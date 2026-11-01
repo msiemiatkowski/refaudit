@@ -1,0 +1,465 @@
+{
+ "url": "https://api.crossref.org/works/10.1177/0963721417718261",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      10,
+      31
+     ]
+    ],
+    "date-time": "2026-10-31T00:52:22Z",
+    "timestamp": 1793407942365,
+    "version": "4.5.0"
+   },
+   "reference-count": 45,
+   "publisher": "SAGE Publications",
+   "issue": "6",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2017,
+        12,
+        1
+       ]
+      ],
+      "date-time": "2017-12-01T00:00:00Z",
+      "timestamp": 1512086400000
+     },
+     "content-version": "tdm",
+     "delay-in-days": 0,
+     "URL": "https://journals.sagepub.com/page/policies/text-and-data-mining-license"
+    }
+   ],
+   "content-domain": {
+    "domain": [
+     "journals.sagepub.com"
+    ],
+    "crossmark-restriction": true
+   },
+   "short-container-title": [
+    "Curr Dir Psychol Sci"
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2017,
+      12
+     ]
+    ]
+   },
+   "abstract": "<jats:p>What psychological factors drive the popularity of conspiracy theories, which explain important events as secret plots by powerful and malevolent groups? What are the psychological consequences of adopting these theories? We review the current research and find that it answers the first of these questions more thoroughly than the second. Belief in conspiracy theories appears to be driven by motives that can be characterized as epistemic (understanding one’s environment), existential (being safe and in control of one’s environment), and social (maintaining a positive image of the self and the social group). However, little research has investigated the consequences of conspiracy belief, and to date, this research does not indicate that conspiracy belief fulfills people’s motivations. Instead, for many people, conspiracy belief may be more appealing than satisfying. Further research is needed to determine for whom, and under what conditions, conspiracy theories may satisfy key psychological motives.</jats:p>",
+   "DOI": "10.1177/0963721417718261",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2017,
+      12,
+      7
+     ]
+    ],
+    "date-time": "2017-12-07T17:06:18Z",
+    "timestamp": 1512666378000
+   },
+   "page": "538-542",
+   "update-policy": "https://doi.org/10.1177/sage-journals-update-policy",
+   "source": "Crossref",
+   "is-referenced-by-count": 1092,
+   "title": [
+    "The Psychology of Conspiracy Theories"
+   ],
+   "prefix": "10.1177",
+   "volume": "26",
+   "author": [
+    {
+     "given": "Karen M.",
+     "family": "Douglas",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "School of Psychology, University of Kent"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "given": "Robbie M.",
+     "family": "Sutton",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Psychology, University of Kent"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "given": "Aleksandra",
+     "family": "Cichocka",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Psychology, University of Kent"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "179",
+   "published-online": {
+    "date-parts": [
+     [
+      2017,
+      12,
+      7
+     ]
+    ]
+   },
+   "reference": [
+    {
+     "key": "bibr1-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.4324/9781315746838"
+    },
+    {
+     "key": "bibr2-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.5040/9781472944528"
+    },
+    {
+     "key": "bibr3-0963721417718261",
+     "unstructured": "Goertzel T. (1994). (See References). A classic in the conspiracy-theory literature."
+    },
+    {
+     "key": "bibr4-0963721417718261",
+     "unstructured": "Sapountzis A., Condor S. (2013). (See References). A sympathetic perspective on conspiracy theories and their value in constructing alternative accounts of reality."
+    },
+    {
+     "key": "bibr5-0963721417718261",
+     "doi-asserted-by": "crossref",
+     "unstructured": "Uscinski J. E., Parent J. M. (2014). (See References). A sustained and empirically informed analysis of conspiracy theories and politics.",
+     "DOI": "10.1093/acprof:oso/9780199351800.001.0001"
+    },
+    {
+     "key": "bibr6-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1948550611434786"
+    },
+    {
+     "key": "bibr7-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/0162-895X.00160"
+    },
+    {
+     "key": "bibr8-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1530-2415.2006.00112.x"
+    },
+    {
+     "key": "bibr9-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/pops.12024"
+    },
+    {
+     "key": "bibr10-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.2466/17.04.PR0.113x17z0"
+    },
+    {
+     "key": "bibr11-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/acp.2995"
+    },
+    {
+     "key": "bibr12-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3389/fpsyg.2013.00225"
+    },
+    {
+     "key": "bibr13-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1948550615616170"
+    },
+    {
+     "key": "bibr14-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/bjop.12158"
+    },
+    {
+     "key": "bibr15-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/01461672992511003"
+    },
+    {
+     "key": "bibr16-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0956797615598740"
+    },
+    {
+     "key": "bibr17-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/bjop.12212"
+    },
+    {
+     "key": "bibr18-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3200/SOCP.148.2.210-222"
+    },
+    {
+     "key": "bibr19-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/13546783.2015.1051586"
+    },
+    {
+     "key": "bibr20-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11109-014-9287-z"
+    },
+    {
+     "key": "bibr21-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.2307/3791630"
+    },
+    {
+     "key": "bibr22-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.jesp.2016.10.003"
+    },
+    {
+     "key": "bibr23-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1371/journal.pone.0151003"
+    },
+    {
+     "key": "bibr24-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s12144-013-9165-6"
+    },
+    {
+     "key": "bibr25-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/10628-000"
+    },
+    {
+     "key": "bibr26-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/per.1930"
+    },
+    {
+     "key": "bibr27-0963721417718261",
+     "unstructured": "Jensen T. (2013). Democrats and Republicans differ on conspiracy theory beliefs. Retrieved from http://www.publicpolicypolling.com/polls/democrats-and-republicans-differ-on-conspiracy-theory-beliefs/"
+    },
+    {
+     "key": "bibr28-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1371/journal.pone.0089177"
+    },
+    {
+     "key": "bibr29-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/bjop.12018"
+    },
+    {
+     "key": "bibr30-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/pops.12404"
+    },
+    {
+     "key": "bibr31-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1751-9004.2007.00056.x"
+    },
+    {
+     "key": "bibr32-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/00207659.2005.11043142"
+    },
+    {
+     "key": "bibr33-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3389/fpsyg.2013.00378"
+    },
+    {
+     "key": "bibr34-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.5964/jspp.v3i1.443"
+    },
+    {
+     "key": "bibr35-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0956797612457686"
+    },
+    {
+     "key": "bibr36-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.2308"
+    },
+    {
+     "key": "bibr37-0963721417718261",
+     "doi-asserted-by": "crossref",
+     "first-page": "731",
+     "DOI": "10.1111/pops.12015",
+     "volume": "43",
+     "author": "Sapountzis A.",
+     "year": "2013",
+     "journal-title": "Political Psychology"
+    },
+    {
+     "key": "bibr38-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.cognition.2014.08.006"
+    },
+    {
+     "key": "bibr39-0963721417718261",
+     "unstructured": "Swift A. (2013). Majority in U.S. still believe JFK killed in a conspiracy. Retrieved from http://www.gallup.com/poll/165893/majority-believe-jfk-killed-conspiracy.aspx"
+    },
+    {
+     "key": "bibr40-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0033-295X.109.3.451"
+    },
+    {
+     "key": "bibr41-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1065912915621621"
+    },
+    {
+     "key": "bibr42-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1093/acprof:oso/9780199351800.001.0001"
+    },
+    {
+     "key": "bibr43-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/acp.3161"
+    },
+    {
+     "key": "bibr44-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.1922"
+    },
+    {
+     "key": "bibr45-0963721417718261",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1126/science.1159845"
+    }
+   ],
+   "container-title": [
+    "Current Directions in Psychological Science"
+   ],
+   "original-title": [],
+   "language": "en",
+   "link": [
+    {
+     "URL": "https://journals.sagepub.com/doi/pdf/10.1177/0963721417718261",
+     "content-type": "application/pdf",
+     "content-version": "vor",
+     "intended-application": "text-mining"
+    },
+    {
+     "URL": "https://journals.sagepub.com/doi/full-xml/10.1177/0963721417718261",
+     "content-type": "application/xml",
+     "content-version": "vor",
+     "intended-application": "text-mining"
+    },
+    {
+     "URL": "https://journals.sagepub.com/doi/pdf/10.1177/0963721417718261",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2026,
+      4,
+      28
+     ]
+    ],
+    "date-time": "2026-04-28T14:28:48Z",
+    "timestamp": 1777386528000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://journals.sagepub.com/doi/10.1177/0963721417718261"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2017,
+      12
+     ]
+    ]
+   },
+   "references-count": 45,
+   "journal-issue": {
+    "issue": "6",
+    "published-print": {
+     "date-parts": [
+      [
+       2017,
+       12
+      ]
+     ]
+    }
+   },
+   "alternative-id": [
+    "10.1177/0963721417718261"
+   ],
+   "URL": "https://doi.org/10.1177/0963721417718261",
+   "relation": {},
+   "ISSN": [
+    "0963-7214",
+    "1467-8721"
+   ],
+   "issn-type": [
+    {
+     "value": "0963-7214",
+     "type": "print"
+    },
+    {
+     "value": "1467-8721",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2017,
+      12
+     ]
+    ]
+   }
+  }
+ }
+}

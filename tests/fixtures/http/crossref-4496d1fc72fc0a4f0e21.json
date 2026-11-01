@@ -1,0 +1,51 @@
+{
+ "url": "https://api.crossref.org/works?filter=updates%3A10.1126%2Fscience.adq1814&rows=20&select=DOI%2Cupdate-to%2Cissued",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+   "facets": {},
+   "total-results": 1,
+   "items": [
+    {
+     "DOI": "10.1126/science.aem1178",
+     "update-to": [
+      {
+       "DOI": "10.1126/science.adq1814",
+       "type": "correction",
+       "label": "Correction",
+       "source": "publisher",
+       "updated": {
+        "date-parts": [
+         [
+          2026,
+          10,
+          22
+         ]
+        ],
+        "date-time": "2026-10-22T00:00:00Z",
+        "timestamp": 1792627200000
+       }
+      }
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2026,
+        10,
+        22
+       ]
+      ]
+     }
+    }
+   ],
+   "items-per-page": 20,
+   "query": {
+    "start-index": 0,
+    "search-terms": null
+   }
+  }
+ }
+}

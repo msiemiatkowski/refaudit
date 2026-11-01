@@ -1,0 +1,189 @@
+{
+ "url": "https://api.crossref.org/works?query.bibliographic=Moonfield%2C+A.+B.%2C+%26+Starling%2C+C.+%282019%29.+Lunar+cycles+and+conspiracy+beliefs.+Journal+of+Imaginary+Results%2C+12%283%29%2C+45%E2%80%9367.&rows=5&select=DOI%2Ctype%2Ctitle%2Csubtitle%2Cauthor%2Ccontainer-title%2Cshort-container-title%2Cvolume%2Cissue%2Cpage%2Carticle-number%2Cpublished-print%2Cpublished-online%2Cissued%2Cupdated-by",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+   "facets": {},
+   "total-results": 510782,
+   "items": [
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     },
+     "DOI": "10.5040/9781978740501.ch-1",
+     "type": "other",
+     "page": "7-12",
+     "title": [
+      "Theoretical Perspectives on Conspiracy Beliefs"
+     ],
+     "container-title": [
+      "Conspiracy Beliefs as Coping Behavior"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     },
+     "DOI": "10.5040/9781978740501.ch-7",
+     "type": "other",
+     "page": "67-68",
+     "title": [
+      "Survey Procedures"
+     ],
+     "container-title": [
+      "Conspiracy Beliefs as Coping Behavior"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     },
+     "DOI": "10.5040/9781978740501.ch-17",
+     "type": "other",
+     "page": "131-138",
+     "title": [
+      "Summary of Study Results"
+     ],
+     "container-title": [
+      "Conspiracy Beliefs as Coping Behavior"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     },
+     "DOI": "10.5040/9781978740501.ch-18",
+     "type": "other",
+     "page": "139-144",
+     "title": [
+      "Interpretation and Application of Study Results"
+     ],
+     "container-title": [
+      "Conspiracy Beliefs as Coping Behavior"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2022
+       ]
+      ]
+     }
+    },
+    {
+     "issue": "12",
+     "short-container-title": [
+      "Curr Psychol"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        2026,
+        6
+       ]
+      ]
+     },
+     "DOI": "10.1007/s12144-026-09660-y",
+     "type": "journal-article",
+     "title": [
+      "What they don’t tell you about conspiracy theories: genius-driven science and informal science communication predict susceptibility to conspiracy beliefs"
+     ],
+     "volume": "45",
+     "author": [
+      {
+       "ORCID": "https://orcid.org/0009-0005-1826-4439",
+       "authenticated-orcid": false,
+       "given": "Michele",
+       "family": "d’Errico",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Taha",
+       "family": "Yasseri",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2026,
+        6,
+        23
+       ]
+      ]
+     },
+     "container-title": [
+      "Current Psychology"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2026,
+        6
+       ]
+      ]
+     },
+     "article-number": "1098"
+    }
+   ],
+   "items-per-page": 5,
+   "query": {
+    "start-index": 0,
+    "search-terms": null
+   }
+  }
+ }
+}

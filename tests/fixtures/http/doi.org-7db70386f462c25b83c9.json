@@ -1,0 +1,54 @@
+{
+ "url": "https://doi.org/api/handles/10.1177/0963721417718261",
+ "status": 200,
+ "body": {
+  "responseCode": 1,
+  "handle": "10.1177/0963721417718261",
+  "values": [
+   {
+    "index": 1,
+    "type": "URL",
+    "data": {
+     "format": "string",
+     "value": "https://journals.sagepub.com/doi/10.1177/0963721417718261"
+    },
+    "ttl": 86400,
+    "timestamp": "2024-09-29T23:38:16Z"
+   },
+   {
+    "index": 700050,
+    "type": "700050",
+    "data": {
+     "format": "string",
+     "value": "2024092907025900316"
+    },
+    "ttl": 86400,
+    "timestamp": "2024-09-29T23:38:16Z"
+   },
+   {
+    "index": 100,
+    "type": "HS_ADMIN",
+    "data": {
+     "format": "admin",
+     "value": {
+      "handle": "0.na/10.1177",
+      "index": 200,
+      "permissions": "111111110010"
+     }
+    },
+    "ttl": 86400,
+    "timestamp": "2018-09-28T11:19:23Z"
+   },
+   {
+    "index": 1000,
+    "type": "10320/loc",
+    "data": {
+     "format": "string",
+     "value": "<locations chooseby=\"locatt,country,weighted\"><location id=\"0\" href=\"https://journals.sagepub.com/doi/10.1177/0963721417718261\" weight=\"1\" /><location id=\"1\" href=\"https://sage.cnpereading.com/doi/10.1177/0963721417718261\" country=\"CN\" weight=\"0\" /></locations>"
+    },
+    "ttl": 86400,
+    "timestamp": "2026-04-28T14:28:47Z"
+   }
+  ]
+ }
+}

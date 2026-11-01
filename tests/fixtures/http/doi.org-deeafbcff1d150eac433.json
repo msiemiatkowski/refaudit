@@ -1,0 +1,44 @@
+{
+ "url": "https://doi.org/api/handles/10.1111/bjso.70021",
+ "status": 200,
+ "body": {
+  "responseCode": 1,
+  "handle": "10.1111/bjso.70021",
+  "values": [
+   {
+    "index": 1,
+    "type": "URL",
+    "data": {
+     "format": "string",
+     "value": "https://bpspsychub.onlinelibrary.wiley.com/doi/10.1111/bjso.70021"
+    },
+    "ttl": 86400,
+    "timestamp": "2025-11-24T12:06:57Z"
+   },
+   {
+    "index": 700050,
+    "type": "700050",
+    "data": {
+     "format": "string",
+     "value": "2026021322163500104"
+    },
+    "ttl": 86400,
+    "timestamp": "2026-02-14T06:17:18Z"
+   },
+   {
+    "index": 100,
+    "type": "HS_ADMIN",
+    "data": {
+     "format": "admin",
+     "value": {
+      "handle": "0.na/10.1111",
+      "index": 200,
+      "permissions": "111111110010"
+     }
+    },
+    "ttl": 86400,
+    "timestamp": "2025-11-24T12:06:57Z"
+   }
+  ]
+ }
+}

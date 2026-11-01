@@ -1,0 +1,44 @@
+{
+ "url": "https://doi.org/api/handles/10.1126/science.1201068",
+ "status": 200,
+ "body": {
+  "responseCode": 1,
+  "handle": "10.1126/science.1201068",
+  "values": [
+   {
+    "index": 1,
+    "type": "URL",
+    "data": {
+     "format": "string",
+     "value": "https://www.science.org/doi/10.1126/science.1201068"
+    },
+    "ttl": 86400,
+    "timestamp": "2021-10-21T13:14:36Z"
+   },
+   {
+    "index": 700050,
+    "type": "700050",
+    "data": {
+     "format": "string",
+     "value": "2024011005363100260"
+    },
+    "ttl": 86400,
+    "timestamp": "2024-01-10T15:44:19Z"
+   },
+   {
+    "index": 100,
+    "type": "HS_ADMIN",
+    "data": {
+     "format": "admin",
+     "value": {
+      "handle": "0.na/10.1126",
+      "index": 200,
+      "permissions": "111111110010"
+     }
+    },
+    "ttl": 86400,
+    "timestamp": "2020-02-05T16:29:11Z"
+   }
+  ]
+ }
+}

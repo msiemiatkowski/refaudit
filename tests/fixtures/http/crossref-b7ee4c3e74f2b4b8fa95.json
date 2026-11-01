@@ -1,0 +1,318 @@
+{
+ "url": "https://api.crossref.org/works/10.1126/science.1201068",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      4,
+      9
+     ]
+    ],
+    "date-time": "2026-04-09T11:29:39Z",
+    "timestamp": 1775734179723,
+    "version": "3.50.1"
+   },
+   "reference-count": 23,
+   "publisher": "American Association for the Advancement of Science (AAAS)",
+   "issue": "6026",
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "Science"
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2011,
+      4,
+      8
+     ]
+    ]
+   },
+   "abstract": "<jats:p>Messiness makes people long for orderliness, which results in a rush to categorize and simplify.</jats:p>",
+   "DOI": "10.1126/science.1201068",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2011,
+      4,
+      8
+     ]
+    ],
+    "date-time": "2011-04-08T05:53:06Z",
+    "timestamp": 1302241986000
+   },
+   "page": "251-253",
+   "source": "Crossref",
+   "is-referenced-by-count": 33,
+   "title": [
+    "Coping with Chaos: How Disordered Contexts Promote Stereotyping and Discrimination"
+   ],
+   "prefix": "10.1126",
+   "volume": "332",
+   "author": [
+    {
+     "given": "Diederik A.",
+     "family": "Stapel",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Tilburg Institute for Behavioral Economics Research, Tilburg University, Post Office Box 90153, 5000 LE Tilburg, Netherlands."
+      }
+     ],
+     "role": [
+      {
+       "role": "author",
+       "vocabulary": "crossref"
+      }
+     ]
+    },
+    {
+     "given": "Siegwart",
+     "family": "Lindenberg",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Tilburg Institute for Behavioral Economics Research, Tilburg University, Post Office Box 90153, 5000 LE Tilburg, Netherlands."
+      },
+      {
+       "name": "Interuniversity Center for Social Science Theory and Methodology, Faculty of Behavioural and Social Sciences, University of Groningen, Grote Rozenstraat 31, NL-9712 TG Groningen."
+      }
+     ],
+     "role": [
+      {
+       "role": "author",
+       "vocabulary": "crossref"
+      }
+     ]
+    }
+   ],
+   "member": "221",
+   "reference": [
+    {
+     "key": "e_1_3_2_2_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/a0016119"
+    },
+    {
+     "key": "e_1_3_2_3_2",
+     "unstructured": "D. J. Schneider The Psychology of Stereotyping (Guilford Press New York 2005)."
+    },
+    {
+     "key": "e_1_3_2_4_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.2105/AJPH.2009.178012"
+    },
+    {
+     "key": "e_1_3_2_5_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1540-4560.2007.00499.x"
+    },
+    {
+     "key": "e_1_3_2_6_2",
+     "unstructured": "S. T. Fiske Social Beings: Core Motives in Social Psychology (Wiley New York 2004)."
+    },
+    {
+     "key": "e_1_3_2_7_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1126/science.1161405"
+    },
+    {
+     "key": "e_1_3_2_8_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.0956-7976.2005.00780.x"
+    },
+    {
+     "key": "e_1_3_2_9_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0033-2909.129.4.522"
+    },
+    {
+     "key": "e_1_3_2_10_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0146167296223003"
+    },
+    {
+     "key": "e_1_3_2_11_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/10478400903448516"
+    },
+    {
+     "key": "e_1_3_2_12_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0146167208325773"
+    },
+    {
+     "key": "e_1_3_2_13_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0146167209357746"
+    },
+    {
+     "key": "e_1_3_2_14_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0146167201278001"
+    },
+    {
+     "key": "e_1_3_2_15_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0022-3514.71.2.230"
+    },
+    {
+     "key": "e_1_3_2_16_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/14792779443000058"
+    },
+    {
+     "key": "e_1_3_2_17_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/S0022-1031(03)00063-5"
+    },
+    {
+     "key": "e_1_3_2_19_2",
+     "unstructured": "A. W. Kruglanski The Psychology of Closed Mindedness (Psychology Press New York 2004)."
+    },
+    {
+     "key": "e_1_3_2_20_2",
+     "unstructured": "M. M. Thompson M. E. Naccarato K. E. Parker paper presented at the Annual Meeting of the Canadian Psychological Association Halifax Nova Scotia June 1989."
+    },
+    {
+     "key": "e_1_3_2_21_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3758/BRM.40.3.879"
+    },
+    {
+     "key": "e_1_3_2_22_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1467-9280.2008.02097.x"
+    },
+    {
+     "key": "e_1_3_2_23_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0022-3514.73.1.31"
+    },
+    {
+     "key": "e_1_3_2_24_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0146167207312465"
+    },
+    {
+     "key": "e_1_3_2_25_2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0022-3514.60.4.509"
+    }
+   ],
+   "updated-by": [
+    {
+     "DOI": "10.1126/science.334.6060.1202-a",
+     "type": "retraction",
+     "label": "Retraction",
+     "source": "retraction-watch",
+     "updated": {
+      "date-parts": [
+       [
+        2011,
+        12,
+        2
+       ]
+      ],
+      "date-time": "2011-12-02T00:00:00Z",
+      "timestamp": 1322784000000
+     },
+     "record-id": "491"
+    }
+   ],
+   "container-title": [
+    "Science"
+   ],
+   "original-title": [],
+   "language": "en",
+   "link": [
+    {
+     "URL": "https://www.science.org/doi/pdf/10.1126/science.1201068",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2024,
+      1,
+      10
+     ]
+    ],
+    "date-time": "2024-01-10T15:44:23Z",
+    "timestamp": 1704901463000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://www.science.org/doi/10.1126/science.1201068"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2011,
+      4,
+      8
+     ]
+    ]
+   },
+   "references-count": 23,
+   "journal-issue": {
+    "issue": "6026",
+    "published-print": {
+     "date-parts": [
+      [
+       2011,
+       4,
+       8
+      ]
+     ]
+    }
+   },
+   "alternative-id": [
+    "10.1126/science.1201068"
+   ],
+   "URL": "https://doi.org/10.1126/science.1201068",
+   "relation": {},
+   "ISSN": [
+    "0036-8075",
+    "1095-9203"
+   ],
+   "issn-type": [
+    {
+     "value": "0036-8075",
+     "type": "print"
+    },
+    {
+     "value": "1095-9203",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2011,
+      4,
+      8
+     ]
+    ]
+   }
+  }
+ }
+}

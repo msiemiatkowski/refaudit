@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "refaudit"
+version = "1.0.0"
+description = "Check the references in a .docx or .bib file against Crossref and OpenAlex and write a colour-coded .xlsx report."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests",
+    "python-docx>=1.0",
+    "bibtexparser>=2.0",
+    "openpyxl",
+    "rapidfuzz",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+refaudit = "refaudit.cli:main"
+
+[tool.setuptools]
+packages = ["refaudit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-m 'not network'"
+markers = ["network: live test that calls Crossref, OpenAlex, DataCite and doi.org"]

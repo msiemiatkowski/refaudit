@@ -1,0 +1,9 @@
+{
+ "url": "https://api.openalex.org/works/doi:10.1126/science.adq1814?select=id%2Cdoi%2Cis_retracted",
+ "status": 200,
+ "body": {
+  "id": "https://openalex.org/W4402474910",
+  "doi": "https://doi.org/10.1126/science.adq1814",
+  "is_retracted": false
+ }
+}

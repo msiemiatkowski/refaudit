@@ -1,0 +1,9 @@
+{
+ "url": "https://api.openalex.org/works/doi:10.47943/lib.9788363487645.rozdzial10?select=id%2Cdoi%2Cis_retracted",
+ "status": 200,
+ "body": {
+  "id": "https://openalex.org/W4390911426",
+  "doi": "https://doi.org/10.47943/lib.9788363487645.rozdzial10",
+  "is_retracted": false
+ }
+}

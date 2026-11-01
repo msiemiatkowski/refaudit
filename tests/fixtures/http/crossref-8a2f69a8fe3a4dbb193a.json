@@ -1,0 +1,472 @@
+{
+ "url": "https://api.crossref.org/works?query.bibliographic=Douglas%2C+K.+M.%2C+Sutton%2C+R.+M.%2C+%26+Cichocka%2C+A.+%282017%29.+The+psychology+of+conspiracy+theories.+Current+Directions+in+Psychological+Science%2C+26%286%29%2C+538%E2%80%93542.&rows=5&select=DOI%2Ctype%2Ctitle%2Csubtitle%2Cauthor%2Ccontainer-title%2Cshort-container-title%2Cvolume%2Cissue%2Cpage%2Carticle-number%2Cpublished-print%2Cpublished-online%2Cissued%2Cupdated-by",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+   "facets": {},
+   "total-results": 1046664,
+   "items": [
+    {
+     "issue": "6",
+     "short-container-title": [
+      "Curr Dir Psychol Sci"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        2017,
+        12
+       ]
+      ]
+     },
+     "DOI": "10.1177/0963721417718261",
+     "type": "journal-article",
+     "page": "538-542",
+     "title": [
+      "The Psychology of Conspiracy Theories"
+     ],
+     "volume": "26",
+     "author": [
+      {
+       "given": "Karen M.",
+       "family": "Douglas",
+       "sequence": "first",
+       "affiliation": [
+        {
+         "name": "School of Psychology, University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Robbie M.",
+       "family": "Sutton",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "School of Psychology, University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Aleksandra",
+       "family": "Cichocka",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "School of Psychology, University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2017,
+        12,
+        7
+       ]
+      ]
+     },
+     "container-title": [
+      "Current Directions in Psychological Science"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2017,
+        12
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2019,
+        4,
+        3
+       ]
+      ]
+     },
+     "DOI": "10.4324/9780429203787-4",
+     "type": "book-chapter",
+     "page": "61-76",
+     "title": [
+      "Belief in Conspiracy Theories"
+     ],
+     "author": [
+      {
+       "given": "Karen M.",
+       "family": "Douglas",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Robbie M.",
+       "family": "Sutton",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Aleksandra",
+       "family": "Cichocka",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "The Social Psychology of Gullibility"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2019,
+        4,
+        3
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2020,
+        2,
+        17
+       ]
+      ]
+     },
+     "DOI": "10.4324/9780429452734-2_3",
+     "type": "book-chapter",
+     "page": "181-191",
+     "title": [
+      "Motivations, Emotions and Belief in Conspiracy Theories"
+     ],
+     "author": [
+      {
+       "given": "Karen M.",
+       "family": "Douglas",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Aleksandra",
+       "family": "Cichocka",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Robbie M.",
+       "family": "Sutton",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "Routledge Handbook of Conspiracy Theories"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2020,
+        2,
+        17
+       ]
+      ]
+     }
+    },
+    {
+     "issue": "S1",
+     "short-container-title": [
+      "Political Psychology"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        2019,
+        2
+       ]
+      ]
+     },
+     "DOI": "10.1111/pops.12568",
+     "type": "journal-article",
+     "page": "3-35",
+     "title": [
+      "Understanding Conspiracy Theories"
+     ],
+     "volume": "40",
+     "author": [
+      {
+       "given": "Karen M.",
+       "family": "Douglas",
+       "sequence": "first",
+       "affiliation": [
+        {
+         "name": "University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Joseph E.",
+       "family": "Uscinski",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "University of Miami"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Robbie M.",
+       "family": "Sutton",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Aleksandra",
+       "family": "Cichocka",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Turkay",
+       "family": "Nefes",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "Oxford University"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Chee Siang",
+       "family": "Ang",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Farzin",
+       "family": "Deravi",
+       "sequence": "additional",
+       "affiliation": [
+        {
+         "name": "University of Kent"
+        }
+       ],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2019,
+        3,
+        20
+       ]
+      ]
+     },
+     "container-title": [
+      "Political Psychology"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2019,
+        2
+       ]
+      ]
+     }
+    },
+    {
+     "short-container-title": [
+      "Current Opinion in Psychology"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        2022,
+        10
+       ]
+      ]
+     },
+     "DOI": "10.1016/j.copsyc.2022.101386",
+     "type": "journal-article",
+     "page": "101386",
+     "title": [
+      "Why do narcissists find conspiracy theories so appealing?"
+     ],
+     "volume": "47",
+     "author": [
+      {
+       "ORCID": "https://orcid.org/0000-0003-1703-1586",
+       "authenticated-orcid": false,
+       "given": "Aleksandra",
+       "family": "Cichocka",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Marta",
+       "family": "Marchlewska",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Mikey",
+       "family": "Biddlestone",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "Current Opinion in Psychology"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2022,
+        10
+       ]
+      ]
+     },
+     "article-number": "101386"
+    }
+   ],
+   "items-per-page": 5,
+   "query": {
+    "start-index": 0,
+    "search-terms": null
+   }
+  }
+ }
+}

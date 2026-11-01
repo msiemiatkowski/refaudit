@@ -1,0 +1,687 @@
+{
+ "url": "https://api.crossref.org/works/10.1111/bjso.70021",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      16
+     ]
+    ],
+    "date-time": "2026-09-16T01:37:48Z",
+    "timestamp": 1789522668517,
+    "version": "build-2803163510"
+   },
+   "reference-count": 69,
+   "publisher": "Wiley",
+   "issue": "1",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2025,
+        11,
+        24
+       ]
+      ],
+      "date-time": "2025-11-24T00:00:00Z",
+      "timestamp": 1763942400000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2025,
+        11,
+        24
+       ]
+      ],
+      "date-time": "2025-11-24T00:00:00Z",
+      "timestamp": 1763942400000
+     },
+     "content-version": "tdm",
+     "delay-in-days": 0,
+     "URL": "http://doi.wiley.com/10.1002/tdm_license_1.1"
+    }
+   ],
+   "funder": [
+    {
+     "DOI": "10.13039/501100004281",
+     "name": "Narodowe Centrum Nauki",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "DEC‐2023/49/B/HS6/01428"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "DEC‐2023/49/B/HS6/01428"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100004281",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    }
+   ],
+   "content-domain": {
+    "domain": [
+     "bpspsychub.onlinelibrary.wiley.com"
+    ],
+    "crossmark-restriction": true
+   },
+   "short-container-title": [
+    "British J Social Psychol"
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2026,
+      1
+     ]
+    ]
+   },
+   "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Through five studies, this research examined how objectively measured societal freedom and individual perceptions of it are related to reduced belief in conspiracy theories. Study 1 (\n                    <jats:italic>N</jats:italic>\n                     = 6353 participants from 36 countries) examined the negative relationship between societal freedom (as measured by the Human Freedom Index) and generic conspiracy beliefs. Study 2 (\n                    <jats:italic>N</jats:italic>\n                     = 44,458 participants from 52 countries) focused on interest group‐related COVID‐19 conspiracy beliefs– a measure not explicitly referring to government actors. Moving to the individual level, Study 3 (\n                    <jats:italic>N</jats:italic>\n                     = 278) examined relationships between perceived societal freedom and various conspiracy beliefs, while Study 4 (\n                    <jats:italic>N</jats:italic>\n                     = 246) experimentally tested whether manipulating perceptions of societal freedom affected belief in generic conspiracist beliefs as well as those related to vaccines and financial crises. Results indicated that both greater societal freedom and higher perceived societal freedom are associated with lower levels of conspiracy beliefs. In Study 5 (\n                    <jats:italic>N</jats:italic>\n                     = 592), we examined the psychological mechanisms mediating the relationship between perceived societal freedom and conspiracy beliefs and found the significant indirect effect via political anger. These findings contribute to a broader understanding of how macro‐level conditions can be incorporated into efforts to reduce the prevalence of conspiracy theories.\n                  </jats:p>",
+   "DOI": "10.1111/bjso.70021",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2025,
+      11,
+      24
+     ]
+    ],
+    "date-time": "2025-11-24T12:06:57Z",
+    "timestamp": 1763986017000
+   },
+   "update-policy": "https://doi.org/10.1002/crossmark_policy",
+   "source": "Crossref",
+   "is-referenced-by-count": 1,
+   "title": [
+    "Free from conspiracies: The negative relationship between societal freedom and belief in generic and content‐specific conspiracy theories"
+   ],
+   "prefix": "10.1111",
+   "volume": "65",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0002-3183-7570",
+     "authenticated-orcid": false,
+     "given": "Maciej",
+     "family": "Siemiątkowski",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Faculty of Psychology University of Warsaw  Warsaw Poland"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0003-0853-5272",
+     "authenticated-orcid": false,
+     "given": "Theofilos",
+     "family": "Gkinopoulos",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Social Sciences, School of Humanities and Social Sciences University of Nicosia Athens Campus  Athens Greece"
+      },
+      {
+       "name": "Institute of Psychology Jagiellonian University  Kraków Poland"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-5027-1691",
+     "authenticated-orcid": false,
+     "given": "Michał",
+     "family": "Bilewicz",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Faculty of Psychology University of Warsaw  Warsaw Poland"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "311",
+   "published-online": {
+    "date-parts": [
+     [
+      2025,
+      11,
+      24
+     ]
+    ]
+   },
+   "reference": [
+    {
+     "key": "e_1_2_16_2_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.2919"
+    },
+    {
+     "key": "e_1_2_16_3_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/19485506221113965"
+    },
+    {
+     "key": "e_1_2_16_4_1",
+     "first-page": "118",
+     "volume-title": "Two concepts of liberty. In Four essays on liberty",
+     "author": "Berlin I.",
+     "year": "1969"
+    },
+    {
+     "key": "e_1_2_16_5_1",
+     "volume-title": "A theory of psychological reactance",
+     "author": "Brehm J. W.",
+     "year": "1966"
+    },
+    {
+     "key": "e_1_2_16_6_1",
+     "volume-title": "Psychological reactance: a theory of freedom and control",
+     "author": "Brehm S. S.",
+     "year": "1981"
+    },
+    {
+     "key": "e_1_2_16_7_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1186/s13612‐014‐0017‐4"
+    },
+    {
+     "key": "e_1_2_16_8_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0013164414547959"
+    },
+    {
+     "key": "e_1_2_16_9_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/17456916211034499"
+    },
+    {
+     "key": "e_1_2_16_10_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11031‐014‐9450‐1"
+    },
+    {
+     "key": "e_1_2_16_11_1",
+     "volume-title": "The effects of multicollinearity in multilevel models (Doctoral dissertation)",
+     "author": "Clark P. C.",
+     "year": "2013"
+    },
+    {
+     "key": "e_1_2_16_12_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1207/s15327965pli1104_01"
+    },
+    {
+     "key": "e_1_2_16_13_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.socscimed.2008.03.038"
+    },
+    {
+     "key": "e_1_2_16_14_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/03637750500111815"
+    },
+    {
+     "key": "e_1_2_16_15_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1146/annurev‐psych‐032420‐031329"
+    },
+    {
+     "key": "e_1_2_16_16_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0963721417718261"
+    },
+    {
+     "key": "e_1_2_16_17_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3758/bf03193146"
+    },
+    {
+     "key": "e_1_2_16_18_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s41598‐025‐10362‐x"
+    },
+    {
+     "key": "e_1_2_16_19_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s10978‐024‐09393‐6"
+    },
+    {
+     "key": "e_1_2_16_20_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.4324/9780429452734-3_5"
+    },
+    {
+     "key": "e_1_2_16_21_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.paid.2023.112303"
+    },
+    {
+     "key": "e_1_2_16_22_1",
+     "volume-title": "Introduction to mediation, moderation, and conditional process analysis: A Regression‐Based Approach",
+     "author": "Hayes A. F.",
+     "year": "2022"
+    },
+    {
+     "key": "e_1_2_16_23_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s44159‐022‐00133‐0"
+    },
+    {
+     "key": "e_1_2_16_24_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.2888"
+    },
+    {
+     "key": "e_1_2_16_25_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/per.1930"
+    },
+    {
+     "key": "e_1_2_16_26_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s41562‐021‐01258‐7"
+    },
+    {
+     "key": "e_1_2_16_27_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0022‐3514.76.3.349"
+    },
+    {
+     "key": "e_1_2_16_28_1",
+     "first-page": "223",
+     "volume-title": "Social motivation",
+     "author": "Jost J. T.",
+     "year": "2011"
+    },
+    {
+     "key": "e_1_2_16_29_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.jrp.2022.104315"
+    },
+    {
+     "key": "e_1_2_16_30_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/0022‐3514.92.1.1"
+    },
+    {
+     "key": "e_1_2_16_31_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.18637/jss.v082.i13"
+    },
+    {
+     "key": "e_1_2_16_32_1",
+     "first-page": "103",
+     "volume-title": "Advances in experimental social psychology",
+     "author": "Lambert A. J.",
+     "year": "2019"
+    },
+    {
+     "key": "e_1_2_16_33_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.5334/irsp.8"
+    },
+    {
+     "key": "e_1_2_16_34_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/09515089.2014.951718"
+    },
+    {
+     "key": "e_1_2_16_35_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/0956797611429468"
+    },
+    {
+     "key": "e_1_2_16_36_1",
+     "unstructured": "Lüdecke D.(2023).sjPlot: Data Visualization for Statistics in Social Science. R package version 2.8.15.https://CRAN.R‐project.org/package=sjPlot"
+    },
+    {
+     "key": "e_1_2_16_37_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/pops.12754"
+    },
+    {
+     "key": "e_1_2_16_38_1",
+     "first-page": "7",
+     "volume-title": "Towards a worldwide index of human freedom",
+     "author": "McMahon F.",
+     "year": "2012"
+    },
+    {
+     "key": "e_1_2_16_39_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s41597‐024‐04100‐7"
+    },
+    {
+     "key": "e_1_2_16_40_1",
+     "volume-title": "On liberty",
+     "author": "Mill J. S.",
+     "year": "1859"
+    },
+    {
+     "key": "e_1_2_16_41_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1475‐6781.2007.00101.x"
+    },
+    {
+     "key": "e_1_2_16_42_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.2939"
+    },
+    {
+     "key": "e_1_2_16_43_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1354067x17692116"
+    },
+    {
+     "key": "e_1_2_16_44_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.2307/2136319"
+    },
+    {
+     "key": "e_1_2_16_45_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3389/fpsyg.2024.1325600"
+    },
+    {
+     "key": "e_1_2_16_46_1",
+     "volume-title": "RStudio: Integrated development environment for R",
+     "author": "Posit team",
+     "year": "2025"
+    },
+    {
+     "key": "e_1_2_16_47_1",
+     "volume-title": "R: A language and environment for statistical computing",
+     "author": "R Core Team",
+     "year": "2025"
+    },
+    {
+     "key": "e_1_2_16_48_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.paid.2021.110874"
+    },
+    {
+     "key": "e_1_2_16_49_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/j.1468‐2958.2012.01443.x"
+    },
+    {
+     "key": "e_1_2_16_50_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.4159/9780674042582"
+    },
+    {
+     "key": "e_1_2_16_51_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.2307/2087176"
+    },
+    {
+     "key": "e_1_2_16_52_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1948550617715068"
+    },
+    {
+     "key": "e_1_2_16_53_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.ssmph.2017.07.010"
+    },
+    {
+     "key": "e_1_2_16_54_1",
+     "volume-title": "Development as freedom",
+     "author": "Sen A.",
+     "year": "1999"
+    },
+    {
+     "key": "e_1_2_16_55_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.2690"
+    },
+    {
+     "key": "e_1_2_16_56_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/mot0000349"
+    },
+    {
+     "key": "e_1_2_16_57_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.jrp.2023.104374"
+    },
+    {
+     "key": "e_1_2_16_58_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1111/bjso.12727"
+    },
+    {
+     "key": "e_1_2_16_59_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.70008"
+    },
+    {
+     "key": "e_1_2_16_60_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s41467‐021‐27668‐9"
+    },
+    {
+     "key": "e_1_2_16_61_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/a0014153"
+    },
+    {
+     "key": "e_1_2_16_62_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.copsyc.2022.101352"
+    },
+    {
+     "key": "e_1_2_16_63_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/acp.3161"
+    },
+    {
+     "key": "e_1_2_16_64_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/ejsp.1922"
+    },
+    {
+     "key": "e_1_2_16_65_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1177/1948550614567356"
+    },
+    {
+     "key": "e_1_2_16_66_1",
+     "volume-title": "The Human Freedom Index 2020: A global measurement of personal, civil, and economic freedom",
+     "author": "Vásquez I.",
+     "year": "2020"
+    },
+    {
+     "key": "e_1_2_16_67_1",
+     "volume-title": "The Human Freedom Index 2023: A global measurement of personal, civil, and economic freedom",
+     "author": "Vásquez I.",
+     "year": "2023"
+    },
+    {
+     "key": "e_1_2_16_68_1",
+     "volume-title": "The Human Freedom Index 2019: A global measurement of personal, civil, and economic freedom",
+     "author": "Vásquez I.",
+     "year": "2019"
+    },
+    {
+     "key": "e_1_2_16_69_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1037/h0028620"
+    },
+    {
+     "key": "e_1_2_16_70_1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/00273171.2024.2315549"
+    }
+   ],
+   "container-title": [
+    "British Journal of Social Psychology"
+   ],
+   "original-title": [],
+   "language": "en",
+   "link": [
+    {
+     "URL": "https://bpspsychub.onlinelibrary.wiley.com/doi/pdf/10.1111/bjso.70021",
+     "content-type": "application/pdf",
+     "content-version": "vor",
+     "intended-application": "text-mining"
+    },
+    {
+     "URL": "https://bpspsychub.onlinelibrary.wiley.com/doi/full-xml/10.1111/bjso.70021",
+     "content-type": "application/xml",
+     "content-version": "vor",
+     "intended-application": "text-mining"
+    },
+    {
+     "URL": "https://bpspsychub.onlinelibrary.wiley.com/doi/pdf/10.1111/bjso.70021",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2026,
+      2,
+      14
+     ]
+    ],
+    "date-time": "2026-02-14T06:17:22Z",
+    "timestamp": 1771049842000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://bpspsychub.onlinelibrary.wiley.com/doi/10.1111/bjso.70021"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2025,
+      11,
+      24
+     ]
+    ]
+   },
+   "references-count": 69,
+   "journal-issue": {
+    "issue": "1",
+    "published-print": {
+     "date-parts": [
+      [
+       2026,
+       1
+      ]
+     ]
+    }
+   },
+   "alternative-id": [
+    "10.1111/bjso.70021"
+   ],
+   "URL": "https://doi.org/10.1111/bjso.70021",
+   "archive": [
+    "Portico"
+   ],
+   "relation": {},
+   "ISSN": [
+    "0144-6665",
+    "2044-8309"
+   ],
+   "issn-type": [
+    {
+     "value": "0144-6665",
+     "type": "print"
+    },
+    {
+     "value": "2044-8309",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2025,
+      11,
+      24
+     ]
+    ]
+   },
+   "assertion": [
+    {
+     "value": "2025-06-03",
+     "order": 0,
+     "name": "received",
+     "label": "Received",
+     "group": {
+      "name": "publication_history",
+      "label": "Publication History"
+     }
+    },
+    {
+     "value": "2025-10-26",
+     "order": 2,
+     "name": "accepted",
+     "label": "Accepted",
+     "group": {
+      "name": "publication_history",
+      "label": "Publication History"
+     }
+    },
+    {
+     "value": "2025-11-24",
+     "order": 3,
+     "name": "published",
+     "label": "Published",
+     "group": {
+      "name": "publication_history",
+      "label": "Publication History"
+     }
+    }
+   ],
+   "article-number": "e70021"
+  }
+ }
+}

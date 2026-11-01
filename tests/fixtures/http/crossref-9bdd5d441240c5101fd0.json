@@ -1,0 +1,292 @@
+{
+ "url": "https://api.crossref.org/works?query.bibliographic=Pucha%C5%82a%2C+D.%2C+%26+Bilewicz%2C+M.+%282024%29.+Identyfikacje+Polak%C3%B3w+i+ich+konsekwencje.+W%3A+D.+Bulska%2C+M.+Winiewski+i+M.+Bilewicz+%28red.%29%2C+Uprzedzenia+w+Polsce.+Postawy+a+ideologia+polityczna+%28s.+269%E2%80%93292%29.+Wydawnictwo+Liberi+Libri.&rows=5&select=DOI%2Ctype%2Ctitle%2Csubtitle%2Cauthor%2Ccontainer-title%2Cshort-container-title%2Cvolume%2Cissue%2Cpage%2Carticle-number%2Cpublished-print%2Cpublished-online%2Cissued%2Cupdated-by",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+   "facets": {},
+   "total-results": 44,
+   "items": [
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "DOI": "10.47943/lib.9788363487645.rozdzial10",
+     "type": "book-chapter",
+     "page": "269-292",
+     "title": [
+      "Identyfikacje Polaków i ich konsekwencje"
+     ],
+     "author": [
+      {
+       "given": "Dominik",
+       "family": "Puchała",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      },
+      {
+       "given": "Michał",
+       "family": "Bilewicz",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "container-title": [
+      "Uprzedzenia w Polsce. Postawy a ideologia polityczna"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "DOI": "10.47943/lib.9788363487645",
+     "type": "edited-book",
+     "title": [
+      "Uprzedzenia w Polsce. Postawy a ideologia polityczna"
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "issued": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "DOI": "10.47943/lib.9788363487645.rozdzial00",
+     "type": "book-chapter",
+     "page": "5-11",
+     "title": [
+      "Wprowadzenie"
+     ],
+     "author": [
+      {
+       "given": "Dominika",
+       "family": "Bulska",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      },
+      {
+       "given": "Mikołaj",
+       "family": "Winiewski",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      },
+      {
+       "given": "Michał",
+       "family": "Bilewicz",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "container-title": [
+      "Uprzedzenia w Polsce. Postawy a ideologia polityczna"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "DOI": "10.47943/lib.9788363487645.rozdzial06",
+     "type": "book-chapter",
+     "page": "185-207",
+     "title": [
+      "Obawy Polaków i Polek a postawy wobec grup obcych"
+     ],
+     "author": [
+      {
+       "given": "Dominika",
+       "family": "Bulska",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "container-title": [
+      "Uprzedzenia w Polsce. Postawy a ideologia polityczna"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "DOI": "10.47943/lib.9788363487645.rozdzial04",
+     "type": "book-chapter",
+     "page": "115-139",
+     "title": [
+      "Ideologiczne podstawy akceptacji przemocy wobec migrantów"
+     ],
+     "author": [
+      {
+       "given": "Mikołaj",
+       "family": "Winiewski",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Aleksandra",
+       "family": "Świderska",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Dominika",
+       "family": "Bulska",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     },
+     "container-title": [
+      "Uprzedzenia w Polsce. Postawy a ideologia polityczna"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2024
+       ]
+      ]
+     }
+    }
+   ],
+   "items-per-page": 5,
+   "query": {
+    "start-index": 0,
+    "search-terms": null
+   }
+  }
+ }
+}

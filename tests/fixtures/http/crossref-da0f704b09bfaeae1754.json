@@ -1,0 +1,307 @@
+{
+ "url": "https://api.crossref.org/works?query.bibliographic=Allport%2C+G.+W.+%281954%29.+The+nature+of+prejudice.+Addison-Wesley.&rows=5&select=DOI%2Ctype%2Ctitle%2Csubtitle%2Cauthor%2Ccontainer-title%2Cshort-container-title%2Cvolume%2Cissue%2Cpage%2Carticle-number%2Cpublished-print%2Cpublished-online%2Cissued%2Cupdated-by",
+ "status": 200,
+ "body": {
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+   "facets": {},
+   "total-results": 1486393,
+   "items": [
+    {
+     "issue": "1",
+     "short-container-title": [
+      "Social Forces"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        1954,
+        10,
+        1
+       ]
+      ]
+     },
+     "DOI": "10.2307/2573151",
+     "type": "journal-article",
+     "page": "90-91",
+     "title": [
+      "THE NATURE OF PREJUDICE. By Gordon W. Allport. Cambridge: Addison-Wesley Publishing Company, Inc., 1954. 537 pp. $5.50"
+     ],
+     "volume": "33",
+     "author": [
+      {
+       "given": "W. L.",
+       "family": "Kolb",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "Social Forces"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        1954,
+        10,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "published-print": {
+      "date-parts": [
+       [
+        2016
+       ]
+      ]
+     },
+     "DOI": "10.1007/978-3-658-13213-2_43",
+     "type": "book-chapter",
+     "page": "193-196",
+     "title": [
+      "Gordon Willard Allport: The Nature of Prejudice, Addison-Wesley: Reading, MA 1954, 537 S. (dt. Die Natur des Vorurteils, Kiepenheuer &amp; Witsch: Köln 1971, 531 S.)"
+     ],
+     "author": [
+      {
+       "given": "Thomas",
+       "family": "Pettigrew",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Kerstin",
+       "family": "Hammann",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        2016,
+        3,
+        19
+       ]
+      ]
+     },
+     "container-title": [
+      "Klassiker der Sozialwissenschaften"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        2016
+       ]
+      ]
+     }
+    },
+    {
+     "issue": "1",
+     "short-container-title": [
+      "The ANNALS of the American Academy of Political and Social Science"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        1954,
+        9
+       ]
+      ]
+     },
+     "DOI": "10.1177/000271625429500151",
+     "type": "journal-article",
+     "page": "171-172",
+     "title": [
+      "Sociology and Education"
+     ],
+     "volume": "295",
+     "author": [
+      {
+       "given": "Muzafer",
+       "family": "Sherif",
+       "sequence": "first",
+       "affiliation": [
+        {
+         "name": "University of Oklahoma"
+        }
+       ],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      }
+     ],
+     "published-online": {
+      "date-parts": [
+       [
+        1954,
+        9,
+        1
+       ]
+      ]
+     },
+     "container-title": [
+      "The ANNALS of the American Academy of Political and Social Science"
+     ],
+     "subtitle": [
+      "ALLPORT, GORDON W. The Nature of Prejudice. Pp. xviii, 537. Cambridge, Mass.: Addison-Wesley Publishing Com pany, 1954. $5.50"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        1954,
+        9
+       ]
+      ]
+     }
+    },
+    {
+     "issue": "5",
+     "short-container-title": [
+      "American Sociological Review"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        1954,
+        10
+       ]
+      ]
+     },
+     "DOI": "10.2307/2087802",
+     "type": "journal-article",
+     "page": "608",
+     "title": [
+      "The Social Psychology of Prejudice.",
+      "The Nature of Prejudice."
+     ],
+     "volume": "19",
+     "author": [
+      {
+       "given": "Arnold M.",
+       "family": "Rose",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Gerhart",
+       "family": "Saenger",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      },
+      {
+       "given": "Gordon W.",
+       "family": "Allport",
+       "sequence": "additional",
+       "affiliation": [],
+       "role": [
+        {
+         "vocabulary": "crossref",
+         "role": "author"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "American Sociological Review"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        1954,
+        10
+       ]
+      ]
+     }
+    },
+    {
+     "issue": "2",
+     "short-container-title": [
+      "Social Problems"
+     ],
+     "published-print": {
+      "date-parts": [
+       [
+        1954,
+        10
+       ]
+      ]
+     },
+     "DOI": "10.1525/sp.1954.2.2.03a00120",
+     "type": "journal-article",
+     "page": "113-114",
+     "title": [
+      ": The Nature of Prejudice . Gordon W. Allport."
+     ],
+     "volume": "2",
+     "author": [
+      {
+       "given": "Sidney H.",
+       "family": "Aronson",
+       "sequence": "first",
+       "affiliation": [],
+       "role": [
+        {
+         "role": "author",
+         "vocabulary": "crossref"
+        }
+       ]
+      }
+     ],
+     "container-title": [
+      "Social Problems"
+     ],
+     "issued": {
+      "date-parts": [
+       [
+        1954,
+        10
+       ]
+      ]
+     }
+    }
+   ],
+   "items-per-page": 5,
+   "query": {
+    "start-index": 0,
+    "search-terms": null
+   }
+  }
+ }
+}

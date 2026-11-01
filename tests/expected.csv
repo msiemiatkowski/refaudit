@@ -1,0 +1,21 @@
+case,file,row,reference,expected,problem_contains
+1,sample.docx,1,"Douglas, Sutton, & Cichocka (2017), Current Directions in Psychological Science, 26(6), 538–542, https://doi.org/10.1177/0963721417718261",GREEN,
+2,sample.docx,2,Case 1 with volume 25 and pages 538–545,ORANGE,"Volume: cited 25, the record has 26"
+3,sample.docx,3,Case 1 without its DOI,YELLOW,DOI missing; found https://doi.org/10.1177/0963721417718261
+4,sample.docx,4,Case 1 with one DOI digit changed (10.1177/0963721417718262),RED,DOI 10.1177/0963721417718262 is not registered
+5,sample.docx,5,"Stapel & Lindenberg (2011), ""Coping with chaos"", Science",RED,"Notice: Retraction, 2011-12-02"
+6,sample.docx,6,"Costello, Pennycook, & Rand (2024), ""Durably reducing conspiracy beliefs through dialogues with AI"", Science",PURPLE,"Notice: Expression of concern, 2026-06-11"
+7,sample.docx,7,"Siemiątkowski, Gkinopoulos, & Bilewicz, British Journal of Social Psychology (societal freedom; online 2025, issue 2026), cited as 2025",ORANGE,issue year is 2026
+8,sample.docx,8,"An invented article: ""Lunar cycles and conspiracy beliefs"", Journal of Imaginary Results",RED,No matching record found
+9,sample.docx,9,"Allport (1954), The nature of prejudice, Addison-Wesley",GREY,No matching record found
+10,sample_pl.docx,1,"A Polish book chapter: Puchała & Bilewicz (2024), W: D. Bulska, M. Winiewski i M. Bilewicz (red.), Uprzedzenia w Polsce (s. 269–292)",as returned,
+1,sample.bib,1,Case 1 as a BibTeX @article,GREEN,
+2,sample.bib,2,Case 2 as a BibTeX @article,ORANGE,"Volume: cited 25, the record has 26"
+3,sample.bib,3,Case 3 as a BibTeX @article,YELLOW,DOI missing; found https://doi.org/10.1177/0963721417718261
+4,sample.bib,4,Case 4 as a BibTeX @article,RED,DOI 10.1177/0963721417718262 is not registered
+5,sample.bib,5,Case 5 as a BibTeX @article,RED,"Notice: Retraction, 2011-12-02"
+6,sample.bib,6,Case 6 as a BibTeX @article,PURPLE,"Notice: Expression of concern, 2026-06-11"
+7,sample.bib,7,Case 7 as a BibTeX @article,ORANGE,issue year is 2026
+8,sample.bib,8,Case 8 as a BibTeX @article,RED,No matching record found
+9,sample.bib,9,Case 9 as a BibTeX @book,GREY,No matching record found
+10,sample.bib,10,Case 10 as a BibTeX @incollection (booktitle),as returned,
