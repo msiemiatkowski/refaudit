@@ -28,6 +28,8 @@ follows the citation, so the hint is the text after it, up to the next citation 
 - **Order of tests.** First-author surname (diacritics folded), numeric year and letter come first. Author count
   ("et al." means 3 or more; two names must both match) then picks between several candidates.
 - **Inexact single match.** One candidate whose letter or author count differs is still matched, with a note.
+- **Compound surnames.** A narrative "Granados Samayoa et al. (2022)" keeps both words when the list has that
+  surname; "In Douglas et al. (2017)" stays "Douglas".
 - **Polish inflection.** Narrative citations decline surnames ("Bilewicza", "Kowalskiej"), so a known Polish case
   ending is allowed after the surname. "Kowal" still doesn't match "Kowalski".
 - **As cited in.** In "X, 1954, as cited in Y, 2006" only Y is an occurrence, because APA lists only the
@@ -38,23 +40,33 @@ follows the citation, so the hint is the text after it, up to the next citation 
   page (partial ratio ≥ 90), else by an AuthorYear file name.
 - **Identity check.** Every text, yours or downloaded, must then pass the identity check: title ≥ 85 and the first
   author on the first pages.
-- **Version.** Your files are taken as published unless the first pages say preprint or accepted manuscript.
+- **Version.** Your files are taken as published unless the first pages say preprint (PsyArXiv, "not peer
+  reviewed", "manuscript submitted for publication", "under review") or accepted manuscript. Frontiers' "This
+  article was submitted to <section>" and a bare "Accepted: <date>" don't count.
 
 **Open-access copies.**
 - **Sources of URLs.** Only URLs from Unpaywall (`oa_locations[].url_for_pdf`), OpenAlex (`best_oa_location`,
   `locations[]`, `open_access.oa_url` if it is a PDF), Europe PMC (full-text XML for open-access PMC records) and
   Semantic Scholar (`openAccessPdf`) are tried.
-- **Order.** Published versions come before accepted ones, and preprints come last.
+- **Order.** Published versions come before accepted ones, and preprints come last. Within a version, paged PDFs
+  come before Europe PMC XML, so evidence can cite pages. When two services list the same URL, the first listing
+  (Unpaywall's) keeps its version: a Semantic Scholar copy without one had pushed a published PDF below an
+  accepted manuscript.
 - **What is read.** A response is used only if it is a PDF (`%PDF`) or Europe PMC XML. HTML landing pages are
-  never read.
+  never read. Europe PMC XML gets a title page (title, authors, abstract), so it can pass the identity check.
 - **Politeness.** Downloads go through part 1's polite client: mailto, at most 5 requests per second, backoff and
   20 s timeouts.
+- **Refused downloads.** A host that refuses a download (HTTP 401–403, usually a bot check) is skipped for the
+  rest of the run, but other hosts are still tried, and the Summary names the refusing hosts. Before this, one
+  refusal stopped every download.
 
 **PDF text.**
 - **Columns.** `pdftotext -layout` keeps two columns side by side, which would interleave sentences. A gutter
   detector splits such pages and puts the left column first; full-width lines (titles) are left alone.
-- **Printed page numbers.** They come from the PDF's own `/PageLabels` when present. Otherwise each page's first
-  and last lines are scanned for the offset (printed − PDF page) that most pages agree on.
+- **Printed page numbers.** They come from the PDF's own `/PageLabels`, unless those are just 1…N, as in
+  Cambridge's PDFs. Otherwise each page's first and last three lines are scanned, before the columns are split
+  (which would cut a running head in two), for the offset (printed − PDF page) that most pages agree on.
+  Psychological Medicine's 5709–5716 on PDF pages 1–8 is found this way.
 - **OCR.** Pages with almost no text are OCRed with tesseract (`eng+pol`) when installed. A source with no text
   and no OCR is NONE, with the reason.
 
