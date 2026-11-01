@@ -2,7 +2,26 @@
  "goertzel1994": [
   "C002"
  ],
+ "imhoff2020": [
+  "C003",
+  "C009"
+ ],
+ "pilch2023": [
+  "C005"
+ ],
  "alsuhibani2022": [
   "C007"
+ ],
+ "vanprooijen2023": [
+  "C010"
+ ],
+ "granadossamayoa2022": [
+  "C012"
+ ],
+ "omahony2023": [
+  "C013"
+ ],
+ "greenburgh2022": [
+  "C014"
  ]
 }

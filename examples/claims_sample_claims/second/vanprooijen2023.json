@@ -1,0 +1,65 @@
+{
+  "refkey": "vanprooijen2023",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Three-wave longitudinal panel survey in the Netherlands (Kieskompas research panels; not preregistered), analysed with cross-lagged panel models (CLPM) and random-intercept cross-lagged panel models (RI-CLPM). Wave 1 April 2020 (first lockdown), Wave 2 June 2020 (between lockdowns), Wave 3 December 2020 (second lockdown). The authors state that the longitudinal design cannot prove causality.",
+    "sample": "N = 4913 Dutch respondents who took part in all three waves (Wave 1 N = 9033, Wave 2 N = 6775, Wave 3 N = 5745); 3516 men and 1397 women; mean age 59.68 (SD 14.45); N = 4118 in the models because of missing values. Men were overrepresented and belief in conspiracy theories was low.",
+    "measures": "Belief in nine Covid-19 conspiracy theories common in the Netherlands in 2020 (credibility ratings, 1-5; alpha .84-.86); self-reported physical distancing (4 items, 0-10); support for lockdown policy (5 items, 0-10); perceived danger of the coronavirus (3 items, 1-5).",
+    "main_results": "CLPM: stronger conspiracy beliefs predicted decreases in physical distancing and in perceived danger at the next wave (all cross-lagged paths significant). These paths were larger than the also-significant reverse paths (Wald tests). Conspiracy beliefs predicted reduced lockdown support only from Wave 2 to Wave 3. RI-CLPM (within-person): conspiracy beliefs predicted decreased distancing only from Wave 1 to 2, and decreased perceived danger only from Wave 2 to 3. Perceived danger at Wave 1 predicted increased conspiracy beliefs, and the within-person lockdown-support paths were paradoxically positive. Conclusion: stronger support for the hypothesis that conspiracy beliefs predict health responses than for the reverse, with within-person effects that depend on the outcome and the phase of the pandemic."
+  },
+  "occurrences": [
+    {
+      "id": "C010",
+      "verdict": "SUPPORTED-WITH-CAVEAT",
+      "support_type": "finding",
+      "severity": "MINOR",
+      "explanation": "The quoted words are verbatim from the source's last Discussion sentence ('Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic'). The framing is accurate: a three-wave longitudinal panel in the Netherlands (April, June and December 2020; N = 4913, 'a large Dutch panel ... at three time points', p. 5710). The wording is predictive, not causal, as in the source, and the direction (conspiracy beliefs -> worse health responses) is right. The only error is the page locator. The sentence is on printed p. 5715 (PDF p. 7), not p. 5713. Page 5713 reports the RI-CLPM physical-distancing results and the lockdown-support results, and the quoted sentence is not there. A nuance that needs no change: the sentence is the authors' hedged ('Apparently') summary for the first pandemic year only, and their detailed results are qualified. Between-person effects ran in both directions for distancing and perceived danger, though larger from conspiracy beliefs to health responses. The lockdown-support effect appeared only from June to December 2020. Within-person effects depended on the outcome and phase, as the source itself says on the same page.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic.",
+          "page": "5715",
+          "pdf_page": 7,
+          "section": ""
+        },
+        {
+          "quote": "Conspiracy beliefs predicted more detrimental health beliefs and behaviors over time, although within-person changes differed across outcome variables and depended on the specific phase of the pandemic.",
+          "page": "5715",
+          "pdf_page": 7,
+          "section": ""
+        }
+      ],
+      "search_terms": [
+        "predict deteriorated",
+        "deteriorat",
+        "throughout",
+        "Apparently",
+        "Dutch",
+        "Netherlands",
+        "three waves",
+        "three time points",
+        "three phases",
+        "panel",
+        "first year",
+        "phase of the pandemic",
+        "depend",
+        "only early",
+        "later in the pandemic",
+        "vice versa",
+        "Paradoxically",
+        "causal",
+        "cannot prove",
+        "generalize",
+        "detrimental",
+        "long run",
+        "short run",
+        "OSM",
+        "Supplement",
+        "page headers (=== PDF page N, printed page P ===)"
+      ],
+      "fix": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic” (van Prooijen et al., 2023, p. 5715).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

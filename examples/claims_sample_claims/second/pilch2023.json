@@ -1,0 +1,58 @@
+{
+  "refkey": "pilch2023",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Systematic review with narrative synthesis (PRISMA guidelines, no meta-analysis because of methodological heterogeneity). Scopus and Web of Science were searched on 17 November 2021 for peer-reviewed journal articles published 2018-2021, extending the review by Goreis and Voracek (2019).",
+    "sample": "274 articles reporting 417 studies that contained primary empirical data, measured specific or general conspiracy beliefs and reported a correlation with at least one other psychological variable. By continent: Europe 207 studies (49.6%), North America 136 (32.6%), Asia 28 (6.7%), multiple continents 28 (6.7%), South America 10 (2.4%), Australia/Oceania 7 (1.7%), Africa 1 (0.2%). 85.7% of the studies used adult samples.",
+    "measures": "Descriptive coding of study design (cross-sectional, experimental, longitudinal), participant type, continent of origin, sample size and the conspiracy-belief measure used (e.g., GCBS, CMQ, CMS, BCTI, COVID-19-specific scales), followed by a narrative synthesis of antecedents and consequences of conspiracy beliefs.",
+    "main_results": "71.2% of the studies were cross-sectional, 23.3% experimental and 5.5% longitudinal. The GCBS was the most frequently used general measure (62 studies), ahead of the CMQ (57) and CMS (52). Antecedents fell into cognitive, motivational, personality, psychopathology, political and sociocultural categories. Conspiracy beliefs were linked to a range of attitudes and behaviours considered unfavourable for individuals and society."
+  },
+  "occurrences": [
+    {
+      "id": "C005",
+      "verdict": "NOT-SUPPORTED",
+      "support_type": "finding",
+      "severity": "CRITICAL",
+      "explanation": "The review's own descriptive results contradict both parts of the sentence. Of the 417 included studies, 207 (49.6%) were conducted in European countries, which the source itself describes as 'nearly half' (Results, p. 3) and 'almost half' (Abstract). Europe is the largest single continent, but it is not a majority. The 71.2% figure in the sentence is the share of cross-sectional studies (297 of 417; Results p. 3 and Table 1 p. 5), not the share of European studies. The only 'majority' statement about geography in the source (Discussion, p. 11) concerns Europe and North America combined. So the key number is wrong and 'Most' overstates Europe's share. A minor point of scope: the figures describe the 417 studies in this 2018-2021 review of peer-reviewed psychological articles indexed in Scopus and Web of Science, not conspiracy-belief research in general. The preceding sentence's 2018-2021 framing makes 'this research' readable that way. A full-text search found no passage giving 71.2% for Europe. The candidates helper found no other source in the reference list that reports this figure, so this is a misread number, not a misattribution.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Of the 417 studies described in the articles analyzed, nearly half (49.6%) were conducted in European countries (see Table 1). Other 136 (32.6%) studies were conducted in North America.",
+          "page": "3",
+          "pdf_page": 3,
+          "section": "3. Results"
+        },
+        {
+          "quote": "The majority of the studies (71.2%) had a cross-sectional design, and the remaining studies had an experimental design (23.3%) or a longitudinal design (5.5%).",
+          "page": "3",
+          "pdf_page": 3,
+          "section": "3. Results"
+        }
+      ],
+      "search_terms": [
+        "Europ",
+        "71.2 / 71,1 / 71.x",
+        "49.6",
+        "32.6",
+        "82.2",
+        "continent",
+        "territorial",
+        "North America",
+        "WEIRD",
+        "geograph",
+        "region",
+        "majority",
+        "half",
+        "most of the studies / most of the research",
+        "predominan",
+        "mainly",
+        "Limitation",
+        "Supplementary",
+        "refaudit claims candidates C005"
+      ],
+      "fix": "Almost half of this research comes from Europe: 49.6% of the studies were conducted in European countries (Pilch et al., 2023).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}
