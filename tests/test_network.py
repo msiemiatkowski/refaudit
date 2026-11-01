@@ -19,3 +19,18 @@ def test_cli_live(name, tmp_path):
         if case["expected"] != "as returned":
             assert status == case["expected"], f"case {case['case']}: {problems}"
         assert case["problem_contains"] in (problems or ""), f"case {case['case']}: {problems}"
+
+
+def test_claims_prepare_live(tmp_path, monkeypatch):
+    """Part 2: every open-access source of the acceptance fixture is found in full; Goertzel (1994) is not."""
+    import os
+    from refaudit import claims_cli
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path / "cache"))
+    if not os.environ.get("REFAUDIT_MAILTO"):
+        pytest.skip("set REFAUDIT_MAILTO (your e-mail) for Unpaywall")
+    work = claims_cli.prepare(FIXTURES / "claims_sample.docx", sources=FIXTURES / "claims_sources", out=tmp_path,
+                              log=lambda *a, **k: None)
+    levels = {ref["key"]: (ref["level"], ref["origin"].split(":")[0]) for ref in claims_cli.load(work, "claims.json")["refs"]}
+    assert levels.pop("goertzel1994") == ("ABSTRACT", "abstract")
+    assert levels.pop("pilch2023") == levels.pop("vanprooijen2023") == ("FULL", "file")
+    assert all(level == "FULL" for level, _ in levels.values()), levels

@@ -53,13 +53,26 @@ COLUMNS = [("ID", 6), ("Paragraph", 9), ("Sentence", 9), ("Claim", 60), ("Citati
            ("Numbers in the claim", 18), ("Candidate passages", 55)]
 
 
+def short_cite(ref: dict) -> str:
+    """'O'Mahony et al., 2023', 'Imhoff & Lamberty, 2020' or 'Goertzel, 1994' for a reference-table entry."""
+    authors = ref.get("authors") or ["Anonymous"]
+    names = authors[0] if len(authors) == 1 else " & ".join(authors[:2]) if len(authors) == 2 else f"{authors[0]} et al."
+    return f"{names}, {ref.get('year') or 'n.d.'}"
+
+
+def _place(e: dict) -> str:
+    """'p. 5715 (PDF p. 7)', 'PDF p. 7' or 'section Results'."""
+    page, pdf = e.get("page") not in (None, ""), e.get("pdf_page") not in (None, "")
+    if page:
+        return f"p. {e['page']}" + (f" (PDF p. {e['pdf_page']})" if pdf and str(e["pdf_page"]) != str(e["page"]) else "")
+    return f"PDF p. {e['pdf_page']}" if pdf else f"section {e['section']}" if e.get("section") else ""
+
+
 def _evidence(row: dict) -> str:
     items = []
     for e in (row["judge"].get("evidence") or []):
-        place = ", ".join(x for x in (f"p. {e['page']}" if e.get("page") not in (None, "") else "",
-                                      f"PDF p. {e['pdf_page']}" if e.get("pdf_page") not in (None, "") else "",
-                                      f"section {e['section']}" if e.get("section") else "") if x)
-        items.append(f"“{e.get('quote', '')}” ({place})" if place else f"“{e.get('quote', '')}”")
+        place = _place(e)
+        items.append(f"{place}: “{e.get('quote', '')}”" if place else f"“{e.get('quote', '')}”")
     return "\n".join(items)
 
 
@@ -117,7 +130,7 @@ def claim_cells(row: dict) -> list[tuple[object, str | None]]:
                                                                             "NONE": "GREY"}.get(level)),
             (row["ref_info"].get("version", ""), None), (row["status"], row["status"]), (row["verdict"], verdict_colour),
             (row["severity"], None), (row["judge"].get("support_type", ""), None), (explanation, None),
-            (_evidence(row), None), (row["judge"].get("fix", ""), None), (row["judge"].get("alternative", ""), None),
+            (_evidence(row), None), (row["judge"].get("fix", ""), None), (row.get("alternative", ""), None),
             (row["judge"].get("confidence", ""), None), (second, second_colour), (check, check_colour),
             (numbers, None), (passages, None)]
 
@@ -311,10 +324,12 @@ def _comment_text(row: dict) -> str:
     lines += [x for x in [explanation, *row["notes"]] if x]
     if row["judge"].get("fix"):
         lines.append(f"Fix: {row['judge']['fix']}")
+    if row.get("alternative"):
+        lines.append(f"Better-fitting reference in your list: {row['alternative']}")
     evidence = (row["judge"].get("evidence") or [])[:1]
     for e in evidence:
-        place = f"p. {e['page']}" if e.get("page") else f"section {e.get('section')}" if e.get("section") else ""
-        lines.append(f"Evidence: “{e.get('quote', '')}”" + (f" ({place})" if place else ""))
+        place = _place(e)
+        lines.append(f"Evidence{', ' + place if place else ''}: “{e.get('quote', '')}”")
     return "\n".join(lines)
 
 

@@ -37,7 +37,7 @@ refaudit library.bib -o report.xlsx
 
 | Environment variable | Meaning |
 |---|---|
-| `REFAUDIT_MAILTO` | your e-mail address, sent to Crossref and OpenAlex for their polite pools |
+| `REFAUDIT_MAILTO` | your e-mail address, sent to Crossref and OpenAlex for their polite pools, and (claim check only) to Unpaywall, which requires one. Any address you read works; it is never written to the cache or the reports. |
 | `OPENALEX_API_KEY` | optional OpenAlex API key, sent as the `api_key` parameter. If OpenAlex refuses requests, refaudit skips it and says so in the Summary sheet. |
 
 ```bash
@@ -270,7 +270,7 @@ These hosts must be reachable over HTTPS:
 - `api.datacite.org`
 - `doi.org`
 
-refaudit uses the APIs politely. It sends `REFAUDIT_MAILTO` to Crossref and OpenAlex only, as `mailto` and in the User-Agent. It makes at most 5 requests per second and uses 20-second timeouts. It retries with backoff (2, 4, 8 and 16 s) on 429, 5xx and network errors. Answers, including "not found", are kept in an on-disk JSON cache (`--cache DIR`) and fetched again after 7 days. Delete the cache directory to force fresh answers.
+refaudit uses the APIs politely. It sends `REFAUDIT_MAILTO` to Crossref and OpenAlex only, as `mailto` and in the User-Agent (the claim check also sends it to Unpaywall as `email`). It makes at most 5 requests per second and uses 20-second timeouts. It retries with backoff (2, 4, 8 and 16 s) on 429, 5xx and network errors. Answers, including "not found", are kept in an on-disk JSON cache (`--cache DIR`) and fetched again after 7 days. Delete the cache directory to force fresh answers.
 
 A service that refuses requests is skipped for the rest of the run, and the Summary sheet says so. That means HTTP 401, 402 or 403, a 429 that persists through all the retries, or a request to wait more than a minute. If a reference's own lookup fails, that reference becomes a GREY row with the error. A DOI already known to be unregistered or wrong stays RED.
 

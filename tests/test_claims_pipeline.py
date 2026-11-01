@@ -182,3 +182,17 @@ def test_agent_and_skill_files():
         assert f'"prompt_version": "{claims_cli.PROMPT_VERSION}"' in text
     skill = (ROOT / ".claude" / "skills" / "check-claims" / "SKILL.md").read_text(encoding="utf-8")
     assert "disable-model-invocation: true" in skill and "$ARGUMENTS" in skill and "at most five" in skill
+
+
+def test_comment_names_the_better_reference_and_both_pages():
+    from refaudit import claims_report
+    row = {"status": "RED", "verdict": "MISATTRIBUTED", "severity": "MAJOR", "notes": [],
+           "alternative": claims_report.short_cite({"authors": ["O'Mahony", "Brassil", "Murphy"], "year": "2023"}),
+           "judge": {"explanation": "The finding is O'Mahony et al.'s.", "fix": "Cite O'Mahony et al. (2023).",
+                     "evidence": [{"quote": "the most effective", "page": "5715", "pdf_page": 7}]}}
+    text = claims_report._comment_text(row)
+    assert "Better-fitting reference in your list: O'Mahony et al., 2023" in text
+    assert "Evidence, p. 5715 (PDF p. 7): “the most effective”" in text
+    assert claims_report.short_cite({"authors": ["Imhoff", "Lamberty"], "year": "2020"}) == "Imhoff & Lamberty, 2020"
+    assert claims_report._place({"page": "", "pdf_page": 3}) == "PDF p. 3"
+    assert claims_report._place({"section": "Results"}) == "section Results"

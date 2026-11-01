@@ -229,6 +229,8 @@ def assess(row: dict, ref: dict | None, verdict: dict | None, second: dict | Non
         if any(not e["ok"] for e in result["evidence"]):
             statuses.append("ORANGE")
             notes.append("Quote not found, check by hand.")
+        if second and any(not e["ok"] for e in result.get("second_evidence", [])):
+            notes.append("A quote of the second opinion was not found in the source.")
         for q in result["quotations"]:
             statuses.append("YELLOW" if q.get("page_mismatch") else "ORANGE" if not q["ok"] else None)
             if not q["ok"]:
@@ -269,6 +271,9 @@ def verify(work: Path, log=print) -> dict:
         if row["ref"] not in text_cache:
             text_cache[row["ref"]] = load(work, f"texts/{row['ref']}.json", {"pages": [], "supplements": [], "abstract": ""})
         results[row["id"]] = checks(row, verdict, text_cache[row["ref"]])
+        if seconds.get(row["cache_key"]):  # the second judge's quotes are checked the same way
+            results[row["id"]]["second_evidence"] = quotes.check_evidence(
+                seconds[row["cache_key"]].get("evidence") or [], text_cache[row["ref"]])
         first[row["id"]] = assess(row, refs.get(row["ref"]), verdict, None, results[row["id"]])
     judged = [row for row in state["rows"] if row["id"] in first]
     green = [row for row in judged if first[row["id"]]["status"] == "GREEN"
@@ -283,7 +288,7 @@ def verify(work: Path, log=print) -> dict:
     save(work, "second_requests.json", requests)
     pending = sum(1 for ids in requests.values() for i in ids
                   if next(r for r in state["rows"] if r["id"] == i)["cache_key"] not in seconds)
-    failed = sum(1 for r in results.values() for e in r["evidence"] if not e["ok"])
+    failed = sum(1 for r in results.values() for e in r["evidence"] + r.get("second_evidence", []) if not e["ok"])
     log(f"{len(judged)} of {len(state['rows'])} citations judged; {failed} evidence quotes not found; "
         f"{pending} second opinions to run" + (f"; {len(errors)} problems in verdict files" if errors else ""))
     for error in errors:
@@ -331,7 +336,10 @@ def rows_for_report(work: Path) -> tuple[dict, list[dict]]:
         assessed = assess(row, refs.get(row["ref"]), verdict, second, result)
         packet = load(work, f"packets/{row['ref']}.json", {}) if row["ref"] else {}
         passages = next((o["passages"] for o in packet.get("occurrences", []) if o["id"] == row["id"]), [])
+        alternative = (verdict or {}).get("alternative") or ""
+        alternative = claims_report.short_cite(refs[alternative]) if alternative in refs else alternative
         out.append(dict(row, **assessed, ref_info=refs.get(row["ref"]) or {}, judge=verdict or {}, second=second,
+                        alternative=alternative,
                         second_requested=row["id"] in requested, checks=result, passages=passages[:2]))
     return state, out
 
