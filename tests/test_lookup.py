@@ -135,3 +135,16 @@ def test_json_cache(tmp_path, sleeps):
     assert offline.get("Crossref", url, {"rows": 5}) == {"message": 1}
     with pytest.raises(Refused):
         offline.get("Crossref", url, {"rows": 6})
+
+
+def test_a_refused_download_skips_only_that_host(tmp_path, sleeps):
+    pdf = Response(200)
+    pdf.content, pdf.headers = b"%PDF-1.4", {"Content-Type": "application/pdf"}
+    c = client(tmp_path, Response(403), pdf)
+    with pytest.raises(ApiError, match="blocked.example refused the download"):
+        c.download("Download", "https://blocked.example/a.pdf")
+    assert c.download("Download", "https://open.example/b.pdf") == (b"%PDF-1.4", "application/pdf")
+    with pytest.raises(Refused, match="blocked.example skipped"):  # no second request to that host
+        c.download("Download", "https://blocked.example/c.pdf")
+    assert len(c.session.calls) == 2 and "Download" not in c.skipped
+    assert dict(c.summary(["Download"]))["Download"].endswith("blocked.example refused (HTTP 403)")

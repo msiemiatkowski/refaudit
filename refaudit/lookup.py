@@ -8,7 +8,7 @@ import re
 import time
 from collections import Counter
 from pathlib import Path
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urlencode, urlparse
 
 import requests
 
@@ -50,6 +50,7 @@ class Client:
         self.fetched, self.cached, self.failed = Counter(), Counter(), Counter()
         self.failures: list[str] = []
         self.skipped: dict[str, str] = {}
+        self.blocked_hosts: dict[str, str] = {}  # hosts that refused a download (a bot check, a paywall)
         if not use_openalex:
             self.skipped["OpenAlex"] = self.skipped["OpenAlex search"] = "turned off (--no-openalex)"
         self._next = 0.0
@@ -80,11 +81,16 @@ class Client:
         return body
 
     def download(self, service: str, url: str) -> tuple[bytes, str] | None:
-        """A file (e.g. an open-access PDF) and its content type, with the same politeness; None for 404."""
+        """A file (e.g. an open-access PDF) and its content type, with the same politeness; None for 404.
+
+        A host that refuses a download is skipped for the rest of the run; other hosts are still tried."""
         if service in self.skipped:
             raise Refused(f"{service} skipped: {self.skipped[service]}")
         if self.offline:
             raise Refused(f"{service}: no downloads offline")
+        host = urlparse(url).netloc.lower()
+        if host in self.blocked_hosts:
+            raise Refused(f"{host} skipped: it refused an earlier download ({self.blocked_hosts[host]})")
         status, body = self._fetch(service, url, None, raw=True)
         self.fetched[service] += 1
         return body
@@ -124,12 +130,16 @@ class Client:
             delay = _retry_after(r)
             retryable = r.status_code == 429 or r.status_code >= 500
             if r.status_code in (401, 402, 403) or (retryable and delay > MAX_WAIT):
+                if raw:  # one publisher's bot check or paywall: skip that host, not every download
+                    raise self._block(service, getattr(r, "url", None) or url, f"HTTP {r.status_code}")
                 raise self._refuse(service, f"HTTP {r.status_code}{_reason(r)}")
             problem, wait = f"HTTP {r.status_code}", delay or 2 ** (attempt + 1)
             if not retryable:
                 break
         self.failed[service] += 1
         if problem == "HTTP 429":  # still rate-limited after every retry
+            if raw:
+                raise self._block(service, url, f"HTTP 429 after {RETRIES + 1} attempts")
             raise self._refuse(service, f"HTTP 429 after {RETRIES + 1} attempts")
         message = f"{service}: {problem} for {url}" + (f" (after {RETRIES + 1} attempts)" if attempt == RETRIES else "")
         self.failures.append(message)
@@ -140,6 +150,15 @@ class Client:
         self.skipped[service] = f"refused requests ({reason})"
         self.failures.append(f"{service} refused requests ({reason}); skipped for the rest of the run.")
         return Refused(f"{service} refused requests ({reason})")
+
+    def _block(self, service, url, reason) -> ApiError:
+        """Skip one host that refused a download for the rest of the run."""
+        host = urlparse(url).netloc.lower()
+        self.failed[service] += 1
+        if host not in self.blocked_hosts:
+            self.blocked_hosts[host] = reason
+            self.failures.append(f"{host} refused a download ({reason}); its other files were skipped.")
+        return ApiError(f"{host} refused the download ({reason})")
 
     def summary(self, services=SERVICES) -> list[tuple[str, str]]:
         """(service, plain-language result) for the Summary sheet."""
@@ -154,7 +173,9 @@ class Client:
             counts = [n(fetched, "response") if fetched else "", f"{cached} from the cache" if cached else "",
                       f"{n(failed, 'failed request')}" if failed else ""]
             counts = ", ".join(c for c in counts if c)
-            rows.append((service, f"{state} ({counts})" if counts else state))
+            refused = "; ".join(f"{host} refused ({why})" for host, why in self.blocked_hosts.items())
+            state = f"{state} ({counts})" if counts else state
+            rows.append((service, f"{state}; {refused}" if service == "Download" and refused else state))
         return rows
 
 

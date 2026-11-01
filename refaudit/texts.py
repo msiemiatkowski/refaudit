@@ -35,10 +35,12 @@ FILE_TYPES = {".pdf", ".epub", ".docx", ".html", ".htm", ".txt"}
 VERSIONS = {"publishedVersion": "published", "acceptedVersion": "accepted", "submittedVersion": "preprint"}
 VERSION_RANK = {"published": 0, "accepted": 1, "unknown": 2, "preprint": 3}
 DOI_RE = re.compile(r"10\.\d{4,9}/[^\s\"<>]+", re.I)
-PREPRINT_MARKS = re.compile(r"\b(preprint|psyarxiv|arxiv|biorxiv|medrxiv|socarxiv|not (?:yet )?peer[- ]reviewed|"
-                            r"submitted (?:to|for publication)|under review)\b", re.I)
-ACCEPTED_MARKS = re.compile(r"\b(accepted (?:author )?manuscript|author accepted|accepted for publication|"
-                            r"post-?print|peer[- ]reviewed version)\b", re.I)
+# Not "submitted to": Frontiers prints "This article was submitted to <section>" on published articles.
+PREPRINT_MARKS = re.compile(r"\b(preprint|psyarxiv|arxiv|biorxiv|medrxiv|socarxiv|not (?:yet )?(?:been )?peer[- ]reviewed|"
+                            r"manuscript submitted|submitted for publication|under review)\b", re.I)
+# Not a bare "Accepted:" date, which published articles print too.
+ACCEPTED_MARKS = re.compile(r"\b(accepted (?:author )?manuscript|author accepted|(?:has been|was) accepted for "
+                            r"publication|accepted for publication in|post-?print|peer[- ]reviewed version)\b", re.I)
 
 
 # --- reading files -------------------------------------------------------------
@@ -280,14 +282,14 @@ def read_docx_text(path) -> dict:
 
 
 def read_jats(xml_text: str) -> dict:
-    """Europe PMC full-text XML (JATS): sections labelled with their titles."""
+    """Europe PMC full-text XML (JATS): a title page (title, authors, abstract), then sections labelled with titles."""
     root = ElementTree.fromstring(xml_text)
     pages = []
 
     def walk(sec, prefix=""):
         title = " ".join("".join(sec.findtext("title") or "").split())
         label = f"{prefix} > {title}" if prefix and title else title or prefix or "text"
-        paragraphs = [" ".join("".join(p.itertext()).split()) for p in sec.findall("p")]
+        paragraphs = [_jats_text(p) for p in sec.findall("p")]
         if any(paragraphs):
             pages.append(page("\n\n".join(p for p in paragraphs if p), label=label))
         for child in sec.findall("sec"):
@@ -295,14 +297,30 @@ def read_jats(xml_text: str) -> dict:
 
     body = root.find(".//body")
     if body is not None:
-        intro = [" ".join("".join(p.itertext()).split()) for p in body.findall("p")]
+        intro = [_jats_text(p) for p in body.findall("p")]
         if any(intro):
             pages.append(page("\n\n".join(intro), label="text"))
         for sec in body.findall("sec"):
             walk(sec)
-    abstract = " ".join(" ".join("".join(a.itertext()).split()) for a in root.iter("abstract"))
-    title = " ".join("".join(root.findtext(".//article-title") or "").split())
+    abstract = " ".join(_jats_text(p) for a in root.iter("abstract") for p in a.iter("p"))
+    meta = root.find(".//article-meta")
+    meta = meta if meta is not None else root
+    title_el = meta.find(".//article-title")
+    title = _jats_text(title_el) if title_el is not None else ""
+    authors = []
+    for group in meta.iterfind(".//contrib-group"):  # authors, not editors or reviewers
+        for contrib in group.iterfind("contrib") if (group.get("content-type") or "author") == "author" else []:
+            name = contrib.find("name")
+            if name is not None and (contrib.get("contrib-type") or "author") == "author":
+                authors.append(" ".join(x for x in (name.findtext("given-names"), name.findtext("surname")) if x))
+    front = "\n\n".join(x for x in (title, ", ".join(authors), abstract) if x)
+    if front:  # the title page: what the identity check and the judges look for first
+        pages.insert(0, page(front, label="Title and abstract"))
     return {"kind": "jats", "pages": pages, "meta": {"title": title, "abstract": abstract}}
+
+
+def _jats_text(element) -> str:
+    return " ".join("".join(element.itertext()).split())
 
 
 def version_of(doc: dict) -> str:
@@ -417,8 +435,8 @@ def open_access(client: Client, doi: str, mailto: str | None, notes: list[str]) 
     work = _get(client, "Crossref", f"{CROSSREF}/works/{path}", None, notes) or {}
     if (work.get("message") or {}).get("abstract"):
         abstracts["Crossref"] = clean(work["message"]["abstract"])
-    unique = list({c["url"]: c for c in candidates}.values())
-    unique.sort(key=lambda c: VERSION_RANK.get(c["version"], 2))
+    unique = list({c["url"]: c for c in reversed(candidates)}.values())[::-1]  # the first listing knows the version
+    unique.sort(key=lambda c: (VERSION_RANK.get(c["version"], 2), bool(c.get("jats"))))  # paged PDFs before XML
     return unique, abstracts
 
 

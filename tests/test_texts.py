@@ -91,8 +91,17 @@ def test_other_formats(tmp_path):
     jats = texts.read_jats('<article><front><article-meta><title-group><article-title>T</article-title></title-group>'
                            '<abstract><p>Short abstract.</p></abstract></article-meta></front><body><sec><title>Results'
                            '</title><p>We found it.</p><sec><title>Study 2</title><p>Again.</p></sec></sec></body></article>')
-    assert [(p["label"], p["text"]) for p in jats["pages"]] == [("Results", "We found it."), ("Results > Study 2", "Again.")]
+    assert [(p["label"], p["text"]) for p in jats["pages"]] == [
+        ("Title and abstract", "T\n\nShort abstract."), ("Results", "We found it."), ("Results > Study 2", "Again.")]
     assert jats["meta"]["abstract"] == "Short abstract."
+    front = texts.read_jats(  # Wiley's JATS marks the group, not each contrib, as authors; editors are left out
+        '<article><front><article-meta><title-group><article-title>Free from <italic>conspiracies</italic>'
+        '</article-title></title-group><contrib-group content-type="author"><contrib><name><surname>Siemiątkowski'
+        '</surname><given-names>Maciej</given-names></name></contrib></contrib-group><contrib-group><contrib '
+        'contrib-type="editor"><name><surname>Editor</surname></name></contrib></contrib-group><abstract><title>'
+        'Abstract</title><p>Five studies.</p></abstract></article-meta></front><body/></article>')
+    assert front["pages"][0]["text"] == "Free from conspiracies\n\nMaciej Siemiątkowski\n\nFive studies."
+    assert texts.identity(front, {"title": "Free from conspiracies", "authors": ["Siemiątkowski"]})[0]
 
 
 def test_identity_and_version():
@@ -101,6 +110,11 @@ def test_identity_and_version():
     assert texts.version_of(doc) == "published"
     assert texts.version_of({"pages": [{"text": "PsyArXiv preprint. Not peer reviewed."}]}) == "preprint"
     assert texts.version_of({"pages": [{"text": "This is the author accepted manuscript."}]}) == "accepted"
+    published = "SPECIALTY SECTION This article was submitted to Personality and Social Psychology. Accepted: 19 January 2023"
+    assert texts.version_of({"pages": [{"text": published}]}) == "published"  # Frontiers' first page
+    assert texts.version_of({"pages": [{"text": "This article has been accepted for publication and undergone full "
+                                                "peer review"}]}) == "accepted"  # Wiley's accepted manuscripts
+    assert texts.version_of({"pages": [{"text": "Manuscript submitted for publication."}]}) == "preprint"
     assert texts.level_of("article", "preprint", True, True) == "PREPRINT"
     assert texts.level_of("web", "published", True, False) == "WEB"
     assert texts.level_of("article", "", False, True) == "ABSTRACT" and texts.level_of("book", "", False, False) == "NONE"
@@ -125,3 +139,29 @@ def test_matching_your_files(tmp_path):
     assert none["level"] == "NONE" and "no DOI" in none["reason"]
     wrong = texts.build_text(dict(OTHER, key="kowalska2017"), list(files.values()), None, None)  # identity fails
     assert wrong["level"] == "NONE" and "identity check failed" in wrong["discarded"][0]["reason"]
+
+
+class Canned:
+    """A client that answers each service from canned JSON."""
+
+    def __init__(self, answers):
+        self.answers = answers
+
+    def get(self, service, url, params=None):
+        return self.answers.get(service)
+
+
+def test_open_access_candidates_best_version_first():
+    a, b, c = "https://journal.example/a.pdf", "https://repo.example/b.pdf", "https://preprints.example/c.pdf"
+    client = Canned({
+        "Unpaywall": {"oa_locations": [{"url_for_pdf": a, "version": "publishedVersion", "host_type": "publisher"},
+                                       {"url_for_pdf": b, "version": "acceptedVersion", "host_type": "repository"}]},
+        "OpenAlex": {"locations": [{"pdf_url": c, "version": "submittedVersion"}, {"pdf_url": b, "version": None}],
+                     "abstract_inverted_index": {"Short": [0], "abstract.": [1]}},
+        "Europe PMC": {"resultList": {"result": [{"pmcid": "PMC1", "isOpenAccess": "Y"}]}},
+        "Semantic Scholar": {"openAccessPdf": {"url": a}},  # the same PDF again, without a version
+    })
+    candidates, abstracts = texts.open_access(client, "10.1/x", "me@example.org", [])
+    assert [(x["url"].rsplit("/", 2)[-1], x["version"]) for x in candidates] == [
+        ("a.pdf", "published"), ("fullTextXML", "published"), ("b.pdf", "accepted"), ("c.pdf", "preprint")]
+    assert candidates[0]["via"].startswith("Unpaywall") and abstracts == {"OpenAlex": "Short abstract."}

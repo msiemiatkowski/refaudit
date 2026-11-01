@@ -38,7 +38,7 @@ WORK_FILES = ("verdict_cache.json", "second_cache.json", "results.json", "second
 # --- the work directory -------------------------------------------------------------
 
 def work_dir(manuscript, out=None) -> Path:
-    return Path(out or Path(manuscript).resolve().parent) / f"{Path(manuscript).stem}_claims"
+    return Path(out or Path(manuscript).parent).resolve() / f"{Path(manuscript).stem}_claims"
 
 
 def load(work: Path, name: str, default=None):
