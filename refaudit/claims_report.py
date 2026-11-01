@@ -11,7 +11,6 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 
 from .report import BOLD, FILLS, LINK, STATUS_ORDER, WRAP, _fill, _table, _value
-from .texts import where
 
 LEVELS = ("FULL", "WEB", "PREPRINT", "ABSTRACT", "NONE")
 VERDICT_ROWS = [

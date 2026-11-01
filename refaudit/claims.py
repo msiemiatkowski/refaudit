@@ -11,7 +11,6 @@ import shutil
 import subprocess
 import zipfile
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from . import parse
 from .compare import fold, norm

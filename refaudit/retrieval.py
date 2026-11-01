@@ -39,7 +39,7 @@ def numbers_in(text: str) -> set[str]:
 def chunks(text: dict) -> list[dict]:
     """Paragraph chunks of a source text (and its supplements), each about 120 words, with their location."""
     out = []
-    sources = [("", text.get("pages", []))] + [(f"Supplement, ", s["pages"]) for s in text.get("supplements", [])]
+    sources = [("", text.get("pages", []))] + [("Supplement, ", s["pages"]) for s in text.get("supplements", [])]
     for prefix, pages in sources:
         for p in pages:
             words = " ".join(p["text"].split()).split()
