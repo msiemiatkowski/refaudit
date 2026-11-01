@@ -9,26 +9,37 @@ from urllib.parse import unquote
 
 HEADINGS = ("references", "reference list", "bibliography", "bibliografia", "literatura", "literatura cytowana")
 HEADING_STYLES = ("heading", "title", "nagłówek", "tytuł")
+HEADING_NUMBER_RE = re.compile(r"^(?:\d+(?:\.\d+)*\.?|[IVXLC]+\.)\s+")
+NUMBERING_RE = re.compile(r"(?:\[\d+\]|\(?\d+[.)])\s+")
+LONE_NUMBER_RE = re.compile(r"[\[(]?\d+[.)\]]?")
+INVISIBLE = dict.fromkeys(map(ord, "\u200b\u200c\u200d\u2060\ufeff\u00ad"))  # zero-width characters, soft hyphen
 
-YEAR_RE = re.compile(r"\(\s*((?:1[5-9]|20)\d\d[a-z]?|n\.\s?d\.|in press|w druku|b\.\s?d\.)(?:\s*,[^()]*)?\s*\)\.?", re.I)
+YEAR_RE = re.compile(
+    r"\(\s*((?:1[5-9]|20)\d\d[a-z]?|(?:n\.\s?d\.|in press|w druku|b\.\s?d\.)(?:-[a-z])?)(?:\s*,[^()]*)?\s*\)\.?", re.I)
 LOOSE_YEAR_RE = re.compile(r"(?<![\d(])((?:1[5-9]|20)\d\d[a-z]?)(?!\d)")
-DOI_RE = re.compile(r"(?:https?://(?:dx\.)?doi\.org/|doi:\s*|\bdoi\s+)?10\.\d{4,9}/[^\s\"<>]+", re.I)
+DOI_RE = re.compile(r"(?:https?://(?:dx\.)?doi\.org/|doi:\s*|\bdoi\s+)?10\.\d{4,9}/[^\s\"]+", re.I)
 URL_RE = re.compile(r"https?://\S+", re.I)
-RETRIEVED_RE = re.compile(r"\b(?:Retrieved|Accessed|Pobrano|Dostęp)\b", re.I)
+MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
+RETRIEVED_RE = re.compile(  # 'Retrieved May 3, 2024, from', 'Pobrano 3.05.2024 z', not 'Dostęp do informacji'
+    rf"(?<![\w-])(?:Retrieved|Accessed|Pobrano|Dostęp|dostępu)\b:?\s*(?=\d|(?:from|z|on|online|w dniu|{MONTHS})\b)", re.I)
+TRAILING_NOTE_RE = re.compile(  # '[in Polish]', '(Original work published 1954)'
+    r"(?:\s*\.?\s*(?:\[[^\[\]]*\]|\((?:in|w|original work published|praca oryginalna)\b[^()]*\)))+\s*\.?\s*$", re.I)
 PAGES = r"(?:(?:Article|Art\.|Artykuł|pp?\.|ss?\.)\s*)?[A-Za-z]{0,4}\d+[A-Za-z]?(?:\s*[-–—‐‑]\s*[A-Za-z]{0,4}\d+[A-Za-z]?)?"
 ARTICLE_TAIL = re.compile(
     rf",\s*(?P<volume>\d+[A-Za-z]?)\s*(?:\((?P<issue>[^()]+)\))?(?:\s*,\s*(?P<pages>{PAGES}))?\s*\.?\s*$")
 ONLINE_FIRST_RE = re.compile(r"[\s.]*(?:Advance online publication|Online first|Epub ahead of print)\.?\s*$", re.I)
 CHAPTER_RE = re.compile(r"(?<=[.?!])\s+(?:In|W):?\s+")
-EDITORS_RE = re.compile(r"\((?:Eds?|Ed|red|Red|Hrsg|Hg)\.?\)\s*,?\s*")
+EDITOR_MARK = r"\((?:Eds?|Ed|red|Red|Hrsg|Hg)\.?(?:\s*nauk\.)?\)"  # (Eds.), (red.), (red. nauk.)
+EDITORS_RE = re.compile(EDITOR_MARK + r"\s*,?\s*")
 CHAPTER_PAGES_RE = re.compile(r"\((?:[^()]*,\s*)?(?:pp?|ss?)\.\s*\d")
+END_PAGES_RE = re.compile(r"(?:^|[\s,])(?:pp?|ss?)\.\s*(\d+[A-Za-z]?(?:\s*[-–—‐‑]\s*\d+[A-Za-z]?)?)")
 THESIS_RE = re.compile(r"\[[^\]]*(?:dissertation|thesis|praca doktorska|rozprawa doktorska|praca magisterska)[^\]]*\]", re.I)
 REPORT_RE = re.compile(r"\b(?:report|raport|working paper|policy brief)\b", re.I)
 EDITION_RE = re.compile(r"\s*\([^()]*\b(?:ed|eds|Vol|wyd|t)\.[^()]*\)\s*\.?$", re.I)
 ABBREVIATIONS = {"vs", "ed", "eds", "vol", "no", "nr", "pp", "p", "st", "dr", "red", "wyd", "t", "s", "ss",
                  "np", "tzw", "e.g", "i.e", "cz", "jr", "sr"}
 SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}
-BIB_KINDS = {"article": "article", "inproceedings": "article", "conference": "article", "book": "book",
+BIB_KINDS = {"article": "article", "inproceedings": "chapter", "conference": "chapter", "book": "book",
              "inbook": "chapter", "incollection": "chapter", "techreport": "report", "report": "report",
              "phdthesis": "thesis", "mastersthesis": "thesis", "thesis": "thesis", "online": "web"}
 
@@ -79,45 +90,62 @@ def read_docx(path, heading=None) -> list[Reference]:
     """References are the non-empty paragraphs after the reference heading, up to the next heading."""
     import docx
 
-    wanted = {heading.strip().casefold()} if heading else set(HEADINGS)
+    wanted = {_heading_key(heading)} if heading else set(HEADINGS)
     paragraphs = list(_docx_paragraphs(docx.Document(path)))
-    starts = [i for i, p in enumerate(paragraphs) if p and p[0].strip().rstrip(":").strip().casefold() in wanted]
+    starts = [i for i, (text, _, _) in enumerate(paragraphs) if _heading_key(text) in wanted]
     if not starts:
         raise ValueError(f"no reference heading found in {Path(path).name} (looked for: {', '.join(sorted(wanted))})")
     refs = []
-    for p in paragraphs[starts[-1] + 1:]:
-        if p is None or p[2]:  # a table or the next heading
+    for text, mask, is_heading in paragraphs[starts[-1] + 1:]:
+        if not text or LONE_NUMBER_RE.fullmatch(text):  # empty, or a list number in its own table cell
+            continue
+        if is_heading:
             break
-        if p[0]:
-            try:
-                refs.append(parse_apa(p[0], p[1]))
-            except Exception as exc:  # never lose a reference
-                refs.append(Reference(raw=p[0], error=f"could not parse: {exc}"))
+        try:
+            refs.append(parse_apa(text, mask))
+        except Exception as exc:  # never lose a reference
+            refs.append(Reference(raw=text, error=f"could not parse: {exc}"))
     return refs
 
 
-def _docx_paragraphs(doc):
-    """Yield (text, italic mask, is_heading) per body paragraph, or None for a table."""
-    from docx.oxml.ns import qn
-    from docx.text.paragraph import Paragraph
-    from docx.text.run import Run
+def _heading_key(text: str) -> str:
+    """'6. References.' -> 'references'."""
+    return HEADING_NUMBER_RE.sub("", text.strip()).strip().rstrip(".:").strip().casefold()
 
-    w_p, w_tbl, w_r, w_t = qn("w:p"), qn("w:tbl"), qn("w:r"), qn("w:t")
-    spaces = {qn("w:tab"), qn("w:br"), qn("w:cr")}
-    for el in doc.element.body.iter(w_p, w_tbl):
-        if el.tag == w_tbl:
-            yield None
+
+def _docx_paragraphs(doc):
+    """Yield (text, italic mask, is_heading) for each paragraph of the body, table cells included."""
+    from docx.enum.style import WD_STYLE_TYPE
+    from docx.oxml.ns import qn
+    from docx.text.font import Font
+
+    w_p, w_r, w_t, w_sym = qn("w:p"), qn("w:r"), qn("w:t"), qn("w:sym")
+    special = {qn("w:tab"): " ", qn("w:ptab"): " ", qn("w:br"): " ", qn("w:cr"): " ", qn("w:noBreakHyphen"): "-"}
+    outline_path = f"{qn('w:pPr')}/{qn('w:outlineLvl')}"
+    styles = {}
+
+    def style(style_id, kind):
+        """(name, bold, italic, outline level) of a paragraph or character style, with inheritance; cached."""
+        if (style_id, kind) not in styles:
+            st = doc.part.get_style(style_id, kind)  # the default style when there is none
+            styles[style_id, kind] = ((st.name or "").casefold() if st is not None else "",
+                                      _inherited(st, lambda x: x.font.bold), _inherited(st, lambda x: x.font.italic),
+                                      _inherited(st, lambda x: x.element.find(outline_path)))
+        return styles[style_id, kind]
+
+    for el in doc.element.body.iter(w_p):
+        if any(True for _ in el.iterancestors(qn("w:txbxContent"))):  # text boxes
             continue
-        if any(True for _ in el.iterancestors(w_tbl, qn("w:txbxContent"))):
-            continue
-        para = Paragraph(el, doc)
+        name, para_bold, para_italic, outline = style(el.style, WD_STYLE_TYPE.PARAGRAPH)
         chars, mask, bold = [], [], []
         for r in el.iter(w_r):  # also finds runs inside hyperlinks, fields and content controls
             if next(r.iterancestors(w_p)) is not el:
                 continue
-            run = Run(r, para)
-            italic = _flag(run, "italic")
-            text = "".join((c.text or "") if c.tag == w_t else " " for c in r if c.tag == w_t or c.tag in spaces)
+            _, char_bold, char_italic, _ = style(r.style, WD_STYLE_TYPE.CHARACTER)
+            font = Font(r)
+            italic = next((v for v in (font.italic, char_italic, para_italic) if v is not None), False)
+            text = "".join(c.text or "" if c.tag == w_t else _symbol(c.get(qn("w:char"))) if c.tag == w_sym
+                           else special.get(c.tag, "") for c in r).translate(INVISIBLE)
             for ch in text:
                 if ch.isspace():
                     if not chars or chars[-1] == " ":
@@ -126,38 +154,56 @@ def _docx_paragraphs(doc):
                 chars.append(ch)
                 mask.append(italic)
             if text.strip():
-                bold.append(_flag(run, "bold"))
+                bold.append(next((v for v in (font.bold, char_bold, para_bold) if v is not None), False))
         while chars and chars[-1] == " ":
             chars.pop()
             mask.pop()
         text = "".join(chars)
-        style = (para.style.name if para.style is not None else "").casefold()
-        outline = el.find(f"{qn('w:pPr')}/{qn('w:outlineLvl')}")
-        is_heading = (style.startswith(HEADING_STYLES) or (outline is not None and outline.get(qn("w:val")) != "9")
+        level = el.find(outline_path)
+        level = outline if level is None else level
+        is_heading = (name.startswith(HEADING_STYLES) or (level is not None and level.get(qn("w:val")) != "9")
                       or (bool(bold) and all(bold) and len(text) <= 100))
         yield text, mask[:len(text)], is_heading
 
 
-def _flag(run, name) -> bool:
-    value = getattr(run.font, name)
-    if value is None and run.style is not None:
-        value = getattr(run.style.font, name)
-    return bool(value)
+def _inherited(style, get):
+    """A style property, following the 'based on' chain."""
+    while style is not None:
+        value = get(style)
+        if value is not None:
+            return value
+        style = style.base_style
+    return None
+
+
+def _symbol(code) -> str:
+    """A w:sym character; Symbol-font codes F020-F0FF map to their ASCII counterparts."""
+    try:
+        n = int(code or "", 16)
+    except ValueError:
+        return ""
+    return chr(n - 0xF000 if 0xF020 <= n <= 0xF0FF else n)
 
 
 # --- APA 7 -----------------------------------------------------------------
 
 def _trim(text: str) -> str:
     """Strip trailing punctuation and unbalanced closing brackets from a DOI or URL."""
-    while text and (text[-1] in ".,;:'\"" or (text[-1] == ")" and text.count(")") > text.count("("))
-                    or (text[-1] == "]" and text.count("]") > text.count("["))):
+    pairs = {")": "(", "]": "[", ">": "<"}
+    while text and (text[-1] in ".,;:'\"" or (text[-1] in pairs and text.count(text[-1]) > text.count(pairs[text[-1]]))):
         text = text[:-1]
     return text
 
 
 def clean_doi(text) -> str | None:
-    m = re.search(r"10\.\d{4,9}/\S+", unquote(str(text or "")))
+    m = re.search(r"10\.\d{4,9}/\S+", unquote(str(text or "").translate(INVISIBLE)))
     return _trim(m.group()).lower() if m else None
+
+
+def _title(text: str) -> str:
+    """A title without its final period and without a translation in brackets: 'Tytuł [Title].' -> 'Tytuł'."""
+    text = text.strip().rstrip(".").strip()
+    return re.sub(r"\s*\[[^\[\]]*\]$", "", text).strip().rstrip(".").strip()
 
 
 def _is_initials(token: str) -> bool:
@@ -257,7 +303,7 @@ def parse_apa(text: str, italic: list[bool] | None = None) -> Reference:
     mask += [False] * (len(text) - len(mask))
     ref = Reference(raw=text)
 
-    numbered = re.match(r"(?:\[\d+\]|\d+\.)\s+", text)
+    numbered = NUMBERING_RE.match(text)
     start = numbered.end() if numbered else 0
     doi = DOI_RE.search(text)
     if doi:
@@ -272,11 +318,12 @@ def parse_apa(text: str, italic: list[bool] | None = None) -> Reference:
     year = YEAR_RE.search(text, start, end) or LOOSE_YEAR_RE.search(text, start, end)
     if year:
         ref.year = " ".join(year.group(1).split())
-        ref.authors, ref.truncated = parse_authors(text[start:year.start()].strip(" ,("))
+        names = re.sub(rf"\s*{EDITOR_MARK}\.?$", "", text[start:year.start()].strip(" ,("))  # edited book
+        ref.authors, ref.truncated = parse_authors(names)
         start = year.end()
     rest, mask = text[start:end], mask[start:end]
     skip = len(rest) - len(rest.lstrip(" .,:)"))
-    rest, mask = rest[skip:].rstrip(), mask[skip:]
+    rest, mask = rest[skip:].rstrip(" <"), mask[skip:]  # '<' of a DOI written as <https://doi.org/...>
     mask = mask[:len(rest)]
     _parse_rest(ref, rest, mask)
     return ref
@@ -286,13 +333,16 @@ def _parse_rest(ref: Reference, rest: str, mask: list[bool]) -> None:
     """Title, source, editors, publisher, volume, issue and pages from the part after the year."""
     thesis = THESIS_RE.search(rest)
     if thesis:
-        ref.kind, ref.title = "thesis", rest[:thesis.start()].strip(" .") or None
+        ref.kind, ref.title = "thesis", _title(rest[:thesis.start()]) or None
         ref.publisher = (thesis.group()[1:-1].split(",", 1)[1:] or [""])[0].strip() or None
         return
+    note = TRAILING_NOTE_RE.search(rest)
+    if note:  # '[in Polish]', '(Original work published 1954)'
+        rest, mask = rest[:note.start()], mask[:note.start()]
     chapter = next((m for m in CHAPTER_RE.finditer(rest)
                     if EDITORS_RE.search(rest, m.end()) or CHAPTER_PAGES_RE.search(rest, m.end())), None)
     if chapter:
-        ref.kind, ref.title = "chapter", rest[:chapter.start()].strip().rstrip(".") or None
+        ref.kind, ref.title = "chapter", _title(rest[:chapter.start()]) or None
         tail = rest[chapter.end():]
         editors = EDITORS_RE.search(tail)
         if editors:
@@ -307,7 +357,10 @@ def _parse_rest(ref: Reference, rest: str, mask: list[bool]) -> None:
         else:
             cut = next(_sentence_ends(tail), len(tail))
             book, after = tail[:cut], tail[cut:]
-        ref.source = EDITION_RE.sub("", book.strip(" .,")).strip(" .,") or None
+        pages = None if ref.pages else END_PAGES_RE.search(after)
+        if pages:  # Polish style: '... Warszawa: PWN, s. 12–34.'
+            ref.pages, after = pages.group(1), after[:pages.start()] + after[pages.end():]
+        ref.source = _title(EDITION_RE.sub("", _title(book))).strip(" ,") or None
         ref.publisher = after.strip(" .,") or None
         return
     article = ARTICLE_TAIL.search(rest)
@@ -316,7 +369,7 @@ def _parse_rest(ref: Reference, rest: str, mask: list[bool]) -> None:
         head_end = (article or online_first).start()
         head = rest[:head_end]
         cut = _italic_start(mask, head_end) or _source_start(head)
-        ref.kind, ref.title = "article", head[:cut].strip().rstrip(".").strip() or None
+        ref.kind, ref.title = "article", _title(head[:cut]) or None
         ref.source = head[cut:].strip(" ,") or None
         if article:
             ref.volume, ref.issue, ref.pages = article["volume"], article["issue"], article["pages"]
@@ -328,35 +381,50 @@ def _parse_rest(ref: Reference, rest: str, mask: list[bool]) -> None:
         cut = next(_sentence_ends(rest), len(rest))
     title, after = rest[:cut], rest[cut:]
     if any(mask[cut:]) and not any(mask[:cut]):  # italic source after a plain title: an article
-        ref.kind, ref.title, ref.source = "article", title.strip().rstrip(".") or None, after.strip(" .,") or None
+        ref.kind, ref.title, ref.source = "article", _title(title) or None, after.strip(" .,") or None
         return
-    ref.title = EDITION_RE.sub("", title.strip()).strip().rstrip(".") or None
-    ref.publisher = re.sub(r"^\s*\([^()]*\)", "", after).strip(" .,") or None
+    ref.title = _title(EDITION_RE.sub("", _title(title))) or None
+    ref.publisher = re.sub(r"^(?:\s*(?:\([^()]*\)|\[[^\[\]]*\]))+", "", after).strip(" .,") or None
     ref.kind = "report" if REPORT_RE.search(rest) else "web" if ref.url and not ref.doi else "book"
 
 
 # --- .bib ------------------------------------------------------------------
 
 def read_bib(path) -> list[Reference]:
+    """Entries in file order; one that cannot be parsed becomes an error row in its place."""
     import bibtexparser
-    from bibtexparser.middlewares import LatexDecodingMiddleware, SeparateCoAuthors, SplitNameParts
+    from bibtexparser.middlewares import (LatexDecodingMiddleware, RemoveEnclosingMiddleware, SeparateCoAuthors,
+                                          SplitNameParts)
+    from bibtexparser.model import Entry, ParsingFailedBlock
 
-    library = bibtexparser.parse_string(
-        Path(path).read_text(encoding="utf-8"),
-        append_middleware=[LatexDecodingMiddleware(keep_braced_groups=True), SeparateCoAuthors(), SplitNameParts()])
-    refs = []
-    for entry in library.entries:
+    data = Path(path).read_bytes()
+    for encoding in ("utf-8-sig", "cp1250", "latin-1"):  # cp1250: Polish Windows
         try:
-            refs.append(_bib_reference(entry))
-        except Exception as exc:  # never lose a reference
-            refs.append(Reference(raw=f"@{entry.entry_type}{{{entry.key}, ...}}", error=f"could not read: {exc}"))
-    for block in library.failed_blocks:
-        refs.append(Reference(raw=" ".join(block.raw.split())[:300], error="could not parse this BibTeX entry"))
+            text = data.decode(encoding)
+            break
+        except UnicodeDecodeError:
+            continue
+    middleware = [LatexDecodingMiddleware(keep_braced_groups=True), SeparateCoAuthors(), SplitNameParts()]
+    refs = []
+    for block in bibtexparser.parse_string(text, append_middleware=middleware).blocks:
+        entry = getattr(block, "ignore_error_block", None)  # e.g. an entry with a duplicate key
+        if isinstance(entry, Entry):
+            library = bibtexparser.Library([entry])
+            for step in [RemoveEnclosingMiddleware(), *middleware]:  # as parse_string does
+                library = step.transform(library)
+            block = library.entries[0]
+        if isinstance(block, Entry):
+            try:
+                refs.append(_bib_reference(block))
+            except Exception as exc:  # never lose a reference
+                refs.append(Reference(raw=f"@{block.entry_type}{{{block.key}, ...}}", error=f"could not read: {exc}"))
+        elif isinstance(block, ParsingFailedBlock):
+            refs.append(Reference(raw=" ".join(block.raw.split())[:300], error="could not parse this BibTeX entry"))
     return refs
 
 
 def _bib_text(value) -> str | None:
-    text = " ".join(str(value).replace("{", "").replace("}", "").split()) if value else ""
+    text = " ".join(str(value).translate(INVISIBLE).replace("{", "").replace("}", "").split()) if value else ""
     return text or None
 
 
@@ -379,7 +447,8 @@ def _bib_reference(entry) -> Reference:
     if kind == "other" and f.get("url") and not f.get("doi"):
         kind = "web"
     ref = Reference(
-        raw="", kind=kind, authors=_bib_people(f.get("author")), year=_bib_text(f.get("year")),
+        raw="", kind=kind, authors=_bib_people(f.get("author")),
+        year=_bib_text(f.get("year")) or (re.findall(r"\d{4}", str(f.get("date", ""))) or [None])[0],  # biblatex date
         title=_bib_text(f.get("title")), source=_bib_text(f.get("journal") or f.get("journaltitle") or f.get("booktitle")),
         editors=_bib_people(f.get("editor")), publisher=_bib_text(f.get("publisher") or f.get("institution") or f.get("school")),
         volume=_bib_text(f.get("volume")), issue=_bib_text(f.get("number") or f.get("issue")),

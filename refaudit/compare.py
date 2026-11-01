@@ -30,8 +30,9 @@ class Record:
     authors: list[Person] = field(default_factory=list)
     title: str = ""
     subtitle: str = ""
-    journal: str = ""
-    short_journals: list[str] = field(default_factory=list)
+    journal: str = ""                # journal, or the book title of a chapter
+    alt_journals: list[str] = field(default_factory=list)    # further container titles (book series)
+    short_journals: list[str] = field(default_factory=list)  # abbreviated titles
     volume: str = ""
     issue: str = ""
     pages: str = ""
@@ -107,7 +108,9 @@ def similarity(a, b) -> int:
 
 
 def name_key(name) -> str:
-    return norm(name).replace(" ", "")
+    """A surname without case, diacritics, punctuation or particles: 'van der Linden' -> 'linden'."""
+    words = norm(name).split()
+    return "".join(w for w in words if w not in PARTICLES) or "".join(words)
 
 
 def same_surname(a, b) -> bool:
@@ -150,7 +153,9 @@ def _set(check: Check, status: str, problem: str = "") -> Check:
 
 
 def _letters(name) -> str:
-    return re.sub(r"[\W_]", "", str(name).casefold())
+    """A surname without case, punctuation or particles, but with its diacritics."""
+    words = re.findall(r"[^\W\d_]+", str(name).casefold())
+    return "".join(w for w in words if fold(w) not in PARTICLES) or "".join(words)
 
 
 def _names(people: list[Person]) -> str:
@@ -229,7 +234,8 @@ def _is_abbreviation(short, full) -> bool:
 
 
 def compare_journal(cited, record: Record) -> Check:
-    journal = clean(record.journal)
+    titles = [clean(t) for t in [record.journal, *record.alt_journals] if t]  # a chapter may list series and book
+    journal = max(titles, key=lambda t: similarity(cited, t)) if cited and titles else (titles[0] if titles else "")
     check = Check(None, cited or "", journal)
     if not cited or not journal:
         return check
@@ -333,6 +339,8 @@ def check_match(ref: Reference, match: Match) -> Check:
         return Check("GREY", problem="The DOI is registered, but neither Crossref nor DataCite has "
                                      "metadata for it, so the other fields could not be checked.")
     if match.record is None:
+        if not match.searched:  # the search failed after a bad DOI; the DOI check says what is known
+            return Check(None)
         if ref.kind == "article":
             return Check("RED", problem=f"No matching record found ({match.searched} searched).")
         return Check("GREY", problem=f"No matching record found ({match.searched} searched); books, chapters, "
@@ -347,10 +355,13 @@ def assess(ref: Reference, match: Match, notices=(), notes=()) -> Row:
     """Compare a reference with its record and work out the row status."""
     rec = match.record or Record()
     title, sim = compare_title(ref.title, rec)
+    notice = check_notices(list(notices))
+    if notice.problem and match.confidence == "low":
+        notice.problem = notice.problem.replace("Notice:", "Notice on the low-confidence match:", 1)
     checks = {
         "match": check_match(ref, match),
         "doi": check_doi(ref, match),
-        "notice": check_notices(list(notices)),
+        "notice": notice,
         "authors": compare_authors(ref.authors, rec.authors, ref.truncated),
         "year": compare_year(ref.year, rec),
         "title": title,

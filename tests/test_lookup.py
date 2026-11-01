@@ -61,6 +61,21 @@ def test_gives_up_after_retries(tmp_path, sleeps):
     assert len(c.session.calls) == 5 and "after 5 attempts" in c.failures[0]
 
 
+def test_persistent_429_and_long_waits_are_refusals(tmp_path, sleeps):
+    c = client(tmp_path, *[Response(429)] * 5)
+    with pytest.raises(Refused):
+        c.get("OpenAlex", "https://api.openalex.org/works/doi:x")
+    assert "OpenAlex" in c.skipped and max(sleeps) <= lookup.MAX_WAIT
+    maintenance = client(tmp_path, Response(503, headers={"Retry-After": "3600"}))
+    with pytest.raises(Refused):
+        maintenance.get("Crossref", "https://api.crossref.org/works/x")
+    assert len(maintenance.session.calls) == 1 and not [s for s in sleeps[5:] if s > lookup.MAX_WAIT]
+    failing = client(tmp_path, *[Response(502)] * 5)
+    with pytest.raises(ApiError):
+        failing.get("DataCite", "https://api.datacite.org/dois/x")
+    assert dict(failing.summary())["DataCite"] == "not reached (1 failed request)"
+
+
 def test_refusal_skips_the_service(tmp_path, sleeps):
     budget = Response(429, {"error": "Rate limit exceeded", "message": "Insufficient budget. Use a key."},
                       {"Retry-After": "75000"})
@@ -86,7 +101,7 @@ def test_polite_parameters(tmp_path, sleeps):
     crossref, openalex, handles = c.session.calls
     assert crossref["params"] == {"rows": 5, "mailto": "me@example.org"} and crossref["timeout"] == 20
     assert crossref["headers"]["User-Agent"].endswith("(mailto:me@example.org)")
-    assert openalex["headers"]["Authorization"] == "Bearer KEY" and openalex["params"]["mailto"] == "me@example.org"
+    assert openalex["params"] == {"mailto": "me@example.org", "api_key": "KEY"}
     assert handles["params"] == {} and handles["headers"] == {}  # the e-mail goes to the polite pools only
     assert Client(tmp_path).session.headers["User-Agent"].startswith("refaudit/")
 

@@ -35,7 +35,7 @@ refaudit library.bib -o report.xlsx
 | Environment variable | Meaning |
 |---|---|
 | `REFAUDIT_MAILTO` | your e-mail address, sent to Crossref and OpenAlex for their polite pools |
-| `OPENALEX_API_KEY` | optional OpenAlex API key. If OpenAlex refuses requests, refaudit skips it and says so in the Summary sheet. |
+| `OPENALEX_API_KEY` | optional OpenAlex API key, sent as the `api_key` parameter. If OpenAlex refuses requests, refaudit skips it and says so in the Summary sheet. |
 
 ```bash
 export REFAUDIT_MAILTO=you@example.org
@@ -45,12 +45,26 @@ Progress is printed as one line per reference. A reference that fails is never f
 
 ### Input
 
-- **.docx**: the reference section starts at a paragraph whose whole text is one of these headings (case-insensitive): References, Reference List, Bibliography, Bibliografia, Literatura, Literatura cytowana. Use `--heading` for any other heading. Every following non-empty paragraph is one reference, up to the next heading (a heading style, or a short all-bold paragraph) or a table, or to the end of the document. Text in hyperlinks, fields and content controls (Zotero, Mendeley, EndNote) is read. Italics help the parser find where the journal or book title starts.
-- **.bib**: parsed with bibtexparser (author, year, title, journal/booktitle, volume, number, pages, doi). LaTeX accents are decoded.
+- **.docx**: the reference section starts at a paragraph whose whole text is one of these headings (case-insensitive; numbering such as "6." and a final period are ignored): References, Reference List, Bibliography, Bibliografia, Literatura, Literatura cytowana. Use `--heading` for any other heading. Every following non-empty paragraph is one reference, up to the next heading or the end of the document. A heading is a paragraph in a heading style, or a short paragraph that is all bold. The following are read:
+  - paragraphs in table cells (a list number alone in a cell is skipped);
+  - text in hyperlinks, fields and content controls (Zotero, Mendeley, EndNote);
+  - tracked insertions (tracked deletions are skipped).
+
+  Italics help the parser find where the journal or book title starts.
+- **.bib**: parsed with bibtexparser (author, year or biblatex date, title, journal/booktitle, volume, number, pages, doi). Entries keep their file order. LaTeX accents are decoded. Files in UTF-8, Windows-1250 or Latin-1 are read. An entry that cannot be parsed becomes a GREY row.
 
 ### What is checked
 
-1. **Parse** each reference with a tolerant APA 7 parser: the DOI; the year (also `2026a`, `in press`, `n.d.`); author surnames and initials, title and source; volume, issue, and pages or article number; editors and publisher. The Polish forms `W:`, `(red.)` and `s.` are understood.
+1. **Parse** each reference with a tolerant APA 7 parser. It finds:
+   - the DOI;
+   - the year (also `2026a`, `in press`, `n.d.`);
+   - author surnames and initials, title and source;
+   - volume, issue, and pages or article number;
+   - editors and publisher.
+
+   The Polish forms `W:`, `(red.)`, `(red. nauk.)` and `s.` are understood. These are left out of the comparison:
+   - a translated title in square brackets (`Tytuł [Title]`), as APA 7 asks for non-English works;
+   - notes such as `[in Polish]` or `(Original work published 1954)`.
 2. **Find the record.**
    - With a DOI: registration is checked at `https://doi.org/api/handles/{doi}`. Metadata comes from Crossref `/works/{doi}`, or from DataCite `/dois/{doi}` if Crossref does not have the DOI.
    - Without a DOI: Crossref is searched (`query.bibliographic`, top 5). If that gives no high-confidence match, OpenAlex is searched too. A candidate is accepted only if its normalized title similarity is at least 90, the first-author surname matches and the year is within ±1. A similarity of 80–89 is a low-confidence match (ORANGE). Anything else is "no record": RED for journal articles, GREY for books, chapters, reports, theses and web pages.
@@ -100,7 +114,7 @@ These hosts must be reachable over HTTPS:
 
 refaudit uses the APIs politely. It sends `REFAUDIT_MAILTO` to Crossref and OpenAlex only, as `mailto` and in the User-Agent. It makes at most 5 requests per second and uses 20-second timeouts. It retries with backoff (2, 4, 8 and 16 s) on 429, 5xx and network errors. Answers, including "not found", are kept in an on-disk JSON cache (`--cache DIR`) and fetched again after 7 days. Delete the cache directory to force fresh answers.
 
-A service that refuses requests (HTTP 401, 402 or 403, or 429 with a wait of more than a minute) is skipped for the rest of the run, and the Summary sheet says so.
+A service that refuses requests is skipped for the rest of the run, and the Summary sheet says so. That means HTTP 401, 402 or 403, a 429 that persists through all the retries, or a request to wait more than a minute. If a reference's own lookup fails, that reference becomes a GREY row with the error. A DOI already known to be unregistered or wrong stays RED.
 
 ## Known limits
 

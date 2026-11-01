@@ -13,8 +13,9 @@ from urllib.parse import quote, urlencode
 import requests
 
 from . import __version__
-from .compare import Match, Notice, Record, RED_NOTICES, norm, same_surname, similarity, title_score, year_close
-from .parse import Person, Reference
+from .compare import (PARTICLES, RED_NOTICES, Match, Notice, Record, norm, same_surname, similarity, title_score,
+                      year_close)
+from .parse import SUFFIXES, Person, Reference
 
 HANDLES = "https://doi.org/api/handles"
 CROSSREF = "https://api.crossref.org"
@@ -27,6 +28,7 @@ OPENALEX_FIELDS = "id,doi,type,display_name,publication_year,authorships,primary
 TIMEOUT = 20          # seconds
 INTERVAL = 0.2        # at most 5 requests per second
 RETRIES = 4           # on 429, 5xx and network errors, waiting 2, 4, 8 and 16 s
+MAX_WAIT = 60         # a longer Retry-After counts as a refusal
 MAX_AGE = 7 * 86400   # cached responses are fetched again after a week
 
 
@@ -45,7 +47,7 @@ class Client:
         self.cache_dir, self.mailto, self.openalex_key, self.offline = Path(cache_dir), mailto, openalex_key, offline
         self.session = requests.Session()
         self.session.headers["User-Agent"] = f"refaudit/{__version__}"
-        self.fetched, self.cached = Counter(), Counter()
+        self.fetched, self.cached, self.failed = Counter(), Counter(), Counter()
         self.failures: list[str] = []
         self.skipped: dict[str, str] = {}
         if not use_openalex:
@@ -83,11 +85,11 @@ class Client:
             params["mailto"] = self.mailto
             headers["User-Agent"] = f"refaudit/{__version__} (mailto:{self.mailto})"
         if self.openalex_key and service.startswith("OpenAlex"):
-            headers["Authorization"] = f"Bearer {self.openalex_key}"
+            params["api_key"] = self.openalex_key  # never part of the cache key or of messages
         problem, wait = "", 0
         for attempt in range(RETRIES + 1):
             if attempt:
-                time.sleep(wait)
+                time.sleep(min(wait, MAX_WAIT))
             pause = self._next - time.monotonic()
             if pause > 0:
                 time.sleep(pause)
@@ -106,17 +108,24 @@ class Client:
                     problem = "invalid JSON"
                     break
             delay = _retry_after(r)
-            if r.status_code in (401, 402, 403) or (r.status_code == 429 and delay > 60):
-                reason = f"refused requests (HTTP {r.status_code}{_reason(r)})"
-                self.skipped[service] = reason
-                self.failures.append(f"{service} {reason}; skipped for the rest of the run.")
-                raise Refused(f"{service} {reason}")
+            retryable = r.status_code == 429 or r.status_code >= 500
+            if r.status_code in (401, 402, 403) or (retryable and delay > MAX_WAIT):
+                raise self._refuse(service, f"HTTP {r.status_code}{_reason(r)}")
             problem, wait = f"HTTP {r.status_code}", delay or 2 ** (attempt + 1)
-            if r.status_code != 429 and r.status_code < 500:
+            if not retryable:
                 break
+        self.failed[service] += 1
+        if problem == "HTTP 429":  # still rate-limited after every retry
+            raise self._refuse(service, f"HTTP 429 after {RETRIES + 1} attempts")
         message = f"{service}: {problem} for {url}" + (f" (after {RETRIES + 1} attempts)" if attempt == RETRIES else "")
         self.failures.append(message)
         raise ApiError(message)
+
+    def _refuse(self, service, reason) -> Refused:
+        """Skip a service that refuses requests for the rest of the run."""
+        self.skipped[service] = f"refused requests ({reason})"
+        self.failures.append(f"{service} refused requests ({reason}); skipped for the rest of the run.")
+        return Refused(f"{service} refused requests ({reason})")
 
     def summary(self) -> list[tuple[str, str]]:
         """(service, plain-language result) for the Summary sheet."""
@@ -125,16 +134,13 @@ class Client:
 
         rows = []
         for service in SERVICES:
-            fetched, cached = self.fetched[service], self.cached[service]
-            text = (f"reached ({n(fetched, 'request')}" if fetched
-                    else f"answered from the cache only ({n(cached, 'response')}" if cached else "not needed")
-            if fetched and cached:
-                text += f"; {cached} more answered from the cache"
-            text += ")" if fetched or cached else ""
-            if service in self.skipped:
-                text = f"skipped: {self.skipped[service]}" + (f" (after {n(fetched + cached, 'response')})"
-                                                             if fetched or cached else "")
-            rows.append((service, text))
+            fetched, cached, failed = self.fetched[service], self.cached[service], self.failed[service]
+            state = (f"skipped: {self.skipped[service]}" if service in self.skipped else "reached" if fetched
+                     else "answered from the cache" if cached else "not reached" if failed else "not needed")
+            counts = [n(fetched, "response") if fetched else "", f"{cached} from the cache" if cached else "",
+                      f"{n(failed, 'failed request')}" if failed else ""]
+            counts = ", ".join(c for c in counts if c)
+            rows.append((service, f"{state} ({counts})" if counts else state))
         return rows
 
 
@@ -180,11 +186,13 @@ def _first(values) -> str:
 def from_crossref(m: dict) -> Record:
     printed = _year(m.get("published-print")) or _year((m.get("journal-issue") or {}).get("published-print"))
     online = _year(m.get("published-online"))
+    people = m.get("author") or m.get("editor") or []  # an edited book has editors only
+    containers = m.get("container-title") or []
     return Record(
         origin="Crossref", doi=(m.get("DOI") or "").lower(), kind=m.get("type", ""),
-        authors=[Person(a.get("family") or a.get("name", ""), given=a.get("given", "")) for a in m.get("author", [])],
+        authors=[Person(a.get("family") or a.get("name", ""), given=a.get("given", "")) for a in people],
         title=_first(m.get("title")), subtitle=_first(m.get("subtitle")),
-        journal=_first(m.get("container-title")), short_journals=m.get("short-container-title") or [],
+        journal=_first(containers), alt_journals=containers[1:], short_journals=m.get("short-container-title") or [],
         volume=m.get("volume", ""), issue=m.get("issue", ""), pages=m.get("page", ""),
         article_number=m.get("article-number", ""),
         issue_year=printed or (None if online else _year(m.get("issued"))), online_year=online,
@@ -213,12 +221,24 @@ def from_datacite(data: dict) -> Record:
         issue_year=int(year) if str(year or "").isdigit() else None)
 
 
+def split_name(name: str) -> Person:
+    """'Martin Luther King Jr.' -> King, Martin Luther; 'Golec de Zavala, Agnieszka' -> Golec de Zavala, Agnieszka."""
+    family, comma, given = name.partition(",")
+    if comma and given.strip(" .").casefold() not in SUFFIXES:
+        return Person(family.strip(), given=given.strip())
+    words = [w for w in family.split() if w.strip(".,").casefold() not in SUFFIXES]
+    i = len(words) - 1
+    while i > 0 and words[i - 1].casefold() in PARTICLES:
+        i -= 1
+    return Person(" ".join(words[max(i, 0):]), given=" ".join(words[:max(i, 0)]))
+
+
 def from_openalex(w: dict) -> Record:
     authors = []
     for au in w.get("authorships", []):
-        words = (au.get("raw_author_name") or (au.get("author") or {}).get("display_name") or "").split()
-        if words:
-            authors.append(Person(words[-1], given=" ".join(words[:-1])))
+        name = (au.get("author") or {}).get("display_name") or au.get("raw_author_name") or ""
+        if name.strip():
+            authors.append(split_name(name))
     biblio = w.get("biblio") or {}
     source = ((w.get("primary_location") or {}).get("source") or {}).get("display_name", "")
     year = w.get("publication_year")
@@ -308,6 +328,29 @@ def find_match(client: Client, ref: Reference, notes: list[str]) -> Match:
                 match.record, match.doi_state, match.confidence, match.route = rec, "ok", "doi", f"DOI → {rec.origin}"
                 return match
             match.doi_state, match.other = "different", rec
+    prefix = {"unregistered": "Cited DOI not registered; ", "different": "Cited DOI is another work; "}.get(
+        match.doi_state, "")
+    try:
+        best, searched = _search(client, ref, notes)
+    except ApiError as exc:
+        if not match.doi_state:
+            raise
+        notes.append(f"The search for the right record failed ({exc}).")  # the DOI is still known to be wrong
+        match.route = f"{prefix}search failed"
+        return match
+    match.searched = " and ".join(searched)
+    if best is None:
+        match.route = f"{prefix}no record ({match.searched} searched)"
+        return match
+    sim, rec, route = best
+    match.record, match.similarity = rec, sim
+    match.confidence = "high" if sim >= 90 else "low"
+    match.route = f"{prefix}{route}, {match.confidence} confidence (title similarity {sim})"
+    return match
+
+
+def _search(client: Client, ref: Reference, notes: list[str]):
+    """((similarity, record, route) or None, sources searched): Crossref, then OpenAlex if needed."""
     searched = ["Crossref"]
     candidates = search_crossref(client, ref)
     best = best_candidate(ref, candidates)
@@ -320,22 +363,14 @@ def find_match(client: Client, ref: Reference, notes: list[str]) -> Match:
             pass
         except ApiError as exc:
             notes.append(f"OpenAlex search failed ({exc}).")
-    match.searched = " and ".join(searched)
-    prefix = {"unregistered": "Cited DOI not registered; ", "different": "Cited DOI is another work; "}.get(
-        match.doi_state, "")
     if best is None:
-        match.route = f"{prefix}no record ({match.searched} searched)"
-        return match
+        return None, searched
     sim, rec = best
-    route = f"{rec.origin} search"
     if rec.origin == "OpenAlex":
         full = fetch_record(client, rec.doi)
         if full:
-            rec, route = full, f"OpenAlex search → {full.origin}"
-    match.record, match.similarity = rec, sim
-    match.confidence = "high" if sim >= 90 else "low"
-    match.route = f"{prefix}{route}, {match.confidence} confidence (title similarity {sim})"
-    return match
+            return (sim, full, f"OpenAlex search → {full.origin}"), searched
+    return (sim, rec, f"{rec.origin} search"), searched
 
 
 def find_notices(client: Client, rec: Record, notes: list[str]) -> list[Notice]:
