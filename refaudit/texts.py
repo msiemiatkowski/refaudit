@@ -69,13 +69,18 @@ def read_pdf(path) -> dict:
     if texts is None:
         texts, how = _pypdf_pages(path), "pypdf"
     can_ocr = bool(shutil.which("tesseract") and shutil.which("pdftoppm"))
-    pages = []
+    pages, layout = [], []
     for i, text in enumerate(texts, 1):
         ocr = False
         if len(text.strip()) < 25 and can_ocr:
             text, ocr = _ocr(path, i), True
+        layout.append(text)
         pages.append(page(_decolumn(text), pdf=i, ocr=ocr))
-    labels = _pdf_page_labels(path, len(pages)) or detect_labels([p["text"] for p in pages])
+    # Headers and footers are searched before the columns are split, which would cut a running head in two.
+    stored, detected = _pdf_page_labels(path, len(pages)), detect_labels(layout)
+    if stored == [str(i) for i in range(1, len(pages) + 1)] and any(detected):
+        stored = None  # a default 1..N /PageLabels says nothing about the printed numbers (Cambridge, Wiley)
+    labels = stored or detected
     for p, label in zip(pages, labels):
         p["label"] = label
     meta = _pdf_meta(path)

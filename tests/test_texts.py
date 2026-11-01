@@ -46,6 +46,20 @@ def test_no_text_layer_without_ocr(monkeypatch):
     assert "no text layer" in doc["meta"]["problem"] and "not installed" in doc["meta"]["problem"]
 
 
+def test_running_heads_beat_default_page_labels(monkeypatch):
+    """A journal PDF with a default 1..N /PageLabels and two-column pages whose running head holds the number."""
+    def layout(left, right):
+        body = [f"{f'left column words, line {c}':<55}     right column words, line {c}" for c in "abcdefghijkl"]
+        return "\n".join([f"{left:<60}{right:>40}", ""] + body)
+    raw = [layout("Psychological Medicine", ""), layout("5710", "Jan-Willem van Prooijen et al."),
+           layout("Psychological Medicine", "5711"), layout("5712", "Jan-Willem van Prooijen et al.")]
+    monkeypatch.setattr(texts, "_pdftotext", lambda path: raw)
+    monkeypatch.setattr(texts, "_pdf_page_labels", lambda path, count: [str(i) for i in range(1, count + 1)])
+    assert [p["label"] for p in texts.read_pdf(PDF)["pages"]] == ["5709", "5710", "5711", "5712"]
+    monkeypatch.setattr(texts, "_pdf_page_labels", lambda path, count: ["i", "ii", "1", "2"])  # real labels win
+    assert [p["label"] for p in texts.read_pdf(PDF)["pages"]] == ["i", "ii", "1", "2"]
+
+
 def test_detect_labels():
     pages = [f"Header\nbody\n{n}" for n in (12, 13, 14, 15)]
     assert texts.detect_labels(pages) == ["12", "13", "14", "15"]

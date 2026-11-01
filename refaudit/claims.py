@@ -34,7 +34,9 @@ SENTENCE_END_RE = re.compile(rf"[()\[\]]|[.?!…]+[\"'”’»)\]]*(?=\s+[\"'“
 ABBREVIATIONS = {"al", "e.g", "i.e", "cf", "vs", "p", "pp", "vol", "no", "np", "tzn", "m.in", "zob", "por", "s", "r",
                  "ss", "fig", "eds", "ed", "red", "tj", "itd", "itp", "tzw", "dr", "prof", "st", "ok", "nr", "ch", "sec"}
 QUOTE_RE = re.compile(r"[“\"„«]([^”\"«»“„]{12,}?)[”\"»]")
-NUMBER_RE = re.compile(r"(?<![\w.,])(?:\d{1,3}(?:[ ,]\d{3})+|\d+)(?:[.,]\d+)?%?|(?<![\w.,])[.,]\d+")
+# not the 19 of COVID-19 or the 2 of SARS-CoV-2
+NUMBER_RE = re.compile(r"(?<![\w.,])(?<![^\W\d_][-‐–])(?:\d{1,3}(?:[ ,]\d{3})+|\d+)(?:[.,]\d+)?%?"
+                       r"|(?<![\w.,])[.,]\d+")
 NOT_NAMES = {  # capitalized words that start sentences, not author lists ("However, Douglas et al. (2017)")
     "however", "moreover", "furthermore", "additionally", "similarly", "indeed", "thus", "therefore", "hence", "also",
     "in", "for", "as", "according", "notably", "nevertheless", "yet", "but", "and", "then", "later", "first", "second",
@@ -61,6 +63,7 @@ class Cite:
     prefix: str | None = None
     original: str | None = None  # "Allport, 1954" in "Allport, 1954, as cited in Douglas et al., 2017"
     group: list[str] = field(default_factory=list)  # the other citations in the same parentheses
+    lead: str = ""               # a capitalized word just before a narrative citation ("Granados ")
 
 
 # --- manuscript text ---------------------------------------------------------
@@ -182,10 +185,22 @@ def find_citations(sentence: str) -> list[Cite]:
         text = m.group().strip()
         if len(authors) < len(re.split(rf"{SEP}", re.sub(rf",?\s*\b{ET_AL}\s*$", "", m["authors"]))):
             text = text[text.find(authors[0]):]  # without the sentence-opening word
+        start = m.start() + m.group().find(text)
+        lead = re.search(rf"(?<![\w'’\-])[{UPPER}][\w'’\-]*\s+$", sentence[:start])
         for year in _years(m["years"]):
-            cites.append(Cite(text=text, authors=authors, et_al=et_al, year=year, start=m.start() + m.group().find(text),
-                              end=m.end(), narrative=True, locator=m["loc"]))
+            cites.append(Cite(text=text, authors=authors, et_al=et_al, year=year, start=start, end=m.end(),
+                              narrative=True, locator=m["loc"], lead=lead.group() if lead else ""))
     return sorted(cites, key=lambda c: (c.start, c.end))
+
+
+def extend(cite: Cite, refs: list[dict]) -> Cite:
+    """'Granados Samayoa et al. (2022)': a compound surname the narrative pattern cut short, if the list has it."""
+    if cite.narrative and cite.lead:
+        longer = f"{cite.lead.strip()} {cite.authors[0]}"
+        if any(r["authors"] and surname_key(r["authors"][0]) == surname_key(longer) for r in refs):
+            cite.authors = [longer] + cite.authors[1:]
+            cite.text, cite.start, cite.lead = cite.lead + cite.text, cite.start - len(cite.lead), ""
+    return cite
 
 
 # --- references and matching -------------------------------------------------
@@ -278,7 +293,7 @@ def occurrences(paragraphs: list[str], refs: list[dict]) -> list[dict]:
         for s, sentence in enumerate(split_sentences(paragraph), 1):
             sentence_list.append((f"P{p:03d}", f"P{p:03d}.S{s}", sentence))
     for i, (pid, sid, sentence) in enumerate(sentence_list):
-        cites = find_citations(sentence)
+        cites = [extend(cite, refs) for cite in find_citations(sentence)]
         bounds = sorted({(c.start, c.end) for c in cites})
         stripped = sentence
         for a, b in reversed(bounds):

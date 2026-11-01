@@ -123,3 +123,19 @@ def test_occurrences_from_a_manuscript(tmp_path):
     assert narrative["scope"].startswith("found that 45.5%") and narrative["numbers"] == ["45.5%", "1,200"]
     assert parenthetical["locator"] == "p. 540" and parenthetical["quotes"] == ["believing is easier than knowing"]
     assert rows[0]["group"] == ["Smith, 2001"] and rows[1]["prev"] == "Introduction" and rows[0]["next"].startswith("Douglas")
+
+
+def test_compound_surnames_in_narrative_citations():
+    refs = REFS + [{"key": "granadossamayoa2022", "authors": ["Granados Samayoa", "Moore", "Ruisch"], "year": "2022"}]
+    cite = claims.extend(find_citations("Granados Samayoa et al. (2022) showed it.")[0], refs)
+    assert (cite.text, cite.authors[0], cite.start) == ("Granados Samayoa et al. (2022)", "Granados Samayoa", 0)
+    assert match(cite, refs)[:2] == ("granadossamayoa2022", "matched")
+    sentence_start = claims.extend(find_citations("In Douglas et al. (2017) it was shown.")[0], refs)
+    assert sentence_start.text == "Douglas et al. (2017)"  # 'In Douglas' is not a surname in the list
+    particle = claims.extend(find_citations("Van Prooijen and Douglas (2017) argued so.")[0], refs)
+    assert particle.text == "Van Prooijen and Douglas (2017)" and match(particle, refs)[0] == "vanprooijen2017"
+
+
+def test_numbers_ignore_names_like_covid_19():
+    assert claims._numbers("COVID-19 and SARS-CoV-2 beliefs fell by 12% among 1,037 adults aged 18-65") == [
+        "12%", "1,037", "18", "65"]
