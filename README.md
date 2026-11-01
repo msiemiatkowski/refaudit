@@ -1,6 +1,6 @@
 # refaudit
 
-A small command-line tool that checks the references in a .docx or .bib file against Crossref and OpenAlex and writes a colour-coded .xlsx report. It is deterministic: no LLM calls and no scraping of publisher pages, only the public APIs of doi.org, Crossref, DataCite and OpenAlex.
+A small tool that checks the references in a .docx or .bib file against Crossref and OpenAlex and writes a colour-coded .xlsx report. It runs from the command line or, through the [web app](#web-app), in a browser. It is deterministic: no LLM calls and no scraping of publisher pages, only the public APIs of doi.org, Crossref, DataCite and OpenAlex.
 
 ## Installation
 
@@ -72,6 +72,40 @@ Progress is printed as one line per reference. A reference that fails is never f
 3. **Notices** come from Crossref `updated-by`, Crossref `/works?filter=updates:{doi}` and OpenAlex `is_retracted`. A retraction, partial retraction, withdrawal or removal, or `is_retracted`, is RED. An expression of concern is PURPLE. Other notices, such as corrections, are listed in the Notice column without a status. Each notice is recorded with its type, date and DOI.
 4. **Compare fields** after normalizing case, punctuation, diacritics, dashes and "&"/"and" (see the table below).
 5. **Row status** is the worst field status: RED > PURPLE > ORANGE > YELLOW > GREEN. It is GREY when nothing could be checked.
+
+## Web app
+
+`web/` holds a browser version with a friendly page. You drop in a .docx or .bib file and watch the references being checked. Then you can filter the results by status, open each reference's comparison with its record, and download the same Excel report.
+
+- **Same results as the command line.** The page runs this repository's Python package in the browser with [Pyodide](https://pyodide.org), so there is a single implementation. The only difference is that rapidfuzz is unavailable in the browser; its similarity ratio is reimplemented exactly (a test checks they agree).
+- **Nothing is uploaded.** The file is read in the browser. Only the references' details are sent to Crossref, OpenAlex, DataCite and doi.org, as with the command line. The e-mail and OpenAlex key options are stored only in that browser.
+- **First load.** The first visit downloads about 15 MB (Python and its packages, from cdn.jsdelivr.net and PyPI). Later visits come from the browser cache. Checking takes about a second per reference.
+
+### Publishing it on GitHub Pages
+
+1. Merge the branch into `main`.
+2. In the repository, open **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+3. The **Web app** workflow (`.github/workflows/pages.yml`) runs the offline tests and publishes the site. It runs on every push to `main`, or by hand from the Actions tab. The site address is `https://<user>.github.io/refaudit/`.
+
+**Privacy.** A GitHub Pages site is public: anyone with the link can open the page, even when the repository is private. Only organizations on GitHub Enterprise Cloud can restrict a Pages site to people with access to the repository. Publishing Pages from a private repository on a personal account needs GitHub Pro.
+
+The page asks search engines not to index it. It contains no data, because every file stays in the visitor's own browser. If the page itself must not be reachable by others, preview it locally (below) instead of publishing it.
+
+### Local preview
+
+Build the site:
+
+```bash
+mkdir -p _site/refaudit && cp -r web/. _site/ && cp refaudit/*.py _site/refaudit/
+```
+
+Serve it:
+
+```bash
+python -m http.server -d _site 8000
+```
+
+Then open http://localhost:8000. The browser needs internet access to cdn.jsdelivr.net, pypi.org, files.pythonhosted.org and the four API hosts.
 
 ## Statuses and colours
 

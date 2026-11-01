@@ -25,7 +25,9 @@ def check_reference(client: lookup.Client, ref: parse.Reference) -> compare.Row:
 
 
 def audit(refs: list[parse.Reference], client: lookup.Client, progress=None) -> list[compare.Row]:
-    """Check every reference; a failing reference becomes a GREY row with the error."""
+    """Check every reference; a failing reference becomes a GREY row with the error.
+
+    progress(n, total, ref, row) is called after each reference."""
     rows = []
     for n, ref in enumerate(refs, 1):
         try:
@@ -36,7 +38,7 @@ def audit(refs: list[parse.Reference], client: lookup.Client, progress=None) -> 
             row = compare.failed(f"{type(exc).__name__}: {exc}")
         rows.append(row)
         if progress:
-            progress(f"[{n}/{len(refs)}] {row.status:<6} {ref.raw[:90]}")
+            progress(n, len(refs), ref, row)
     return rows
 
 
@@ -72,7 +74,8 @@ def main(argv=None) -> int:
     client = lookup.Client(args.cache or default_cache(), mailto=mailto,
                            openalex_key=os.environ.get("OPENALEX_API_KEY") or None,
                            use_openalex=not args.no_openalex)
-    rows = audit(refs, client, progress=lambda line: print(line, file=sys.stderr))
+    rows = audit(refs, client, lambda n, total, ref, row: print(f"[{n}/{total}] {row.status:<6} {ref.raw[:90]}",
+                                                             file=sys.stderr))
     info = {"input": str(source), "date": datetime.now().strftime("%Y-%m-%d %H:%M"), "version": __version__,
             "sources": client.summary(), "failures": client.failures, "mailto": bool(mailto)}
     try:

@@ -7,9 +7,26 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 
-from rapidfuzz import fuzz
-
 from .parse import Person, Reference
+
+
+def lcs_ratio(a: str, b: str) -> float:
+    """rapidfuzz.fuzz.ratio without rapidfuzz (normalized Indel similarity, bit-parallel LCS; same floats)."""
+    masks: dict[str, int] = {}
+    for i, ch in enumerate(a):
+        masks[ch] = masks.get(ch, 0) | 1 << i
+    full = v = (1 << len(a)) - 1
+    for ch in b:
+        u = v & masks.get(ch, 0)
+        v = ((v + u) | (v - u)) & full
+    total = len(a) + len(b)
+    return (1 - (total - 2 * (len(a) - bin(v).count("1"))) / total) * 100 if total else 100.0
+
+
+try:
+    from rapidfuzz.fuzz import ratio as _ratio
+except ImportError:  # in the browser (Pyodide) rapidfuzz is not available
+    _ratio = lcs_ratio
 
 ORDER = ("RED", "PURPLE", "ORANGE", "YELLOW", "GREEN")  # worst first; GREY = nothing checked
 RED_NOTICES = {"retraction", "partial_retraction", "withdrawal", "removal", "is_retracted"}
@@ -18,7 +35,7 @@ PARTICLES = {"de", "van", "von", "der", "den", "da", "di", "du", "la", "le", "de
 STOPWORDS = {"the", "of", "and", "for", "in", "on", "a", "an", "to", "de", "der", "und", "i", "w"}
 _LETTERS = str.maketrans({"ł": "l", "Ł": "L", "ø": "o", "Ø": "O", "đ": "d", "Đ": "D", "ß": "ss",
                           "æ": "ae", "Æ": "Ae", "œ": "oe", "Œ": "Oe", "ı": "i", "þ": "th", "Þ": "Th"})
-DASHES = "‐‑‒–—―−﹘﹣－"
+DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212\ufe58\ufe63\uff0d"  # hyphens, dashes and minus signs
 
 
 @dataclass
@@ -104,7 +121,7 @@ def norm(text) -> str:
 def similarity(a, b) -> int:
     """Similarity (0-100) of two normalized strings."""
     a, b = norm(a), norm(b)
-    return round(fuzz.ratio(a, b)) if a and b else 0
+    return round(_ratio(a, b)) if a and b else 0
 
 
 def name_key(name) -> str:

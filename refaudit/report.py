@@ -74,7 +74,7 @@ def _value(value):
     return None if value == "" else value
 
 
-def _cells(n: int, ref: Reference, row: Row) -> list[tuple[object, str | None]]:
+def audit_cells(n: int, ref: Reference, row: Row) -> list[tuple[object, str | None]]:
     """(value, status for the cell colour) for each Audit column."""
     def get(key):
         return row.checks.get(key) or Check()
@@ -109,7 +109,7 @@ def write_report(path, refs: list[Reference], rows: list[Row], info: dict) -> No
     audit.title = "Audit"
     _table(audit, [[name for name, _ in COLUMNS]], [width for _, width in COLUMNS])
     for n, (ref, row) in enumerate(zip(refs, rows), 1):
-        cells = _cells(n, ref, row)
+        cells = audit_cells(n, ref, row)
         audit.append([_value(value) for value, _ in cells])
         for col, (value, status) in enumerate(cells, 1):
             cell = audit.cell(row=n + 1, column=col)
