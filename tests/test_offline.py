@@ -45,6 +45,18 @@ def test_failing_reference_becomes_a_row(results):
     assert rows[0].status == "GREY" and rows[0].problems[0].startswith("Error:")
 
 
+def test_cli(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(cli.lookup, "Client", lambda *args, **kwargs: offline_client())
+    out = tmp_path / "out.xlsx"
+    assert cli.main([str(FIXTURES / "sample.docx"), "-o", str(out), "--limit", "2", "--heading", "References"]) == 0
+    assert [r[1] for r in load_workbook(out)["Audit"].iter_rows(min_row=2, values_only=True)] == ["GREEN", "ORANGE"]
+    bib = tmp_path / "library.bib"
+    bib.write_bytes((FIXTURES / "sample.bib").read_bytes())
+    assert cli.main([str(bib)]) == 0 and (tmp_path / "library_refaudit.xlsx").exists()  # default output name
+    assert "Wrote" in capsys.readouterr().err
+    assert cli.main([str(tmp_path / "missing.docx")]) == 2
+
+
 def test_report(results, tmp_path):
     refs, rows = results["sample.docx"]
     path = tmp_path / "report.xlsx"

@@ -39,6 +39,38 @@ def test_docx_bold_heading_and_override():
         read_docx(FIXTURES / "sample.docx", heading="Works cited")
 
 
+def test_docx_fields_and_content_controls(tmp_path):
+    """Reference managers put the list in content controls and fields; tracked deletions are skipped."""
+    import docx
+    from docx.oxml import parse_xml
+    from docx.oxml.ns import nsdecls
+
+    document = docx.Document()
+    document.add_heading("References", level=1)
+    body = document.element.body
+    body.insert(len(body) - 1, parse_xml(
+        f'<w:sdt {nsdecls("w")}><w:sdtContent><w:p><w:r><w:t xml:space="preserve">Allport, G. W. (1954). </w:t></w:r>'
+        '<w:r><w:rPr><w:i/></w:rPr><w:t>The nature of prejudice</w:t></w:r><w:r><w:t>. Addison-Wesley.</w:t></w:r>'
+        '</w:p></w:sdtContent></w:sdt>'))
+    body.insert(len(body) - 1, parse_xml(
+        f'<w:p {nsdecls("w")}><w:r><w:fldChar w:fldCharType="begin"/></w:r>'
+        '<w:r><w:instrText> ADDIN ZOTERO_BIBL CSL_BIBLIOGRAPHY </w:instrText></w:r>'
+        '<w:r><w:fldChar w:fldCharType="separate"/></w:r>'
+        '<w:r><w:t xml:space="preserve">Stapel, D. A., &amp; Lindenberg, S. (2011). Coping with chaos. </w:t></w:r>'
+        '<w:sdt><w:sdtContent><w:r><w:rPr><w:i/></w:rPr><w:t>Science, 332</w:t></w:r></w:sdtContent></w:sdt>'
+        '<w:fldSimple w:instr="X"><w:r><w:t xml:space="preserve">(6026), 251–253. </w:t></w:r></w:fldSimple>'
+        '<w:ins w:id="1" w:author="a"><w:r><w:t>https://doi.org/10.1126/science.1201068</w:t></w:r></w:ins>'
+        '<w:del w:id="2" w:author="a"><w:r><w:delText>deleted</w:delText></w:r></w:del>'
+        '<w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>'))
+    path = tmp_path / "managed.docx"
+    document.save(path)
+    book, article = read_docx(path)
+    assert (book.kind, book.title, book.publisher) == ("book", "The nature of prejudice", "Addison-Wesley")
+    assert article.raw == ("Stapel, D. A., & Lindenberg, S. (2011). Coping with chaos. Science, 332(6026), 251–253. "
+                           "https://doi.org/10.1126/science.1201068")
+    assert (article.source, article.doi) == ("Science", "10.1126/science.1201068")
+
+
 def test_polish_book_chapter():
     """Case 10: 'W:', '(red.)' and 's.'."""
     ref = read_docx(FIXTURES / "sample_pl.docx")[0]

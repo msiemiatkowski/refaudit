@@ -30,6 +30,8 @@ def audit(refs: list[parse.Reference], client: lookup.Client, progress=None) -> 
     for n, ref in enumerate(refs, 1):
         try:
             row = check_reference(client, ref)
+        except lookup.ApiError as exc:
+            row = compare.failed(f"could not check this reference ({exc})")
         except Exception as exc:
             row = compare.failed(f"{type(exc).__name__}: {exc}")
         rows.append(row)
