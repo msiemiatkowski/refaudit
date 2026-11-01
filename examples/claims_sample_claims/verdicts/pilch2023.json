@@ -1,0 +1,64 @@
+{
+  "refkey": "pilch2023",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "PRISMA systematic review with narrative synthesis (no meta-analysis, because of methodological heterogeneity) of psychological studies on conspiracy beliefs published 2018-2021, planned as a continuation of Goreis and Voracek (2019). Scopus and Web of Science searched on 17 November 2021; double screening and data extraction verified by two other authors; descriptive analysis of study characteristics followed by a narrative synthesis of antecedents and consequences.",
+    "sample": "3,504 records (2,703 after de-duplication); 308 full texts assessed; 274 peer-reviewed articles reporting 417 studies with primary data that measured specific or general conspiracy beliefs and their correlation with at least one psychological variable. Continent of origin (Table 1): Europe 207 (49.6%), North America 136 (32.6%), Asia 28 (6.7%), multiple continents 28 (6.7%), South America 10 (2.4%), Australia/Oceania 7 (1.7%), Africa 1 (0.2%). Adults 359 (85.7%), students 60 (14.3%).",
+    "measures": "Coded study characteristics: design (cross-sectional, longitudinal, experimental), participant type, continent of origin, sample size and conspiracy-belief measures. Table 2 lists the most used questionnaires: GCBS 62 studies, CMQ 57, CMS 52 (all generic), BCTI 17, VCBS 11, HIV Conspiracy Theory Scale 5. Substantive coding of antecedents and consequences of conspiracy beliefs.",
+    "main_results": "71.2% of studies were cross-sectional, 23.3% experimental and 5.5% longitudinal. Nearly half (49.6%) were conducted in Europe. The GCBS was the most frequently used general measure, although scales for specific theories (mostly COVID-19) were the most common type overall. Antecedents fall into six groups (cognitive, motivational, personality, psychopathology, political, sociocultural). Conspiracy beliefs are linked to unfavourable attitudes and behaviours (e.g., lower COVID-19 protective behaviour and vaccination intentions). Compared with Goreis and Voracek (2019): 267 vs 96 papers, the same share of cross-sectional studies (71.2% vs 71.1%), more Asian studies, larger samples and fewer student samples."
+  },
+  "occurrences": [
+    {
+      "id": "C004",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "The review covers 274 peer-reviewed articles (417 studies) published 2018-2021. It states that the GCBS was the most frequently used measure of general belief in conspiracy theories, used in 62 studies. Table 2 lists the CMQ (57 studies) and the CMS (52) as the next most used generic measures. The sentence restates this finding and correctly limits it to general, not specific, conspiracy belief: the review adds that scales for specific theories (mostly COVID-19) were the most common type overall. The period 2018-2021 matches the review's coverage. Note: the count refers to the studies included in this review (Scopus and Web of Science only), and the GCBS's lead over the CMQ is small. The sentence misstates neither.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "The GCBS was the most frequently used measure of general belief on conspiracy theories. It was used in a total of 62 studies (see Table 2).",
+          "page": "3",
+          "pdf_page": 3,
+          "section": ""
+        },
+        {
+          "quote": "Our review is intended to extend their work to cover the years 2018–2021.",
+          "page": "3",
+          "pdf_page": 3,
+          "section": ""
+        }
+      ],
+      "search_terms": ["GCBS", "Generic Conspiracist", "generic", "most frequently", "most commonly", "most used", "62", "general belief", "CMQ", "CMS", "Table 2", "2018-2021"],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    },
+    {
+      "id": "C005",
+      "verdict": "NOT-SUPPORTED",
+      "support_type": "finding",
+      "severity": "CRITICAL",
+      "explanation": "The key number is wrong. In the review, 207 of 417 studies (49.6%, 'nearly half') were conducted in European countries and 136 (32.6%) in North America (Table 1). 71.2% is the share of cross-sectional studies (297 of 417); the sentence has transferred it to Europe. 'Most of this research comes from Europe' also overstates the source. Europe is the largest single continent but not a majority: the discussion says the majority of studies were done in Europe and North America together. No other source in the manuscript's list reports 71.2% European studies. Every 71.2% figure in the source texts is Pilch's cross-sectional share, and the candidates helper found no matching passage.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Of the 417 studies described in the articles analyzed, nearly half (49.6%) were conducted in European countries (see Table 1).",
+          "page": "3",
+          "pdf_page": 3,
+          "section": ""
+        },
+        {
+          "quote": "The majority of the studies (71.2%) had a cross-sectional design, and the remaining studies had an experimental design (23.3%) or a longitudinal design (5.5%).",
+          "page": "3",
+          "pdf_page": 3,
+          "section": ""
+        }
+      ],
+      "search_terms": ["Europ", "European countries", "71.2", "71,2", "49.6", "continent", "North America", "majority", "most of", "half", "71.2 / 71,2 across all texts/*.txt", "refaudit claims candidates C005"],
+      "fix": "Nearly half of this research comes from Europe: 49.6% of the studies were conducted in European countries (Pilch et al., 2023).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

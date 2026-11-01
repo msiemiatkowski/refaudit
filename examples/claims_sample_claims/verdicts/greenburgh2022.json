@@ -1,0 +1,64 @@
+{
+ "refkey": "greenburgh2022",
+ "prompt_version": "1",
+ "source_summary": {
+  "design": "Pre-registered, cross-sectional online questionnaire study (correlational). Primary analysis: one pre-registered cumulative link mixed model with multi-model averaging (endorsement of questionnaire items predicted by paranoia, target, intentionality, perceived in-group endorsement, age, gender and paranoia interactions). Plus an unregistered network analysis (mixed graphical model, LASSO/EBIC) with bootstrapped edge-difference tests, and secondary correlations. No manipulation or intervention of any kind.",
+  "sample": "1000 US-based adults recruited on Prolific Academic in November 2020 (mean age 36, SD 12; 522 male, 463 female, 13 non-binary; mild conservative lean). No extra recruitment was needed because 14.5% of the initial sample scored above 75/120 on the conspiracy questionnaire.",
+  "measures": "Paranoia: Revised Green et al. Paranoid Thoughts Scale (R-GPTS), persecution subscale (reference subscale as a sensitivity check). Conspiracy thinking: a novel 24-item Components of Conspiracy Ideation Questionnaire whose items vary target (self vs society), intentionality (intentional vs incidental harm) and specificity across four themes, rated 1-5. For each item, whether people similar to the participant would endorse it (yes/no/unsure). Also the Conspiracy Mentality Questionnaire (CMQ) and the Social and Economic Conservatism Scale (SECS).",
+  "main_results": "Higher paranoia predicted greater endorsement of the questionnaire items overall (estimate 0.83, 95% CI 0.72-0.93). Overall, items describing incidental harm and harm to society were endorsed more than intentional and self-referential ones, but more paranoid participants were relatively more likely to endorse self-referential items (paranoia x target -0.14, CI -0.22 to -0.06; called 'marginal' in the Discussion) and intentional-harm items (paranoia x intentionality 0.34, CI 0.26-0.42). Believing that one's in-group endorses an item strongly predicted endorsement (1.15), and counter to prediction this was stronger, not weaker, with paranoia. Network analysis: the paranoia-type 1 (intentional/self) edge was stronger than the paranoia-type 3 (intentional/society) edge; items sharing the same intentionality level clustered most. CMQ correlated with paranoia (rt 0.21) and SECS (rt 0.18). The authors state the results cannot speak to causality."
+ },
+ "occurrences": [
+  {
+   "id": "C006",
+   "verdict": "SUPPORTED",
+   "support_type": "finding",
+   "severity": "",
+   "explanation": "The sentence restates the source's own abstract almost word for word. The study was pre-registered (AsPredicted), run online via Prolific, with exactly 1000 US-based participants, and the pre-registered regression found that more paranoid participants were more likely to endorse items describing intentional harm (paranoia x intentionality 0.34, 95% CI 0.26-0.42) and self-referential harm (paranoia x target -0.14, 95% CI -0.22 to -0.06). Correlational wording ('more likely to endorse') matches the design. Two minor points that do not require an edit: the Discussion describes the self-referential effect as 'marginal' (small, though its CI excludes zero), and the items were from a purpose-built Components of Conspiracy Ideation Questionnaire rather than real-world conspiracy theories; 'conspiracy items' is a fair paraphrase.",
+   "group_share": "",
+   "evidence": [
+    {
+     "quote": "more paranoid individuals were more likely to endorse items describing intentional and self-referential harm",
+     "page": "",
+     "pdf_page": null,
+     "section": "Title and abstract"
+    },
+    {
+     "quote": "In line with our pre-registration, we recruited 1000 US-based participants from Prolific Academic (www.prolific.ac), the online crowdsourcing platform.",
+     "page": "",
+     "pdf_page": null,
+     "section": "Method > Participants"
+    }
+   ],
+   "search_terms": ["pre-regist", "1000", "online", "Prolific", "self-referential", "intentional", "marginal", "paranoia × target", "paranoia × intentionality"],
+   "fix": "",
+   "alternative": "",
+   "confidence": "high"
+  },
+  {
+   "id": "C014",
+   "verdict": "MISATTRIBUTED",
+   "support_type": "none",
+   "severity": "CRITICAL",
+   "explanation": "Greenburgh et al. (2022) is a correlational survey of how paranoia relates to different components of conspiracy thinking; it tested no interventions and says nothing about analytical mindsets, critical thinking skills, or what reduces conspiracy beliefs. A full-text search for intervention, analytic, critical thinking, effective, counter, debunk, inoculat, prebunk, mindset, teach, training, skill and reduc found only 'meta-analytic evidence' and 'conspiracy mindset'. The claim is instead the headline finding of the systematic review cited in the manuscript's preceding sentence, O'Mahony et al. (2023), whose abstract reads: 'Interventions that fostered an analytical mindset or taught critical thinking skills were found to be the most effective in terms of changing conspiracy beliefs' (p. 1; repeated as recommendation 4 on p. 14). The whole sentence is attributed to a source that does not address it, so the attribution is wholly wrong; the fix is a one-citation swap to omahony2023.",
+   "group_share": "",
+   "evidence": [
+    {
+     "quote": "We present a novel study investigating the relationship between paranoia and different components of conspiracy thinking.",
+     "page": "",
+     "pdf_page": null,
+     "section": "Discussion"
+    },
+    {
+     "quote": "Paranoia and conspiracy thinking are known to be distinct but correlated constructs, but it is unknown whether certain types of conspiracy thinking are more common in paranoia than others.",
+     "page": "",
+     "pdf_page": null,
+     "section": "Title and abstract"
+    }
+   ],
+   "search_terms": ["intervention", "analytic", "critical thinking", "effective", "counter", "debunk", "inoculat", "prebunk", "mindset", "teach", "training", "skill", "reduc"],
+   "fix": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills (O'Mahony et al., 2023).",
+   "alternative": "omahony2023",
+   "confidence": "high"
+  }
+ ]
+}

@@ -1,0 +1,730 @@
+{
+ "manuscript": "/home/user/refaudit/tests/fixtures/claims_sample.docx",
+ "sources": "/home/user/refaudit/tests/fixtures/claims_sources",
+ "heading": null,
+ "method": "pandoc",
+ "tracked_changes": false,
+ "prepared": "2026-11-01 18:17",
+ "version": "2.0.0",
+ "prompt_version": "1",
+ "refs": [
+  {
+   "key": "alsuhibani2022",
+   "raw": "Alsuhibani, A., Shevlin, M., Freeman, D., Sheaves, B., & Bentall, R. P. (2022). Why conspiracy theorists are not always paranoid: Conspiracy theories and paranoia form separate factors with distinct psychological predictors. PLOS ONE, 17(4), e0259053. https://doi.org/10.1371/journal.pone.0259053",
+   "authors": [
+    "Alsuhibani",
+    "Shevlin",
+    "Freeman",
+    "Sheaves",
+    "Bentall"
+   ],
+   "year": "2022",
+   "title": "Why conspiracy theorists are not always paranoid: Conspiracy theories and paranoia form separate factors with distinct psychological predictors",
+   "source": "PLOS ONE",
+   "kind": "article",
+   "doi": "10.1371/journal.pone.0259053",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Unpaywall (publisher): https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0259053&type=printable",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 23,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "b27642b5675c2652f851e8df3efaf1c03650ec9b7cdae2c6f021be6a066dc4b0"
+  },
+  {
+   "key": "goertzel1994",
+   "raw": "Goertzel, T. (1994). Belief in conspiracy theories. Political Psychology, 15(4), 731–742. https://doi.org/10.2307/3791630",
+   "authors": [
+    "Goertzel"
+   ],
+   "year": "1994",
+   "title": "Belief in conspiracy theories",
+   "source": "Political Psychology",
+   "kind": "article",
+   "doi": "10.2307/3791630",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "ABSTRACT",
+   "version": "",
+   "origin": "abstract: OpenAlex",
+   "reason": "no open-access copy and no file of yours",
+   "identity": "",
+   "pages": 0,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "4b81edb12a05977c3b36904d2865cd785253731db8108e695a6c370a53e8f568"
+  },
+  {
+   "key": "granadossamayoa2022",
+   "raw": "Granados Samayoa, J. A., Moore, C. A., Ruisch, B. C., Boggs, S. T., Ladanyi, J. T., & Fazio, R. H. (2022). A gateway conspiracy? Belief in COVID-19 conspiracy theories prospectively predicts greater conspiracist ideation. PLOS ONE, 17(10), e0275502. https://doi.org/10.1371/journal.pone.0275502",
+   "authors": [
+    "Granados Samayoa",
+    "Moore",
+    "Ruisch",
+    "Boggs",
+    "Ladanyi",
+    "Fazio"
+   ],
+   "year": "2022",
+   "title": "A gateway conspiracy? Belief in COVID-19 conspiracy theories prospectively predicts greater conspiracist ideation",
+   "source": "PLOS ONE",
+   "kind": "article",
+   "doi": "10.1371/journal.pone.0275502",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Unpaywall (publisher): https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0275502&type=printable",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 14,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "b28df5093d8b409220ce565db22d33d6e62b5cfc9a3eaef8a6e9725af8ac94b9"
+  },
+  {
+   "key": "greenburgh2022",
+   "raw": "Greenburgh, A. G., Liefgreen, A., Bell, V., & Raihani, N. (2022). Factors affecting conspiracy theory endorsement in paranoia. Royal Society Open Science, 9(1), 211555. https://doi.org/10.1098/rsos.211555",
+   "authors": [
+    "Greenburgh",
+    "Liefgreen",
+    "Bell",
+    "Raihani"
+   ],
+   "year": "2022",
+   "title": "Factors affecting conspiracy theory endorsement in paranoia",
+   "source": "Royal Society Open Science",
+   "kind": "article",
+   "doi": "10.1098/rsos.211555",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Europe PMC (PMC8790340): https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8790340/fullTextXML",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 24,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "2bea038f5a6d77d7645822531fc4bc5eefe165658dff88c3ee2f6ac00d5bfea4"
+  },
+  {
+   "key": "imhoff2020",
+   "raw": "Imhoff, R., & Lamberty, P. (2020). A bioweapon or a hoax? The link between distinct conspiracy beliefs about the coronavirus disease (COVID-19) outbreak and pandemic behavior. Social Psychological and Personality Science, 11(8), 1110–1118. https://doi.org/10.1177/1948550620934692",
+   "authors": [
+    "Imhoff",
+    "Lamberty"
+   ],
+   "year": "2020",
+   "title": "A bioweapon or a hoax? The link between distinct conspiracy beliefs about the coronavirus disease (COVID-19) outbreak and pandemic behavior",
+   "source": "Social Psychological and Personality Science",
+   "kind": "article",
+   "doi": "10.1177/1948550620934692",
+   "reference_check": "GREEN",
+   "notice": "Correction, 2020-10-14, https://doi.org/10.1177/1948550620966182",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Europe PMC (PMC7342934): https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7342934/fullTextXML",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 23,
+   "discarded": [
+    {
+     "origin": "https://journals.sagepub.com/doi/pdf/10.1177/1948550620934692",
+     "reason": "journals.sagepub.com refused the download (HTTP 403)"
+    }
+   ],
+   "text_notes": [],
+   "sha256": "2f016a5aa234ca7eb9019e16a7f32ebcf17278d9eefe9d587eaca7cf84687840"
+  },
+  {
+   "key": "omahony2023",
+   "raw": "O'Mahony, C., Brassil, M., Murphy, G., & Linehan, C. (2023). The efficacy of interventions in reducing belief in conspiracy theories: A systematic review. PLOS ONE, 18(4), e0280902. https://doi.org/10.1371/journal.pone.0280902",
+   "authors": [
+    "O'Mahony",
+    "Brassil",
+    "Murphy",
+    "Linehan"
+   ],
+   "year": "2023",
+   "title": "The efficacy of interventions in reducing belief in conspiracy theories: A systematic review",
+   "source": "PLOS ONE",
+   "kind": "article",
+   "doi": "10.1371/journal.pone.0280902",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Unpaywall (publisher): https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0280902&type=printable",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 18,
+   "discarded": [
+    {
+     "origin": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10075392/pdf/pone.0280902.pdf",
+     "reason": "pmc.ncbi.nlm.nih.gov refused the download (HTTP 403)"
+    }
+   ],
+   "text_notes": [],
+   "sha256": "2e70e533cd8d54a45b26b518625247f8690e76bf501a27739a6b6479166411bf"
+  },
+  {
+   "key": "pilch2023",
+   "raw": "Pilch, I., Turska-Kawa, A., Wardawy, P., Olszanecka-Marmola, A., & Smołkowska-Jędo, W. (2023). Contemporary trends in psychological research on conspiracy beliefs. A systematic review. Frontiers in Psychology, 14, 1075779. https://doi.org/10.3389/fpsyg.2023.1075779",
+   "authors": [
+    "Pilch",
+    "Turska-Kawa",
+    "Wardawy",
+    "Olszanecka-Marmola",
+    "Smołkowska-Jędo"
+   ],
+   "year": "2023",
+   "title": "Contemporary trends in psychological research on conspiracy beliefs. A systematic review",
+   "source": "Frontiers in Psychology",
+   "kind": "article",
+   "doi": "10.3389/fpsyg.2023.1075779",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "file: /home/user/refaudit/tests/fixtures/claims_sources/Pilch_2023_FrontPsychol.pdf",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 19,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "3fe0d3c56dd853e6a47cf1758540b2496ba6018f03425f236b61d8ed20f86d27"
+  },
+  {
+   "key": "siemiatkowski2026",
+   "raw": "Siemiątkowski, M., Gkinopoulos, T., & Bilewicz, M. (2026). Free from conspiracies: The negative relationship between societal freedom and belief in generic and content-specific conspiracy theories. British Journal of Social Psychology, 65(1), e70021. https://doi.org/10.1111/bjso.70021",
+   "authors": [
+    "Siemiątkowski",
+    "Gkinopoulos",
+    "Bilewicz"
+   ],
+   "year": "2026",
+   "title": "Free from conspiracies: The negative relationship between societal freedom and belief in generic and content-specific conspiracy theories",
+   "source": "British Journal of Social Psychology",
+   "kind": "article",
+   "doi": "10.1111/bjso.70021",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Europe PMC (PMC12641589): https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12641589/fullTextXML",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 58,
+   "discarded": [
+    {
+     "origin": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/bjso.70021",
+     "reason": "onlinelibrary.wiley.com refused the download (HTTP 403)"
+    }
+   ],
+   "text_notes": [],
+   "sha256": "a4a0cec37aa30c4f1099f88ccba3219179e777610176374238335a463e3b769f"
+  },
+  {
+   "key": "uscinski2022",
+   "raw": "Uscinski, J., Enders, A., Klofstad, C., Seelig, M., Drochon, H., Premaratne, K., & Murthi, M. (2022). Have beliefs in conspiracy theories increased over time? PLOS ONE, 17(7), e0270429. https://doi.org/10.1371/journal.pone.0270429",
+   "authors": [
+    "Uscinski",
+    "Enders",
+    "Klofstad",
+    "Seelig",
+    "Drochon",
+    "Premaratne",
+    "Murthi"
+   ],
+   "year": "2022",
+   "title": "Have beliefs in conspiracy theories increased over time?",
+   "source": "PLOS ONE",
+   "kind": "article",
+   "doi": "10.1371/journal.pone.0270429",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "Unpaywall (publisher): https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0270429&type=printable",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 19,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "5ae6c6ef6f43b4d6807809bd370f064354658cff528ef016ccd8d1e88543c350"
+  },
+  {
+   "key": "vanprooijen2023",
+   "raw": "van Prooijen, J.-W., Amodio, D. M., Boot, A., Eerland, A., Etienne, T., Krouwel, A. P. M., Onderco, M., Verkoeijen, P., & Zwaan, R. A. (2023). A longitudinal analysis of conspiracy beliefs and Covid-19 health responses. Psychological Medicine, 53(12), 5709–5716. https://doi.org/10.1017/S0033291722002938",
+   "authors": [
+    "van Prooijen",
+    "Amodio",
+    "Boot",
+    "Eerland",
+    "Etienne",
+    "Krouwel",
+    "Onderco",
+    "Verkoeijen",
+    "Zwaan"
+   ],
+   "year": "2023",
+   "title": "A longitudinal analysis of conspiracy beliefs and Covid-19 health responses",
+   "source": "Psychological Medicine",
+   "kind": "article",
+   "doi": "10.1017/s0033291722002938",
+   "reference_check": "GREEN",
+   "notice": "",
+   "notice_status": null,
+   "level": "FULL",
+   "version": "published",
+   "origin": "file: /home/user/refaudit/tests/fixtures/claims_sources/vanProoijen_2023_PsycholMed.pdf",
+   "reason": "",
+   "identity": "title similarity 100; first author found on the first pages",
+   "pages": 8,
+   "discarded": [],
+   "text_notes": [],
+   "sha256": "3e725eb957d53a637f77963727b052773e68887fe8d563b858fd69a103e31295"
+  }
+ ],
+ "rows": [
+  {
+   "id": "C001",
+   "paragraph": "P002",
+   "sentence_id": "P002.S2",
+   "sentence": "Contrary to this impression, Uscinski et al. (2022) found no systematic evidence that belief in conspiracy theories has increased over time, either in the United States or in six European countries.",
+   "scope": "found no systematic evidence that belief in conspiracy theories has increased over time, either in the United States or in six European countries.",
+   "prev": "Conspiracy theories are often described as a growing problem of our time.",
+   "next": "Goertzel (1994) argued that conspiracy theories offer people simple explanations for events that are otherwise hard to understand.",
+   "citation": "Uscinski et al. (2022)",
+   "authors": [
+    "Uscinski"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": true,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "uscinski2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "e2c51efecb6e0018011777d5"
+  },
+  {
+   "id": "C002",
+   "paragraph": "P002",
+   "sentence_id": "P002.S3",
+   "sentence": "Goertzel (1994) argued that conspiracy theories offer people simple explanations for events that are otherwise hard to understand.",
+   "scope": "argued that conspiracy theories offer people simple explanations for events that are otherwise hard to understand.",
+   "prev": "Contrary to this impression, Uscinski et al. (2022) found no systematic evidence that belief in conspiracy theories has increased over time, either in the United States or in six European countries.",
+   "next": "At the beginning of March 2020, 13% of Americans were convinced that the coronavirus is a hoax (Imhoff & Lamberty, 2020).",
+   "citation": "Goertzel (1994)",
+   "authors": [
+    "Goertzel"
+   ],
+   "et_al": false,
+   "year": "1994",
+   "narrative": true,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "goertzel1994",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "dfbb048f560a44374186203d"
+  },
+  {
+   "id": "C003",
+   "paragraph": "P002",
+   "sentence_id": "P002.S4",
+   "sentence": "At the beginning of March 2020, 13% of Americans were convinced that the coronavirus is a hoax (Imhoff & Lamberty, 2020).",
+   "scope": "At the beginning of March 2020, 13% of Americans were convinced that the coronavirus is a hoax",
+   "prev": "Goertzel (1994) argued that conspiracy theories offer people simple explanations for events that are otherwise hard to understand.",
+   "next": "Research on conspiracy beliefs",
+   "citation": "Imhoff & Lamberty, 2020",
+   "authors": [
+    "Imhoff",
+    "Lamberty"
+   ],
+   "et_al": false,
+   "year": "2020",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "2020",
+    "13%"
+   ],
+   "ref": "imhoff2020",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "8738bd318ace3a6ce29a92e8"
+  },
+  {
+   "id": "C004",
+   "paragraph": "P004",
+   "sentence_id": "P004.S1",
+   "sentence": "Between 2018 and 2021, the Generic Conspiracist Beliefs Scale was the most frequently used measure of general conspiracy belief (Pilch et al., 2023).",
+   "scope": "Between 2018 and 2021, the Generic Conspiracist Beliefs Scale was the most frequently used measure of general conspiracy belief",
+   "prev": "Research on conspiracy beliefs",
+   "next": "Most of this research comes from Europe: 71.2% of the studies were conducted in European countries (Pilch et al., 2023).",
+   "citation": "Pilch et al., 2023",
+   "authors": [
+    "Pilch"
+   ],
+   "et_al": true,
+   "year": "2023",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "2018",
+    "2021"
+   ],
+   "ref": "pilch2023",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "efc731bc514ef0ff29fe9911"
+  },
+  {
+   "id": "C005",
+   "paragraph": "P004",
+   "sentence_id": "P004.S2",
+   "sentence": "Most of this research comes from Europe: 71.2% of the studies were conducted in European countries (Pilch et al., 2023).",
+   "scope": "Most of this research comes from Europe: 71.2% of the studies were conducted in European countries",
+   "prev": "Between 2018 and 2021, the Generic Conspiracist Beliefs Scale was the most frequently used measure of general conspiracy belief (Pilch et al., 2023).",
+   "next": "Correlates",
+   "citation": "Pilch et al., 2023",
+   "authors": [
+    "Pilch"
+   ],
+   "et_al": true,
+   "year": "2023",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "71.2%"
+   ],
+   "ref": "pilch2023",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "f8e63e5c7e610ff32dad8336"
+  },
+  {
+   "id": "C006",
+   "paragraph": "P006",
+   "sentence_id": "P006.S1",
+   "sentence": "In a pre-registered online study of 1,000 participants, more paranoid individuals were more likely to endorse conspiracy items describing intentional and self-referential harm (Greenburgh et al., 2022).",
+   "scope": "In a pre-registered online study of 1,000 participants, more paranoid individuals were more likely to endorse conspiracy items describing intentional and self-referential harm",
+   "prev": "Correlates",
+   "next": "Loneliness drives people towards conspiracy theories (Alsuhibani et al., 2022).",
+   "citation": "Greenburgh et al., 2022",
+   "authors": [
+    "Greenburgh"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "1,000"
+   ],
+   "ref": "greenburgh2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "91df31f816eedc013130ebc4"
+  },
+  {
+   "id": "C007",
+   "paragraph": "P006",
+   "sentence_id": "P006.S2",
+   "sentence": "Loneliness drives people towards conspiracy theories (Alsuhibani et al., 2022).",
+   "scope": "Loneliness drives people towards conspiracy theories",
+   "prev": "In a pre-registered online study of 1,000 participants, more paranoid individuals were more likely to endorse conspiracy items describing intentional and self-referential harm (Greenburgh et al., 2022).",
+   "next": "Across 36 countries, greater societal freedom, as measured by the Human Freedom Index, was associated with weaker generic conspiracy beliefs (Siemiątkowski et al., 2026).",
+   "citation": "Alsuhibani et al., 2022",
+   "authors": [
+    "Alsuhibani"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "alsuhibani2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "ad75d0e9a9cb90303ef9bb68"
+  },
+  {
+   "id": "C008",
+   "paragraph": "P006",
+   "sentence_id": "P006.S3",
+   "sentence": "Across 36 countries, greater societal freedom, as measured by the Human Freedom Index, was associated with weaker generic conspiracy beliefs (Siemiątkowski et al., 2026).",
+   "scope": "Across 36 countries, greater societal freedom, as measured by the Human Freedom Index, was associated with weaker generic conspiracy beliefs",
+   "prev": "Loneliness drives people towards conspiracy theories (Alsuhibani et al., 2022).",
+   "next": "Consequences for health",
+   "citation": "Siemiątkowski et al., 2026",
+   "authors": [
+    "Siemiątkowski"
+   ],
+   "et_al": true,
+   "year": "2026",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "36"
+   ],
+   "ref": "siemiatkowski2026",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "0e87bb6527a770e7199e40c9"
+  },
+  {
+   "id": "C009",
+   "paragraph": "P008",
+   "sentence_id": "P008.S1",
+   "sentence": "People who believed that COVID-19 is a hoax reported more containment-related behaviour, such as hygiene and physical distancing (Imhoff & Lamberty, 2020).",
+   "scope": "People who believed that COVID-19 is a hoax reported more containment-related behaviour, such as hygiene and physical distancing",
+   "prev": "Consequences for health",
+   "next": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic” (van Prooijen et al., 2023, p. 5713).",
+   "citation": "Imhoff & Lamberty, 2020",
+   "authors": [
+    "Imhoff",
+    "Lamberty"
+   ],
+   "et_al": false,
+   "year": "2020",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "imhoff2020",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "1bceddc6f3a32da0276a756c"
+  },
+  {
+   "id": "C010",
+   "paragraph": "P008",
+   "sentence_id": "P008.S2",
+   "sentence": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic” (van Prooijen et al., 2023, p. 5713).",
+   "scope": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic”",
+   "prev": "People who believed that COVID-19 is a hoax reported more containment-related behaviour, such as hygiene and physical distancing (Imhoff & Lamberty, 2020).",
+   "next": "Belief in COVID-19 conspiracy theories at baseline also predicted increases in generic conspiracist ideation over several months (Granados Samayoa et al., 2022).",
+   "citation": "van Prooijen et al., 2023, p. 5713",
+   "authors": [
+    "van Prooijen"
+   ],
+   "et_al": true,
+   "year": "2023",
+   "narrative": false,
+   "locator": "p. 5713",
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [
+    "predict deteriorated health responses to Covid-19 throughout the course of the pandemic"
+   ],
+   "numbers": [],
+   "ref": "vanprooijen2023",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "31397d8a53323ebadf68f912"
+  },
+  {
+   "id": "C011",
+   "paragraph": "P008",
+   "sentence_id": "P008.S3",
+   "sentence": "Belief in COVID-19 conspiracy theories at baseline also predicted increases in generic conspiracist ideation over several months (Granados Samayoa et al., 2022).",
+   "scope": "Belief in COVID-19 conspiracy theories at baseline also predicted increases in generic conspiracist ideation over several months",
+   "prev": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic” (van Prooijen et al., 2023, p. 5713).",
+   "next": "Granados Samayoa et al. (2022) showed that this happens because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+   "citation": "Granados Samayoa et al., 2022",
+   "authors": [
+    "Granados Samayoa"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "granadossamayoa2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "0a3401ec915762455392d3c0"
+  },
+  {
+   "id": "C012",
+   "paragraph": "P008",
+   "sentence_id": "P008.S4",
+   "sentence": "Granados Samayoa et al. (2022) showed that this happens because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+   "scope": "showed that this happens because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+   "prev": "Belief in COVID-19 conspiracy theories at baseline also predicted increases in generic conspiracist ideation over several months (Granados Samayoa et al., 2022).",
+   "next": "Interventions",
+   "citation": "Granados Samayoa et al. (2022)",
+   "authors": [
+    "Granados Samayoa"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": true,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "granadossamayoa2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "5b96aa4b424bd54d851aeda2"
+  },
+  {
+   "id": "C013",
+   "paragraph": "P010",
+   "sentence_id": "P010.S1",
+   "sentence": "A systematic review of 25 studies found that most interventions designed to counter conspiracy beliefs were ineffective (O'Mahony et al., 2023).",
+   "scope": "A systematic review of 25 studies found that most interventions designed to counter conspiracy beliefs were ineffective",
+   "prev": "Interventions",
+   "next": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills (Greenburgh et al., 2022).",
+   "citation": "O'Mahony et al., 2023",
+   "authors": [
+    "O'Mahony"
+   ],
+   "et_al": true,
+   "year": "2023",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [
+    "25"
+   ],
+   "ref": "omahony2023",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "3fd8d47df008764ae5fc4ede"
+  },
+  {
+   "id": "C014",
+   "paragraph": "P010",
+   "sentence_id": "P010.S2",
+   "sentence": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills (Greenburgh et al., 2022).",
+   "scope": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills",
+   "prev": "A systematic review of 25 studies found that most interventions designed to counter conspiracy beliefs were ineffective (O'Mahony et al., 2023).",
+   "next": "",
+   "citation": "Greenburgh et al., 2022",
+   "authors": [
+    "Greenburgh"
+   ],
+   "et_al": true,
+   "year": "2022",
+   "narrative": false,
+   "locator": null,
+   "prefix": null,
+   "original": null,
+   "group": [],
+   "quotes": [],
+   "numbers": [],
+   "ref": "greenburgh2022",
+   "match": "matched",
+   "match_note": "",
+   "cache_key": "daac94b7617a72f529cf04f8"
+  }
+ ],
+ "files": [
+  {
+   "path": "/home/user/refaudit/tests/fixtures/claims_sources/Pilch_2023_FrontPsychol.pdf",
+   "ref": "pilch2023",
+   "how": "DOI in the file",
+   "supp": false,
+   "error": null
+  },
+  {
+   "path": "/home/user/refaudit/tests/fixtures/claims_sources/vanProoijen_2023_PsycholMed.pdf",
+   "ref": "vanprooijen2023",
+   "how": "DOI in the file",
+   "supp": false,
+   "error": null
+  }
+ ],
+ "services": [
+  [
+   "Crossref",
+   "answered from the cache (20 from the cache)"
+  ],
+  [
+   "OpenAlex",
+   "answered from the cache (10 from the cache)"
+  ],
+  [
+   "Unpaywall",
+   "not needed"
+  ],
+  [
+   "Europe PMC",
+   "not needed"
+  ],
+  [
+   "Semantic Scholar",
+   "not needed"
+  ],
+  [
+   "Download",
+   "not needed"
+  ]
+ ],
+ "failures": []
+}

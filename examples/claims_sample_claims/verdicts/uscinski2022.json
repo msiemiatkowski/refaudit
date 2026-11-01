@@ -1,0 +1,58 @@
+{
+  "refkey": "uscinski2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Four studies of change over time using repeated cross-sectional national polls: earlier survey items were re-polled with the exact original wording and T1 and T2 proportions were compared (two-tailed difference-in-proportions tests); Study 4 traces a conspiracy-thinking scale across surveys (OLS trend). Descriptive and correlational; no causal design.",
+    "sample": "U.S. adults (T1 polls fielded 1966-2020; T2 polls online, opt-in, quota-based, 2020-2021); YouGov national samples in six European countries (Germany, Great Britain, Italy, Poland, Portugal, Sweden) in 2016 and 2018; four U.S. surveys (2012-2020) for Study 3 and eight U.S. surveys (October 2012 to May 2021) for Study 4.",
+    "measures": "Study 1: belief in 46 specific conspiracy theories plus 4 pieces of COVID-19 misinformation (U.S.); Study 2: belief in six conspiracy theories (Alien Contact, AIDS Virus, Control World, Holocaust Denial, Global Warming, Hide Immigrants); Study 3: which of nine groups are 'likely to work in secret against the rest of us'; Study 4: American Conspiracy Thinking Scale (ACTS, four items, 1-5).",
+    "main_results": "Study 1: of 46 conspiracy theories and related misinformation, 7 increased significantly, 22 showed no significant change and 17 decreased (average change across the 37 Roper-based items -3.84 points); Study 2: of 35 country-by-theory comparisons, 1 increased (Holocaust denial in Sweden, 1% to 3%), 7 decreased, 27 showed no significant change; Study 3: no significant increase in the average number of perceived conspiring groups (2.56 in 2012 vs 2.70 in 2020, p = 0.09); Study 4: no average increase in conspiracy thinking 2012-2021. The authors conclude there is no systematic evidence that conspiracism, however operationalized, has increased, but caution against sweeping inferences beyond the theories and countries tested."
+  },
+  "occurrences": [
+    {
+      "id": "C001",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "The sentence restates the paper's own central finding, almost in its own words. The abstract says that 'in no instance' did the authors observe systematic evidence of an increase in conspiracism. This covers the United States (Study 1: 46 specific theories, some tracked over up to 55 years; Studies 3-4: perceived conspirators and conspiracy thinking, 2012-2021) and six European countries (Study 2: Germany, Great Britain, Italy, Poland, Portugal, Sweden, 2016 vs 2018). In Study 2, only 1 of 35 comparisons rose significantly and 7 fell. Direction, the number of countries and the populations all match, and the sentence makes no causal claim. 'No systematic evidence' is accurate even though the paper reports a few significant increases (7 of 46 in Study 1; 13 of 52 across Studies 1-2), because the authors themselves judge these insufficient. 'Contrary to this impression' matches the paper's framing against the popular belief that conspiracism is rising. Context only, not an error: the European test covers six theories over two years, and the authors say they cannot rule out increases in other beliefs or other countries; the sentence does not claim more than this.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "In no instance do we observe systematic evidence for an increase in conspiracism, however operationalized.",
+          "page": "1",
+          "pdf_page": 1,
+          "section": ""
+        },
+        {
+          "quote": "Out of the 35 comparisons presented, the proportion of believers significantly increased over time in only one: Holocaust denial in Sweden increased from 1% to 3% of the population, (p = 0.016).",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        }
+      ],
+      "search_terms": [
+        "systematic evidence",
+        "no instance",
+        "compelling evidence",
+        "scant evidence",
+        "increase / increased",
+        "European",
+        "Europe",
+        "six countries",
+        "Sweden",
+        "Germany",
+        "Poland",
+        "seven nations",
+        "cross-national",
+        "2016 and 2018",
+        "preclude",
+        "caution",
+        "sweeping",
+        "limitation",
+        "could be increasing"
+      ],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

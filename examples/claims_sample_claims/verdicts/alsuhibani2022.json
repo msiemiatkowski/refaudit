@@ -1,0 +1,38 @@
+{
+  "refkey": "alsuhibani2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Three cross-sectional online surveys (UK). Confirmatory factor analysis comparing one-factor vs two-correlated-factor models of paranoia and conspiracy beliefs; multivariate regression with both latent belief factors predicted simultaneously by psychological constructs, with Wald tests for differential association. Authors state all three studies were cross-sectional and make no strong causal claims.",
+    "sample": "Study 1: mainly students from Liverpool, Oxford and Ulster participant panels, UK-born, final N = 496. Study 2: Qualtrics sample stratified by age, sex and household income to approximate the UK population, N = 1,519. Study 3: same sampling frame, N = 638.",
+    "measures": "Paranoia: Revised Paranoia and Deservedness Scale (Studies 1-2), propositional revised Paranoia Scale (Study 3). Conspiracy beliefs: Conspiracy Mentality Questionnaire (Study 1), Generic Conspiracist Beliefs Scale (Studies 2-3). Attachment (RQ; ECR-12), self-schemas/self-esteem (BCSS; SERS), Multidimensional Locus of Control, 3-item Loneliness Scale (Studies 1 and 2 only), Cognitive Reflection Test (Studies 2-3), NPI-13 narcissism (Study 3).",
+    "main_results": "Two correlated factors fit best in all studies (latent r = .42-.53; summed-score r = .34, .44, .50). Both belief systems associated with chance and powerful-others locus of control and with loneliness: Study 1 zero-order r = .15 for conspiracy vs .54 for paranoia, regression beta = .15 vs .50 (Wald p < .001, stronger for paranoia); Study 2 r = .28 vs .59, beta = .15 vs .18 (no significant difference). Paranoia specifically associated with negative self-esteem and (Studies 1-2) insecure attachment; conspiracy beliefs with positive self-esteem, narcissism (Study 3) and poor CRT performance (Studies 2-3)."
+  },
+  "occurrences": [
+    {
+      "id": "C007",
+      "verdict": "OVERSTATED",
+      "support_type": "finding",
+      "severity": "MAJOR",
+      "explanation": "The source does find that loneliness is positively associated with belief in conspiracy theories (Studies 1 and 2; loneliness was not measured in Study 3), but the association is modest (zero-order r = .15 and .28; regression beta = .15 in both studies) and in Study 1 was much stronger for paranoia than for conspiracy beliefs. All three studies were cross-sectional and the authors explicitly state they make no strong claims about the causal role of the psychological constructs. The manuscript's wording 'drives people towards' asserts a causal effect of loneliness on conspiracy beliefs that the design cannot establish and the authors disclaim.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Both belief systems were also associated with loneliness although, in one study (Study 1, with the least representative sample), this effect was greater for paranoia.",
+          "page": "16",
+          "pdf_page": 16,
+          "section": ""
+        },
+        {
+          "quote": "we make no strong claims about the causal role of the psychological processes identified",
+          "page": "18",
+          "pdf_page": 18,
+          "section": ""
+        }
+      ],
+      "search_terms": ["lonel", "isolat", "caus", "cross-sectional", "longitudinal", "direction", "drive", "driv", "lead to", "leads to", "prospective", "experiment"],
+      "fix": "Loneliness is associated with belief in conspiracy theories (Alsuhibani et al., 2022).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

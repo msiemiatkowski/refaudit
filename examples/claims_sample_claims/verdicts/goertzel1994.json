@@ -1,0 +1,58 @@
+{
+ "refkey": "goertzel1994",
+ "prompt_version": "1",
+ "source_summary": {
+  "design": "Cross-sectional survey (abstract only; no full text available, so the body of the paper could not be read).",
+  "sample": "348 residents of southwestern New Jersey, USA.",
+  "measures": "Belief in a list of 10 conspiracy theories; anomia; interpersonal trust; insecurity about employment; demographics (race/ethnicity, age, gender, educational level, occupational category).",
+  "main_results": "Most respondents rated several of the 10 conspiracy theories as at least probably true; belief in one conspiracy went with belief in others; belief was correlated with anomia, lack of interpersonal trust and employment insecurity; higher among Black and Hispanic than white respondents and slightly higher among young people; few significant correlations with gender, education or occupation."
+ },
+ "occurrences": [
+  {
+   "id": "C002",
+   "verdict": "UNVERIFIABLE",
+   "support_type": "none",
+   "severity": "MINOR",
+   "explanation": "Only the OpenAlex abstract of Goertzel (1994) is available (no open-access full text). The manuscript attributes to Goertzel the argument that conspiracy theories offer people simple explanations for events that are otherwise hard to understand. The abstract contains nothing of the kind: it reports a survey of 348 New Jersey residents and correlations of conspiracy belief with anomia, lack of interpersonal trust, employment insecurity, race/ethnicity and age, plus the finding that belief in one conspiracy goes with belief in others. A search of the abstract for 'simple', 'explanation', 'understand', 'complex', 'event', 'sense' and related terms found no match. The abstract neither supports nor contradicts the attributed argument, which may appear in the paper's discussion, so the claim cannot be settled from the available text. No source in the manuscript's reference list makes this argument as its own: the candidates helper and a search of all source texts found only secondary summaries (e.g. vanprooijen2023: 'Conspiracy theories help people understand their social environment (Douglas et al., 2019; Van Prooijen, 2020)'; imhoff2020 on events of magnitude begging explanation, citing Leman & Cinnirella, 2007), which are about sense-making or control rather than 'simple explanations' and are attributed to other works.",
+   "group_share": "",
+   "evidence": [
+    {
+     "quote": "A survey of 348 residents of southwestern New Jersey showed that most believed that several of a list of 10 conspiracy theories were at least probably true.",
+     "page": "",
+     "pdf_page": null,
+     "section": "Abstract"
+    },
+    {
+     "quote": "Belief in conspiracies was correlated with anomia, lack of interpersonal trust, and insecurity about employment.",
+     "page": "",
+     "pdf_page": null,
+     "section": "Abstract"
+    }
+   ],
+   "search_terms": [
+    "simple",
+    "simpl",
+    "explanation",
+    "explain",
+    "understand",
+    "complex",
+    "event",
+    "hard",
+    "difficult",
+    "sense",
+    "make sense",
+    "meaning",
+    "uncertain",
+    "simple explanation (all source texts)",
+    "simplif (all source texts)",
+    "sense-making (all source texts)",
+    "comprehensible (all source texts)",
+    "hard to understand / difficult to understand (all source texts)",
+    "Goertzel (all source texts)"
+   ],
+   "fix": "Check the claim against the full text of Goertzel (1994) and add a page locator for the passage where this argument is made; if it is not there, reword to what the abstract supports (e.g. 'Goertzel (1994) found that belief in conspiracies was correlated with anomia, lack of interpersonal trust, and insecurity about employment') or replace the citation.",
+   "alternative": "",
+   "confidence": "medium"
+  }
+ ]
+}

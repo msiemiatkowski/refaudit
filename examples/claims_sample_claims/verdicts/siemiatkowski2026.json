@@ -1,0 +1,53 @@
+{
+  "refkey": "siemiatkowski2026",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Five studies. Studies 1 and 2: cross-national multilevel (mixed-effects) analyses of existing datasets (Study 1: Hornsey, Pearson, et al., 2023; Study 2: van Bavel et al., 2022), with the Human Freedom Index (HFI) as a country-level predictor and a random intercept for countries. Study 3: a preregistered correlational survey in Poland. Study 4: a preregistered three-condition experiment manipulating perceived societal freedom (low, high, control). Study 5: a cross-sectional mediation study in Poland (PROCESS Model 4).",
+    "sample": "Study 1: N = 6353 participants from 36 countries across six continents (65.6% women, Mage = 21.81). Study 2: N = 44,458 from 52 countries. Studies 3-5: Polish online panels, N = 278, 246 and 592.",
+    "measures": "HFI (0-10; 76 indicators in 12 areas; 2019 report for Study 1, 2020 report for Study 2); perceived societal freedom (8 items based on the HFI); generic conspiracy beliefs (Lantian et al., 2016 single item, which explicitly mentions authorities and government); an interest-group COVID-19 conspiracy item; conspiracy mentality; generic conspiracist beliefs (Kay & Slovic, 2023); vaccine-related and financial-crisis conspiracy beliefs; political anger; lack of control. Covariates: age and gender (plus political orientation in Studies 2-5).",
+    "main_results": "Study 1: the HFI was a significant negative predictor of generic conspiracy beliefs (beta = -.14; model fit improvement chi2(1) = 7.83, p = .005), controlling for age and gender. Study 2: the HFI negatively predicted interest-group COVID-19 conspiracy beliefs (beta = -.17). Study 3: perceived freedom was negatively related to most conspiracy measures, but not significantly to the single-item generic measure (beta = -.07). Study 4: the high-freedom condition lowered conspiracy beliefs and the low-freedom condition raised them (one non-significant contrast, for financial-crisis beliefs). Study 5: political anger mediated the link; lack of control did not."
+  },
+  "occurrences": [
+    {
+      "id": "C008",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "This is the source's own Study 1 result. The authors analysed N = 6353 participants from 36 countries (a dataset collected by Hornsey, Pearson, et al., 2023) in multilevel models with the 2019 Human Freedom Index as the country-level predictor. The HFI was a significant negative predictor of the single-item generic conspiracy beliefs measure (Lantian et al., 2016): beta = -.14, with a significant model-fit improvement, chi2(1) = 7.83, p = .005, controlling for age and gender. The sentence matches on every point checked. Direction: more freedom, weaker beliefs. Number: 36 countries. Measure: the HFI. Construct: generic conspiracy beliefs. Significance: significant. Wording: 'was associated with' is correlational, which fits the design. The dataset is secondary, but the HFI analysis is the authors' own, so this is not SECONDARY. Context the sentence leaves out without overreaching: the item explicitly mentions authorities and government, and the authors note that collinear country-level factors such as corruption were not controlled. Neither undermines the sentence.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Consistent with our hypothesis, the HFI emerged as a significant negative predictor of generic conspiracy beliefs (β = −.14).",
+          "page": "",
+          "pdf_page": null,
+          "section": "STUDY 1 > Results"
+        },
+        {
+          "quote": "This resulted in the final sample of N = 6353 individuals (65.6% women, 34.4% men, Mage = 21.81, SDage = 5.62) from 36 countries across six continents.",
+          "page": "",
+          "pdf_page": null,
+          "section": "STUDY 1 > Method > Participants"
+        }
+      ],
+      "search_terms": [
+        "36 countries",
+        "Human Freedom Index",
+        "HFI",
+        "generic conspiracy belief",
+        "negative predictor",
+        "β = −.14",
+        "higher levels of HFI",
+        "associated with lower",
+        "student",
+        "GDP",
+        "corruption",
+        "robust",
+        "ecological",
+        "causal"
+      ],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

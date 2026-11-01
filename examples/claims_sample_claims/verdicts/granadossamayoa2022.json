@@ -1,0 +1,64 @@
+{
+  "refkey": "granadossamayoa2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Two prospective longitudinal survey studies conducted during the COVID-19 pandemic. Lagged OLS regressions predicted follow-up conspiracist ideation from baseline conspiracist ideation plus baseline belief in COVID-19 conspiracy theories, with change-score analyses as robustness checks. No experimental manipulation and no mediation or mechanism analyses; the authors say future research should address mechanisms.",
+    "sample": "Study 1: 107 US MTurk workers (of 501 at baseline; baseline June 9, 2020, follow-up December 2020, six months; 56 female, 51 male; M age 40.2). Study 2: 1,037 UK adults from the COVID-19 Psychological Research Consortium (C19PRC) panel, Waves 1, 2 and 4 (March to December 2020; M age 51.0).",
+    "measures": "Belief in COVID-19 conspiracy theories: two items adapted from Imhoff and Lamberty (virus intentionally created / danger exaggerated), averaged. Conspiracist ideation: trimmed Generic Conspiracist Beliefs Scale (10 items at baseline, 5 at follow-up; Study 1) and the 5-item Conspiracy Mentality Questionnaire (Waves 1 and 4; Study 2). Study 1 also measured belief in voter fraud in the 2020 US Presidential election (follow-up) and political orientation. No measure of trust in authorities or institutions.",
+    "main_results": "Study 1: baseline COVID-19 conspiracy belief predicted belief in election voter fraud six months later (beta = 0.65; beta = 0.50 controlling for baseline conspiracist ideation and political orientation) and increases in conspiracist ideation over six months controlling for baseline ideation (beta = 0.38, about 8% additional variance; change-score beta = 0.28). Study 2: COVID-19 conspiracy belief at Wave 2 predicted increases in conspiracist ideation from Wave 1 to Wave 4 (beta = 0.16; change-score beta = 0.12). The discussion offers loss of trust in authorities (citing Pierre 2020) and social exposure as possible, untested mechanisms."
+  },
+  "occurrences": [
+    {
+      "id": "C011",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "This is the paper's central finding, stated in almost the same words. In both longitudinal studies, greater belief in COVID-19 conspiracy theories at baseline predicted increases in conspiracist ideation over several months, controlling for baseline ideation (Study 1, US, N = 107, six months, beta = 0.38; Study 2, UK, N = 1,037, roughly nine months, beta = 0.16), with change-score analyses pointing the same way. 'Predicted' matches the prospective, non-experimental design, and 'generic conspiracist ideation' is the source's own term in its abstract (Generic Conspiracist Beliefs Scale in Study 1, Conspiracy Mentality Questionnaire in Study 2).",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "increases in generic conspiracist ideation over a period of several months (Studies 1 and 2)",
+          "page": "1",
+          "pdf_page": 1,
+          "section": ""
+        },
+        {
+          "quote": "greater belief in COVID-19 conspiracy theories at baseline significantly predicted increases in conspiracist ideation over a six-month period, β = 0.38 (95% CI: 0.24, 0.51), t(104) = 6.20, p < 0.001.",
+          "page": "7",
+          "pdf_page": 7,
+          "section": ""
+        }
+      ],
+      "search_terms": ["several months", "generic conspiracist", "increases in conspiracist", "at baseline", "six-month", "Wave 4"],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    },
+    {
+      "id": "C012",
+      "verdict": "OVERSTATED",
+      "support_type": "speculation",
+      "severity": "MAJOR",
+      "explanation": "The source did not show any mechanism. Neither study measured trust in authorities or institutions, and no mediation or mechanism analysis was run. The loss-of-trust idea appears only in the General Discussion as a suggestion for future research ('Future research should address the mechanisms... A loss of trust in authorities is one possible mechanism'), attributed in part to another work (reference 52, Pierre 2020), alongside a second possible mechanism (social exposure to conspiracy communities). The manuscript turns this explicitly untested speculation into something the authors 'showed'. The content of the proposed mechanism (lost trust in implicated authorities making people receptive to other conspiracy theories) is relayed accurately; only its evidential status is wrong. The candidates helper found no source in the manuscript's list that demonstrated such a mechanism, so a wording change is the right fix.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Future research should address the mechanisms through which belief in specific conspiracy theories triggers increases in conspiracist ideation. A loss of trust in authorities is one possible mechanism [52].",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        },
+        {
+          "quote": "From our perspective, when specific conspiracy theories lure people in, they set off a sequence of psychological processes (e.g., reduced trust in institutions) that guide people in the direction of being receptive toward a wider variety of conspiracy theories",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        }
+      ],
+      "search_terms": ["trust", "authorit", "institution", "mediat", "mechanism", "receptiv"],
+      "fix": "Granados Samayoa et al. (2022) suggested that this may happen because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

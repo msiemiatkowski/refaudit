@@ -1,0 +1,44 @@
+{
+ "results": {
+  "C002": {
+   "evidence": [
+    {
+     "quote": "A survey of 348 residents of southwestern New Jersey showed that most believed that several of a list of 10 conspiracy theories were at least probably true.",
+     "ok": true,
+     "score": 100,
+     "where": "section Abstract"
+    },
+    {
+     "quote": "Belief in conspiracies was correlated with anomia, lack of interpersonal trust, and insecurity about employment.",
+     "ok": true,
+     "score": 100,
+     "where": "section Abstract"
+    }
+   ],
+   "locator": "",
+   "quotations": [],
+   "numbers": {}
+  },
+  "C007": {
+   "evidence": [
+    {
+     "quote": "Both belief systems were also associated with loneliness although, in one study (Study 1, with the least representative sample), this effect was greater for paranoia.",
+     "ok": true,
+     "score": 100,
+     "where": "PDF page 16, printed page 16"
+    },
+    {
+     "quote": "we make no strong claims about the causal role of the psychological processes identified",
+     "ok": true,
+     "score": 100,
+     "where": "PDF page 18, printed page 18"
+    }
+   ],
+   "locator": "",
+   "quotations": [],
+   "numbers": {}
+  }
+ },
+ "errors": [],
+ "sample": []
+}
