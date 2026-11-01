@@ -139,9 +139,9 @@ Options are `--sources DIR`, `--model M` (default `fable`), `--effort E` (defaul
 - **Locally** (best for paywalled PDFs on your disk): clone the repository, `pip install -e .`, and install pandoc and poppler-utils. Optionally install tesseract-ocr for scanned PDFs. Start `claude` in the repository and run `/check-claims` with paths anywhere on your disk.
 - **In a cloud session:** commit the manuscript and PDFs under `inputs/`, and give the environment **Full** network access, because open-access copies come from many publisher hosts. Then run `/check-claims inputs/manuscript.docx --sources inputs/pdfs`.
 
-So that unattended runs don't stop at permission prompts, copy `.claude/settings.example.json` to `.claude/settings.json`. It allows `refaudit claims`, pandoc, pdftotext, pdftoppm and tesseract, the two judge agents, and writes to the verdict folders. Claude Code would not write that file itself, because it changes Claude's own permissions.
+So that unattended runs don't stop at permission prompts, copy `.claude/settings.example.json` to `.claude/settings.json`. It allows `refaudit claims`, pandoc, pdftotext, pdftoppm and tesseract, the two judge agents, and writes to the verdict folders. It also registers the judges' two hooks at settings level, limited to the judges' own tool calls, so they apply even where agent hooks are skipped. Claude Code would not write that file itself, because it changes Claude's own permissions.
 
-The two agents also load only in sessions started after `.claude/agents/` exists; restart once after pulling this branch.
+The two agents also load only in sessions started after `.claude/agents/` exists; restart once after pulling this branch. Trust the folder when Claude Code asks: until then it skips the hooks in the agents' files.
 
 ### What happens
 
@@ -154,6 +154,7 @@ The two agents also load only in sessions started after `.claude/agents/` exists
    - Gets each source's text, in this order:
      - **your file**, matched by a DOI in the file, the title on its first page, or an AuthorYear file name;
      - **an open-access copy**, from URLs given by Unpaywall, OpenAlex, Europe PMC full-text XML or Semantic Scholar (only PDFs and Europe PMC XML are read; landing pages are not scraped and no shadow libraries are used);
+       a host that refuses a download (usually a bot check, as at SAGE, Wiley and PMC's PDF links) is skipped for the rest of the run and named in the Summary sheet;
      - **the abstract**, from OpenAlex, Crossref or Semantic Scholar.
    - Keeps a text only if its title (fuzzy ≥ 85) and first author appear on its first pages.
    - Reads PDFs with `pdftotext -layout` page by page, splitting two-column pages and finding printed page numbers, so evidence reads "p. 540 (PDF p. 3)". It falls back to pypdf, and uses tesseract OCR for pages without text.
@@ -162,11 +163,12 @@ The two agents also load only in sessions started after `.claude/agents/` exists
 2. **Judging** (`/check-claims`): one `claim-judge` subagent per source, in parallel batches of up to five.
    - Each reads the source once and judges each of its citations separately.
    - Each writes `verdicts/<refkey>.json` with the verdict, type of support, severity, explanation, one or two verbatim quotes with pages, a minimal fix, a better reference from the list if there is one, and its confidence.
-   - The judges may run only `refaudit claims candidates` and `status`, and have no web tools.
+   - The judges may run only `refaudit claims candidates` and `status`, and have no web tools. A hook enforces this where Claude Code runs the agents' hooks (see below).
 3. **`refaudit claims verify WORK`**
    - Checks every evidence quote against the source text on the stated page (fuzzy ≥ 95 after normalizing whitespace, hyphenation and ligatures).
    - Compares page locators, matches the manuscript's direct quotations verbatim, and lists the claim's numbers as found or not found.
-   - Picks rows for a blind second opinion: every row that isn't GREEN, every low-confidence row and a random 10% of GREEN rows. The `claim-second-opinion` subagent never sees the first verdict; a hook blocks it.
+   - Picks rows for a blind second opinion: every row that isn't GREEN, every low-confidence row and a random 10% of GREEN rows.
+   - Before the second opinions, `refaudit claims seal WORK` moves the first verdicts out of the work folder. The `claim-second-opinion` subagent therefore cannot see them, even where hooks don't run, and its hook blocks the rest. The next `verify` brings them back and compares the two opinions.
 4. **`refaudit claims report WORK`**: writes `<stem>_claims.xlsx`, `<stem>_claims_comments.docx` and `<stem>_claims.json`.
 
 `refaudit claims status WORK` prints, as JSON, what still needs judging. `refaudit claims candidates WORK C012` lists the passages in the other cited sources that best fit claim C012.
@@ -218,6 +220,10 @@ To spend less:
 - choose a lighter model or effort, for example `/check-claims ms.docx --model sonnet --effort high`;
 - check part of a manuscript first;
 - rely on the cache: re-runs judge only claims whose text, citation or source text changed.
+
+If your plan's limit for a model is reached mid-run, run `/check-claims` again with another `--model`: verdicts already written are kept, and the Summary sheet records the model you name.
+
+The design decisions, known limits and open questions are in [NOTES.md](NOTES.md). The acceptance run, with its outputs, is described in [examples/README.md](examples/README.md).
 
 ### External tools
 
@@ -294,7 +300,9 @@ This runs the offline unit tests: parsing, normalization, comparison, status log
 pytest -m network
 ```
 
-This is the live smoke test. It runs the CLI on the three samples against the real APIs and asserts the statuses in `tests/expected.csv`.
+This is the live smoke test. It runs the CLI on the three samples against the real APIs and asserts the statuses in `tests/expected.csv`. With `REFAUDIT_MAILTO` set, it also fetches the claim-check fixture's source texts and checks their evidence levels.
+
+The claim check's offline tests cover sentence splitting, citation forms and matching, your files, PDF pages and labels, BM25, quote checks, the reports and the hooks. `tests/test_claims_acceptance.py` checks the acceptance criteria against the committed run in `examples/`. `python tests/make_claims_fixture.py` rebuilds `tests/fixtures/claims_sample.docx` and `tests/claims_expected.csv`; `--download` fetches the two CC-BY PDFs again.
 
 To rebuild the samples (`sample.docx` with a "References" heading and APA 7 hanging indents, `sample_pl.docx` with a "Bibliografia" heading, and `sample.bib`), run:
 

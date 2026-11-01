@@ -2,7 +2,7 @@
 
 ## Decisions
 
-**Command line.** `refaudit claims prepare|status|verify|report|candidates` is a subcommand group. `cli.main`
+**Command line.** `refaudit claims prepare|status|verify|seal|report|candidates` is a subcommand group. `cli.main`
 hands any argument list that starts with `claims` to `claims_cli.main`, so `refaudit FILE` keeps working exactly as
 before, and part 1 still makes no model calls. Version 2.0.0.
 
@@ -80,12 +80,21 @@ containing one of the claim's numbers are added; numbers are normalized, so `1,2
   SECONDARY), partly (PARTIALLY-SUPPORTED, OVERSTATED), wrong (NOT-SUPPORTED, MISATTRIBUTED) or unverifiable.
   Otherwise the row is DISPUTED (ORANGE) and both rationales are shown. Strict verdict equality would turn many
   SUPPORTED vs WITH-CAVEAT pairs into disputes.
-- **Blindness.** It is enforced, not only requested: a PreToolUse hook stops the second judge from reading
-  `verdicts/`, the caches or the reports, and from searching outside `texts/` and `packets/`.
+- **Blindness.** It does not depend on the judges' good behaviour. Before the second opinions, `refaudit claims
+  seal` moves the first verdicts (`verdicts/`, the verdict cache, the check results) out of the work folder into a
+  hidden sibling folder; `verify` brings them back. While they are away, `status` still knows what was judged.
+  On top of that, a PreToolUse hook stops the second judge from reading `verdicts/`, the sealed folder, the
+  caches or the reports, and from searching outside `texts/` and `packets/`. The hook alone was not enough: in
+  the acceptance run the agents' hooks did not run at all (see Known limits).
 
 **Judges' Bash.** A subagent's `tools` field can't restrict Bash to particular commands. A PreToolUse hook
 (`.claude/hooks/refaudit_only.py`) therefore allows only single `refaudit claims candidates|status` commands. The
 judges have no web tools.
+- **Where the hooks are declared.** They are in each agent's frontmatter. `.claude/settings.example.json`
+  declares them again at settings level, with `--only <agent>` so they touch only the judges' tool calls
+  (`agent_type`), because settings hooks also run inside subagents.
+- **Fail closed.** A hook that crashes or gets bad input blocks the call; by default a crashing hook lets it
+  through.
 
 **Cache.**
 - **Key.** Verdicts are cached by sentence, citation, year, reference, the source text's sha256 and
@@ -111,6 +120,19 @@ changes accepted. The runs are split so the comment covers only the citation.
   Claude's own permissions. The intended rules are in `.claude/settings.example.json`; copy it to activate them.
 - **Agents need a restart.** The agents load only in sessions started after `.claude/agents/` exists; the first
   agents directory created mid-session isn't hot-reloaded. Restart Claude Code once after pulling.
+- **The agents' hooks did not run in the acceptance session.** The judges' transcripts show no hook events, and
+  they ran read-only shell commands (`ls`, `cat`, `grep`, `python3 -c` with `refaudit.quotes`) that the hook
+  would have blocked. Claude Code's documentation says frontmatter hooks of project agents are skipped until the
+  folder is trusted, and how cloud sessions answer that is not documented; the agents had also been created
+  mid-session. Nothing harmful happened, and blindness held because the first verdicts were moved away (now
+  `refaudit claims seal`). To enforce the hooks, trust the folder, restart Claude Code, and copy
+  `.claude/settings.example.json` to `.claude/settings.json`.
+- **Some publishers refuse automated downloads.** SAGE, Wiley and PMC's PDF links answered with bot checks
+  (HTTP 403). refaudit doesn't get around them; it uses Europe PMC's XML or another listed copy, or asks for
+  your PDF.
+- **Usage limits.** A long run can hit the account's limit for a model. The acceptance run hit the Fable limit
+  after 5 of 10 sources; the rest was judged with `--model opus`. Verdicts already written are kept, so a run can
+  continue later or with another model, and the Summary records what was used.
 - **Cross-language retrieval.** BM25 is lexical, so a Polish claim retrieves little from an English source. The
   candidate passages are hints only; the judges read the full text.
 - **PDF layouts.** Column splitting and page-label detection are heuristics. Complex layouts (three columns,
@@ -127,12 +149,68 @@ changes accepted. The runs are split so the comment covers only the citation.
 
 ## Acceptance
 
-The end-to-end acceptance needs **Full network access**. That covers the fixture manuscript citing real CC-BY
-open-access articles, `tests/claims_expected.csv`, the `/check-claims` run, and the outputs in `examples/`.
+The acceptance run passed. Its outputs are in `examples/`, described in `examples/README.md`.
 
-In this cloud session, Unpaywall, Europe PMC, Semantic Scholar and the publisher hosts were blocked by the
-environment's network policy, so the acceptance run is pending. Everything else is covered by offline tests, which
-include a small paged two-column PDF and a scanned PDF for OCR.
+**The fixture.** `tests/make_claims_fixture.py` builds `tests/fixtures/claims_sample.docx`. It has five short
+sections, 14 citations and ten references:
+- nine CC-BY open-access articles on conspiracy beliefs;
+- Goertzel (1994), which is closed, for case 9.
+
+**The planted cases.** Ten cases, plus four correct claims, are listed in `tests/claims_expected.csv`.
+
+**Your PDFs.** Two CC-BY PDFs are delivered through `--sources`:
+- van Prooijen et al. (2023), Psychological Medicine, which prints pages 5709–5716 on PDF pages 1–8;
+- Pilch et al. (2023), Frontiers in Psychology.
+
+**The run.**
+- **Command:** the `/check-claims` procedure with `--sources tests/fixtures/claims_sources --out examples`.
+- **Network:** Full network access; the e-mail for Unpaywall was set in the environment, not committed.
+- **Texts:**
+  - full text for all nine open-access sources:
+    - two from your PDFs;
+    - four from PLOS PDFs via Unpaywall;
+    - three from Europe PMC XML (SAGE, Wiley and PMC's PDF links refused downloads);
+  - the abstract only for Goertzel (1994).
+- **Judges:**
+  - Fable at max effort for 5 sources;
+  - Opus at max effort for the other 5 and for all 9 second opinions (Fable limit reached).
+- **Blindness:** the first verdicts were sealed away while the second opinions ran.
+
+| Case | Planted | Expected | Got (first judge / second opinion) |
+|---|---|---|---|
+| 1 | correct claim (Uscinski et al., 2022) | GREEN | GREEN, SUPPORTED |
+| 2 | reversed direction (Imhoff & Lamberty, 2020) | RED | RED, NOT-SUPPORTED / agrees |
+| 3 | causal wording, correlational data (Alsuhibani et al., 2022) | ORANGE | ORANGE, OVERSTATED / agrees |
+| 4 | wrong percentage, 71.2% for 49.6% (Pilch et al., 2023) | RED | RED, NOT-SUPPORTED / agrees |
+| 5 | belongs to O'Mahony et al. (2023), cited to Greenburgh et al. (2022) | RED | RED, MISATTRIBUTED, alternative omahony2023 / agrees |
+| 6 | discussion speculation as a finding (Granados Samayoa et al., 2022) | ORANGE | ORANGE, OVERSTATED / agrees |
+| 7 | secondary: a poll the source cites (Imhoff & Lamberty, 2020) | YELLOW | YELLOW, SECONDARY / agrees |
+| 8 | quotation cited as p. 5713, printed on p. 5715 (van Prooijen et al., 2023) | YELLOW | YELLOW, SUPPORTED-WITH-CAVEAT / agrees; quotation check: "on printed page 5715" |
+| 9 | closed article, no PDF (Goertzel, 1994) | GREY | GREY, UNVERIFIABLE / agrees |
+| 10 | correct claim found only in the uploaded PDF's body (Pilch et al., 2023) | GREEN | GREEN, SUPPORTED |
+
+**Results.**
+- **Correct claims.** The four extra correct claims are GREEN; one of them (O'Mahony et al., 2023) was the 10%
+  GREEN sample and its second opinion agreed.
+- **Quotes.** All 46 evidence quotes (28 first, 18 second) were found on their stated pages.
+- **Disputes.** No row is DISPUTED.
+- **Test.** `tests/test_claims_acceptance.py` checks these criteria against the committed outputs.
+- **Visual check.** The xlsx was opened with openpyxl: five sheets, status fills, frozen headers, filters, DOI
+  links. The commented docx was rendered with LibreOffice; its comments sit on the right citations, which
+  exposed and fixed a bug: a repeated citation got its comment on the first occurrence.
+
+**Fixes found on real articles.**
+- **One refusing host stopped all downloads.**
+- **Duplicate listings lost their version.** They demoted a published PDF.
+- **Europe PMC XML failed the identity check.**
+- **A Frontiers PDF was taken for a preprint.**
+- **Printed page numbers were missed.** This happened under a default `/PageLabels` and with two-column
+  running heads.
+- **Compound surnames were cut.** "Granados Samayoa" in narrative citations lost its first word.
+- **"COVID-19" gave a number.** Its 19 was read as a number in the claim.
+- **Re-runs lost the fetch report.** A re-run that reused texts dropped the record of the run that fetched them.
+
+**No real manuscript.** `inputs/` holds none, so none was run.
 
 ## Open questions
 
@@ -141,3 +219,9 @@ include a small paged two-column PDF and a scanned PDF for OCR.
 - Should cached source texts be deleted after a run? They can contain copyrighted text, and are kept for re-runs
   only.
 - Should a source with a retraction still be judged? It is now, and the row is RED either way.
+- Should the candidates helper also search references that are listed but never cited? A misattributed claim
+  may belong to one of them, but their texts are not fetched now, to save requests.
+- When a model's usage limit is reached mid-run, should the skill switch to another model by itself, or stop and
+  ask? In the acceptance run the switch was made by hand and recorded in the Summary.
+- Should the "PDFs to upload" sheet also list sources whose PDF was refused by the publisher's bot check, when
+  only XML or an accepted manuscript was found? They are FULL now, so they are not listed.

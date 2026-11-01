@@ -1,1 +1,498 @@
-{}
+{
+ "ad75d0e9a9cb90303ef9bb68": {
+  "id": "C007",
+  "verdict": "OVERSTATED",
+  "support_type": "finding",
+  "severity": "MAJOR",
+  "explanation": "The source finds that loneliness is associated with conspiracy beliefs, but only cross-sectionally. Loneliness was measured only in Studies 1 and 2 (UK samples: mainly students, N = 496; stratified quota sample, N = 1,519) with a 3-item scale. In latent regression models with all constructs entered simultaneously, it was positively and significantly associated with conspiracy mentality / generic conspiracist beliefs (standardised beta about .15 in both studies, Tables 2 and 4; zero-order r = .15 and .28, Tables 1 and 3). The association was much stronger for paranoia in Study 1 and equal in Study 2 (Table 7). The authors say that all three studies were cross sectional (p. 18), that they make no strong claims about the causal role of the constructs, and that experimental and longitudinal studies are needed. 'Drives people towards' is causal wording that the source neither tests nor supports: the association could run the other way or reflect third variables. The generic sentence also drops the UK-sample scope and the modest size of the effect. No other source in the manuscript's list supports a causal loneliness effect. The candidates helper returned no loneliness passages. Grep for loneliness and ostracism across all source texts found that omahony2023 and pilch2023 mention only ostracism, second-hand from Poon et al. (2020), which is not in the list. So the wording should be fixed, not the citation.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Both belief systems were also associated with loneliness although, in one study (Study 1, with the least representative sample), this effect was greater for paranoia.",
+    "page": "16",
+    "pdf_page": 16,
+    "section": ""
+   },
+   {
+    "quote": "this model is structural, identifying common and specific psychological features of paranoia and conspiracy theories, and we make no strong claims about the causal role of the psychological processes identified.",
+    "page": "18",
+    "pdf_page": 18,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "lonel",
+   "isolat",
+   "social capital",
+   "social network",
+   "network diversity",
+   "causal",
+   "cause / causing",
+   "cross sectional / cross-sectional",
+   "longitudinal",
+   "experiment",
+   "drive / driving",
+   "lead to / led to",
+   "predict",
+   "ostracism / social exclusion (all source texts)",
+   "refaudit claims candidates C007"
+  ],
+  "fix": "Loneliness is associated with stronger belief in conspiracy theories (Alsuhibani et al., 2022).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "alsuhibani2022",
+  "source_summary": {
+   "design": "Three cross-sectional online surveys. Confirmatory factor analyses compared one-factor and two-correlated-factor models of paranoia and conspiracy beliefs; multivariate latent regression models entered all psychological constructs simultaneously as predictors of covarying paranoia and conspiracy factors, with Wald tests of equality of coefficients.",
+   "sample": "UK. Study 1: mainly student sample from Liverpool, Oxford and Ulster university participant panels, UK-born only (N = 496). Study 2: Qualtrics sample of UK residents stratified by age, sex and household income (N = 1,519). Study 3: same sampling frame (N = 638).",
+   "measures": "Paranoia: PaDS-R P scale (Studies 1-2), a revised propositional paranoia scale (Study 3). Conspiracy beliefs: Conspiracy Mentality Questionnaire (Study 1), Generic Conspiracist Beliefs Scale (Studies 2-3). Also Relationship Questionnaire / ECR-12 attachment, Brief Core Schema Scales (Study 1) / Self-Esteem Rating Scale (Studies 2-3), Multidimensional Locus of Control Scale, 3-item Loneliness Scale (Studies 1-2 only), expanded Cognitive Reflection Test (Studies 2-3), NPI-13 narcissism (Study 3).",
+   "main_results": "A two-correlated-factor model fit better than a single factor in all studies (latent r = .42 to .53). Both belief systems were associated with chance and powerful-others locus of control and with loneliness (the loneliness effect was stronger for paranoia in Study 1 and did not differ in Study 2). Paranoia was specifically associated with negative self-esteem and, in Studies 1-2, insecure attachment. Conspiracy beliefs were associated with positive self-esteem (Studies 2-3), narcissism (Study 3) and poor CRT performance (Studies 2-3). The authors stress that all studies were cross-sectional and make no strong causal claims."
+  }
+ },
+ "dfbb048f560a44374186203d": {
+  "id": "C002",
+  "verdict": "UNVERIFIABLE",
+  "support_type": "none",
+  "severity": "NOTE",
+  "explanation": "Only the OpenAlex abstract is available; there is no full text. The abstract describes a correlational survey of 348 residents of southwestern New Jersey: how many of 10 conspiracy theories people believed, whether those beliefs went together, and their correlates (anomia, low interpersonal trust, employment insecurity, ethnicity, age). It says nothing about conspiracy theories offering simple explanations for events that are hard to understand, and none of the claim's key terms (simple, explanation, understand, event, argue) appear in it. The sentence credits Goertzel with a theoretical argument ('argued'). Such an argument would be in the introduction or discussion if anywhere, so the abstract can neither confirm nor refute it. No other source in the list credits this argument to Goertzel: Granados Samayoa et al. (2022) cite Goertzel (their ref. 10) only for how common and how coherent conspiracy beliefs are. The closest related statements credit other authors: van Prooijen et al. (2023) say conspiracy theories 'help people understand their social environment', and Alsuhibani et al. (2022) link need for closure to 'conspiratorial explanations for uncertain events'. So neither is a better-fitting reference for this narrative citation.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "A survey of 348 residents of southwestern New Jersey showed that most believed that several of a list of 10 conspiracy theories were at least probably true.",
+    "page": "",
+    "pdf_page": null,
+    "section": "Abstract"
+   },
+   {
+    "quote": "Belief in conspiracies was correlated with anomia, lack of interpersonal trust, and insecurity about employment.",
+    "page": "",
+    "pdf_page": null,
+    "section": "Abstract"
+   }
+  ],
+  "search_terms": [
+   "simpl",
+   "explan",
+   "explain",
+   "understand",
+   "comprehen",
+   "event",
+   "argu",
+   "meaning",
+   "sense",
+   "uncertain",
+   "complex",
+   "function",
+   "reason",
+   "cope",
+   "why",
+   "other sources: simple explanation",
+   "make sense of",
+   "sense-making",
+   "hard to understand",
+   "difficult to understand",
+   "complex events",
+   "offer/provide explanation",
+   "explanations for uncertain events",
+   "need for closure",
+   "understand their social environment",
+   "Goertzel",
+   "refaudit claims candidates C002"
+  ],
+  "fix": "None can be derived from the abstract. Check the full text of Goertzel (1994) for this argument; if it is not there, replace or remove the citation.",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "goertzel1994",
+  "source_summary": {
+   "design": "Cross-sectional, correlational survey. Only the OpenAlex abstract is available, so design details beyond it are unknown.",
+   "sample": "348 residents of southwestern New Jersey, USA.",
+   "measures": "Belief in each of a list of 10 conspiracy theories (whether each was 'at least probably true'); anomia; interpersonal trust; employment insecurity; ethnicity (Black, Hispanic, white), age, gender, educational level, occupational category.",
+   "main_results": "Most respondents thought several of the 10 conspiracy theories were at least probably true; belief in one conspiracy went with belief in others; belief correlated with anomia, lack of interpersonal trust and employment insecurity; Black and Hispanic respondents believed more than white respondents, and young people slightly more; few significant correlations with gender, education or occupation."
+  }
+ },
+ "5b96aa4b424bd54d851aeda2": {
+  "id": "C012",
+  "verdict": "OVERSTATED",
+  "support_type": "speculation",
+  "severity": "MAJOR",
+  "explanation": "The source's own findings are prospective associations: baseline belief in COVID-19 conspiracy theories predicted later increases in generic conspiracist ideation (US MTurk, N = 107; UK panel, N = 1,037). It never measured trust and ran no mediation analysis. 'Trust' appears only in the General Discussion (p. 11). There the authors say the mechanisms are a task for future research and call loss of trust in authorities 'one possible mechanism', crediting the idea to their reference [52], which is not in the manuscript's list. They also offer a second possible mechanism, a social component (exposure to conspiracy websites and like-minded people). And their trust idea is narrower: theories that implicate scientists or government officials make novel theories about those same actors more believable. The manuscript's 'showed that this happens because' turns an untested speculation, credited to another work, into a demonstrated causal mechanism.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Future research should address the mechanisms through which belief in specific conspiracy theories triggers increases in conspiracist ideation. A loss of trust in authorities is one possible mechanism [52].",
+    "page": "11",
+    "pdf_page": 11,
+    "section": ""
+   },
+   {
+    "quote": "Specifically, once people believe a specific conspiracy theory that implicates scientists or government officials in wrongdoing, their trust in those authorities will be violated, making it more likely that they believe other novel conspiracy theories",
+    "page": "11",
+    "pdf_page": 11,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "trust",
+   "distrust",
+   "mistrust",
+   "mechanism",
+   "mediat",
+   "indirect",
+   "process",
+   "authorit",
+   "institution",
+   "government",
+   "scientist",
+   "official",
+   "receptiv",
+   "because",
+   "causal",
+   "explain",
+   "future research",
+   "possible",
+   "potential",
+   "loss",
+   "violat",
+   "social component",
+   "[52]",
+   "Pierre"
+  ],
+  "fix": "Granados Samayoa et al. (2022) suggested that this may happen because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "granadossamayoa2022",
+  "source_summary": {
+   "design": "Two longitudinal (prospective panel) survey studies analysed with lagged hierarchical OLS regressions and change scores; correlational, with no manipulation and no mediation analysis.",
+   "sample": "Study 1: 107 US MTurk workers who completed both waves (baseline June 2020, n = 501; follow-up December 2020). Study 2: 1,037 UK adults from the C19PRC panel (waves 1, 2 and 4, March-December 2020).",
+   "measures": "Belief in two COVID-19 conspiracy theories (deliberately created / danger exaggerated; Study 2: made in a Wuhan lab / no more dangerous than flu); conspiracist ideation via a shortened Generic Conspiracist Beliefs Scale (Study 1) and the Conspiracy Mentality Questionnaire (Study 2); belief in 2020 US election voter fraud and political orientation (Study 1). Trust was not measured.",
+   "main_results": "Baseline belief in COVID-19 conspiracy theories predicted later belief in election voter fraud (beta = 0.50 controlling for conspiracist ideation and political orientation) and increases in conspiracist ideation over six months (Study 1, beta = 0.38, about 8% of variance) and over several months in the UK (Study 2, beta = 0.16). The authors read this as a 'gateway' effect; loss of trust in authorities and a social component are offered only as possible mechanisms for future research."
+  }
+ },
+ "daac94b7617a72f529cf04f8": {
+  "id": "C014",
+  "verdict": "MISATTRIBUTED",
+  "support_type": "none",
+  "severity": "MAJOR",
+  "explanation": "Greenburgh et al. (2022) is a cross-sectional online survey of 1,000 US adults about how paranoia relates to endorsement of conspiracy-type items that differ in intentionality and target of harm. It tests no intervention, reviews no intervention studies and never discusses priming an analytical mindset or teaching critical thinking. A search of the whole text finds 'analytic' only in 'meta-analytic evidence', 'mindset' only as 'general conspiracy mindset' (the CMQ measure), 'effective', 'intervention' and 'critical thinking' nowhere, and 'treatment' only in a remark about patients with schizophrenia. The sentence restates, almost word for word, O'Mahony et al. (2023). That review is in the reference list and is cited in the previous sentence. Its abstract (printed p. 1, PDF p. 1) reads: 'Interventions that fostered an analytical mindset or taught critical thinking skills were found to be the most effective in terms of changing conspiracy beliefs.' Its conclusion point 4 (p. 14) says the same. So the claim is correct but credited to the wrong source. Severity is MAJOR rather than CRITICAL: the statement itself is accurate and the right source is cited one sentence earlier, but the citation as written gives no support.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "In a large (n = 1000), pre-registered online study we tested if endorsement of items on a new Components of Conspiracy Ideation Questionnaire varied according to whether harm was described as being (a) intentional and (b) self-referential.",
+    "page": "",
+    "pdf_page": null,
+    "section": "Title and abstract"
+   },
+   {
+    "quote": "We present a novel study investigating the relationship between paranoia and different components of conspiracy thinking.",
+    "page": "",
+    "pdf_page": null,
+    "section": "Discussion"
+   }
+  ],
+  "search_terms": [
+   "intervention",
+   "interven",
+   "effective",
+   "ineffective",
+   "analytic",
+   "analytical mindset",
+   "mindset",
+   "critical thinking",
+   "critical",
+   "skills",
+   "taught",
+   "teach",
+   "training",
+   "educat",
+   "debunk",
+   "inocul",
+   "prebunk",
+   "counterargument",
+   "counter",
+   "reduc",
+   "systematic review",
+   "review",
+   "meta-analy",
+   "25 studies",
+   "treatment",
+   "therap",
+   "rational",
+   "reasoning",
+   "reflect",
+   "intuitive",
+   "thinking style",
+   "cognitive style"
+  ],
+  "fix": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills (O'Mahony et al., 2023).",
+  "alternative": "omahony2023",
+  "confidence": "high",
+  "refkey": "greenburgh2022",
+  "source_summary": {
+   "design": "Pre-registered online questionnaire study (November 2020). Item features (intentional vs incidental harm, self vs society as target, general vs specific) are varied systematically across conspiracy-type items. Analyses: a cumulative link regression model with multi-model averaging and an unregistered mixed graphical network analysis. Correlational with respect to paranoia; no intervention is tested.",
+   "sample": "1,000 US-based adults recruited via Prolific Academic (mean age 36, SD 12; 522 male, 463 female, 13 nonbinary, 2 other/undisclosed), with a mild conservative bias.",
+   "measures": "Paranoia: R-GPTS persecution subscale, with the reference subscale in robustness checks. A new 24-item Components of Conspiracy Ideation Questionnaire (1-5 endorsement). Per-item perceived endorsement by similar others (yes/no/unsure). General conspiracy mindset: the Conspiracy Mentality Questionnaire. Social and Economic Conservatism Scale.",
+   "main_results": "Paranoia predicted higher endorsement overall (estimate 0.83, 95% CI 0.72-0.93). Incidental-harm and society-targeted items were endorsed more overall. More paranoid participants were relatively more likely to endorse intentional-harm and self-referential items; the self-referential effect is called marginal. In the network analysis endorsement clustered mainly by intentionality, and the edge from paranoia to intentional/self items was stronger than the edge to intentional/society items. Participants endorsed items they thought similar others endorsed, and paranoia did not weaken this effect. There are no data on interventions to reduce conspiracy beliefs."
+  }
+ },
+ "8738bd318ace3a6ce29a92e8": {
+  "id": "C003",
+  "verdict": "SECONDARY",
+  "support_type": "secondary",
+  "severity": "MINOR",
+  "explanation": "The number, date, country and wording all match the source: a survey from the beginning of March 2020 in the United States, with 13% 'convinced that the coronavirus is a hoax'. But Imhoff and Lamberty only report this figure in their introduction, citing another survey (Frankovic, 2020). It is not their own result. Their own studies were run March 20-25, 2020 and measured agreement on 1-7 scales, not prevalence. Frankovic (2020) is not in the manuscript's reference list. The candidates helper found no other listed source with this figure (uscinski2022 gives different March 2020 percentages for other beliefs). So the sentence should mark the citation as secondary.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "A survey conducted in the beginning of March 2020 in the United States supported the notion to differentiate between the two types of conspiracy beliefs",
+    "page": "",
+    "pdf_page": null,
+    "section": "Distinct Effects of Different Conspiracy Beliefs on Behavior"
+   },
+   {
+    "quote": "In contrast, 44% thought that the threat of the coronavirus is being exaggerated for political reasons and 13% were convinced that the coronavirus is a hoax (Frankovic, 2020).",
+    "page": "",
+    "pdf_page": null,
+    "section": "Distinct Effects of Different Conspiracy Beliefs on Behavior"
+   }
+  ],
+  "search_terms": [
+   "13%",
+   "%",
+   "Frankovic",
+   "hoax",
+   "beginning of March",
+   "survey",
+   "Americans",
+   "prevalen",
+   "percent",
+   "agree"
+  ],
+  "fix": "At the beginning of March 2020, 13% of Americans were convinced that the coronavirus is a hoax (Frankovic, 2020, as cited in Imhoff & Lamberty, 2020).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "imhoff2020",
+  "source_summary": {
+   "design": "Three cross-sectional online correlational surveys (Study 1; preregistered Studies 2a and 2b, with documented deviations). Self-reported pandemic behaviour was regressed on two COVID-19 conspiracy beliefs, with controls added in exploratory steps. Data were collected March 20-25, 2020.",
+   "sample": "Study 1: N = 220 US MTurk workers (March 20-23, 2020). Study 2a: N = 288 US MTurk workers. Study 2b: N = 298 UK Prolific participants (both March 25, 2020). A German replication is reported only in the Supplemental Material.",
+   "measures": "Two 3-item agreement scales (1-7): 'COVID-19 hoax' (the virus is harmless and its danger overblown) and 'SARS-CoV-2 human-made' (the virus was purposely created). Self-reported pandemic behaviour (18 items, 1-7) formed two composites: containment-related (e.g., hygiene, physical distancing) and self-centred prepping (e.g., hoarding, alternative remedies). Also threat perception, the Conspiracy Mentality Scale and political orientation; Study 2 added RWA, SDO and the Big Five, plus intended lockdown noncompliance in the UK.",
+   "main_results": "The two beliefs correlated positively with each other and with conspiracy mentality. Hoax beliefs predicted less containment-related behaviour: Study 1 B = -0.345; US 2a B = -0.448; UK 2b B = -0.196, weaker. Human-made beliefs predicted more self-centred prepping, and hoax beliefs did too in US 2a. All results are cross-sectional correlations, and the authors say they are mute on causality. The intro's survey percentages (e.g. 13% hoax) come from other work (Frankovic, 2020). The packet lists a correction dated 2020-10-14 that is not in the text file."
+  }
+ },
+ "1bceddc6f3a32da0276a756c": {
+  "id": "C009",
+  "verdict": "NOT-SUPPORTED",
+  "support_type": "finding",
+  "severity": "CRITICAL",
+  "explanation": "The direction is reversed. In every study the source finds that believing COVID-19 is a hoax goes with LESS self-reported containment-related behaviour (hygiene/handwashing, physical distancing): Study 1 B = -0.345, p < .001; US Study 2a B = -0.448, p < .001; UK Study 2b B = -0.196, p = .001 (weaker). The abstract and the General Discussion say the same. No passage reports more containment behaviour among hoax believers. The only positive link for hoax beliefs (US Study 2a) is with self-centred prepping such as hoarding, not with containment behaviour. The sentence's examples (hygiene, physical distancing) and its self-report, non-causal wording are otherwise accurate.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "In line with our predictions, believing that COVID-19 was a hoax was a strong negative prediction of containment-related behaviors such as handwashing and keeping physical distance, B = −0.345, SE = 0.063, p < .001",
+    "page": "",
+    "pdf_page": null,
+    "section": "Results"
+   },
+   {
+    "quote": "Whereas conspiracy beliefs describing the pandemic as a hoax were more strongly associated with reduced containment-related behavior",
+    "page": "",
+    "pdf_page": null,
+    "section": "Abstract"
+   }
+  ],
+  "search_terms": [
+   "containment",
+   "hygiene",
+   "distanc",
+   "handwash",
+   "hoax",
+   "positiv",
+   "increas",
+   "greater",
+   "more likely",
+   "less likely",
+   "weaker",
+   "reduced",
+   "negative"
+  ],
+  "fix": "People who believed that COVID-19 is a hoax reported less containment-related behaviour, such as hygiene and physical distancing (Imhoff & Lamberty, 2020).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "imhoff2020",
+  "source_summary": {
+   "design": "Three cross-sectional online correlational surveys (Study 1; preregistered Studies 2a and 2b, with documented deviations). Self-reported pandemic behaviour was regressed on two COVID-19 conspiracy beliefs, with controls added in exploratory steps. Data were collected March 20-25, 2020.",
+   "sample": "Study 1: N = 220 US MTurk workers (March 20-23, 2020). Study 2a: N = 288 US MTurk workers. Study 2b: N = 298 UK Prolific participants (both March 25, 2020). A German replication is reported only in the Supplemental Material.",
+   "measures": "Two 3-item agreement scales (1-7): 'COVID-19 hoax' (the virus is harmless and its danger overblown) and 'SARS-CoV-2 human-made' (the virus was purposely created). Self-reported pandemic behaviour (18 items, 1-7) formed two composites: containment-related (e.g., hygiene, physical distancing) and self-centred prepping (e.g., hoarding, alternative remedies). Also threat perception, the Conspiracy Mentality Scale and political orientation; Study 2 added RWA, SDO and the Big Five, plus intended lockdown noncompliance in the UK.",
+   "main_results": "The two beliefs correlated positively with each other and with conspiracy mentality. Hoax beliefs predicted less containment-related behaviour: Study 1 B = -0.345; US 2a B = -0.448; UK 2b B = -0.196, weaker. Human-made beliefs predicted more self-centred prepping, and hoax beliefs did too in US 2a. All results are cross-sectional correlations, and the authors say they are mute on causality. The intro's survey percentages (e.g. 13% hoax) come from other work (Frankovic, 2020). The packet lists a correction dated 2020-10-14 that is not in the text file."
+  }
+ },
+ "3fd8d47df008764ae5fc4ede": {
+  "id": "C013",
+  "verdict": "SUPPORTED",
+  "support_type": "finding",
+  "severity": "",
+  "explanation": "The source is a systematic review of interventions that 'have sought to counter conspiracy beliefs'. Its abstract says that out of 25 studies (total N = 7179) 'the majority of interventions were ineffective' at changing conspiracy beliefs. The Discussion (p. 11: 'most existing conspiracy interventions are ineffective') and the Conclusion (p. 14) say the same. The sentence matches the source on design, study count, direction and scope. This is the review's own synthesis finding, not a report of other work. Context only, no fix needed: (1) The source is inconsistent about its own count. It says 25 studies in the abstract and twice on p. 5, but '24 studies' elsewhere on p. 5 and on p. 13; the studies come from 13 articles and give 48 comparisons. The manuscript uses the source's headline figure. (2) The source's 'ineffective' rests on only ~40% (21 of 48) of comparisons reaching significance, a pool that includes some comparisons designed to increase belief, and on few medium-to-large effects. So it partly means 'small effects' rather than strictly null results. The sentence still reproduces the authors' own conclusion faithfully.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "We conducted a systematic review to identify and assess interventions that have sought to counter conspiracy beliefs. Out of 25 studies (total N = 7179), we found that while the majority of interventions were ineffective",
+    "page": "1",
+    "pdf_page": 1,
+    "section": ""
+   },
+   {
+    "quote": "We found that overall, the majority of current conspiracy interventions are ineffective in terms of changing conspiracy beliefs.",
+    "page": "14",
+    "pdf_page": 14,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "25 studies",
+   "24 studies",
+   "13 articles",
+   "7179",
+   "48 comparisons",
+   "ineffective",
+   "inef-",
+   "majority",
+   "most existing",
+   "only half",
+   "~40%",
+   "successfully changed",
+   "sought to counter",
+   "designed to reduce / increase / nullify",
+   "aimed at reducing / increasing",
+   "not intended to reduce",
+   "medium to large",
+   "handful of interventions",
+   "induced any change",
+   "S1 Table",
+   "supplement",
+   "systematic review",
+   "PRISMA",
+   "PROSPERO"
+  ],
+  "fix": "",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "omahony2023",
+  "source_summary": {
+   "design": "Systematic review (PRISMA-P guided, preregistered at PROSPERO CRD42021256263). PubMed, PsycINFO and Scopus were searched on 3 June 2021 for experimental or quasi-experimental studies with a control condition that tried to influence conspiracy belief. Each comparison was summarised as a pairwise Cohen's d, or as statistical significance when d could not be calculated. Risk of bias was rated with RoB 2. The effects were not pooled meta-analytically.",
+   "sample": "13 peer-reviewed articles published 2013-2020, reporting 25 studies (the text also says 24). Total N = 7179 non-clinical adults; 48 intervention comparisons. The articles came mostly from the US and UK, with others from France, Hungary, Macedonia, Hong Kong and Belgium; many samples were US participants recruited online.",
+   "measures": "Self-reported conspiracy belief, measured either as general conspiracy ideation (e.g. GCBS, CMQ, CAT, BCTI) or as belief in specific conspiracy theories (e.g. anti-vaccine conspiracy beliefs, 7/7 bombings). The outcome was the difference between the intervention and a control or baseline condition.",
+   "main_results": "About 40% (21) of the 48 comparisons changed conspiracy beliefs significantly, and only a handful had medium-to-large effects. The authors conclude that most interventions are ineffective. Informational inoculations had the largest effects (fact-based d = 1.3, logic-based d = 0.9), but warning participants beforehand (metainoculation) negated them. Analytical-thinking priming had small effects. A 3-month pseudoscience course had a large effect (d = 1.07). Counterarguments, ridicule, empathy appeals, labelling and narrative persuasion had small or null effects. The authors judge an analytical mindset and critical-thinking skills to be the most effective approaches."
+  }
+ },
+ "f8e63e5c7e610ff32dad8336": {
+  "id": "C005",
+  "verdict": "NOT-SUPPORTED",
+  "support_type": "finding",
+  "severity": "CRITICAL",
+  "explanation": "The review's own descriptive results contradict both parts of the sentence. Of the 417 included studies, 207 (49.6%) were conducted in European countries, which the source itself describes as 'nearly half' (Results, p. 3) and 'almost half' (Abstract). Europe is the largest single continent, but it is not a majority. The 71.2% figure in the sentence is the share of cross-sectional studies (297 of 417; Results p. 3 and Table 1 p. 5), not the share of European studies. The only 'majority' statement about geography in the source (Discussion, p. 11) concerns Europe and North America combined. So the key number is wrong and 'Most' overstates Europe's share. A minor point of scope: the figures describe the 417 studies in this 2018-2021 review of peer-reviewed psychological articles indexed in Scopus and Web of Science, not conspiracy-belief research in general. The preceding sentence's 2018-2021 framing makes 'this research' readable that way. A full-text search found no passage giving 71.2% for Europe. The candidates helper found no other source in the reference list that reports this figure, so this is a misread number, not a misattribution.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Of the 417 studies described in the articles analyzed, nearly half (49.6%) were conducted in European countries (see Table 1). Other 136 (32.6%) studies were conducted in North America.",
+    "page": "3",
+    "pdf_page": 3,
+    "section": "3. Results"
+   },
+   {
+    "quote": "The majority of the studies (71.2%) had a cross-sectional design, and the remaining studies had an experimental design (23.3%) or a longitudinal design (5.5%).",
+    "page": "3",
+    "pdf_page": 3,
+    "section": "3. Results"
+   }
+  ],
+  "search_terms": [
+   "Europ",
+   "71.2 / 71,1 / 71.x",
+   "49.6",
+   "32.6",
+   "82.2",
+   "continent",
+   "territorial",
+   "North America",
+   "WEIRD",
+   "geograph",
+   "region",
+   "majority",
+   "half",
+   "most of the studies / most of the research",
+   "predominan",
+   "mainly",
+   "Limitation",
+   "Supplementary",
+   "refaudit claims candidates C005"
+  ],
+  "fix": "Almost half of this research comes from Europe: 49.6% of the studies were conducted in European countries (Pilch et al., 2023).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "pilch2023",
+  "source_summary": {
+   "design": "Systematic review with narrative synthesis (PRISMA guidelines, no meta-analysis because of methodological heterogeneity). Scopus and Web of Science were searched on 17 November 2021 for peer-reviewed journal articles published 2018-2021, extending the review by Goreis and Voracek (2019).",
+   "sample": "274 articles reporting 417 studies that contained primary empirical data, measured specific or general conspiracy beliefs and reported a correlation with at least one other psychological variable. By continent: Europe 207 studies (49.6%), North America 136 (32.6%), Asia 28 (6.7%), multiple continents 28 (6.7%), South America 10 (2.4%), Australia/Oceania 7 (1.7%), Africa 1 (0.2%). 85.7% of the studies used adult samples.",
+   "measures": "Descriptive coding of study design (cross-sectional, experimental, longitudinal), participant type, continent of origin, sample size and the conspiracy-belief measure used (e.g., GCBS, CMQ, CMS, BCTI, COVID-19-specific scales), followed by a narrative synthesis of antecedents and consequences of conspiracy beliefs.",
+   "main_results": "71.2% of the studies were cross-sectional, 23.3% experimental and 5.5% longitudinal. The GCBS was the most frequently used general measure (62 studies), ahead of the CMQ (57) and CMS (52). Antecedents fell into cognitive, motivational, personality, psychopathology, political and sociocultural categories. Conspiracy beliefs were linked to a range of attitudes and behaviours considered unfavourable for individuals and society."
+  }
+ },
+ "31397d8a53323ebadf68f912": {
+  "id": "C010",
+  "verdict": "SUPPORTED-WITH-CAVEAT",
+  "support_type": "finding",
+  "severity": "MINOR",
+  "explanation": "The quoted words are verbatim from the source's last Discussion sentence ('Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic'). The framing is accurate: a three-wave longitudinal panel in the Netherlands (April, June and December 2020; N = 4913, 'a large Dutch panel ... at three time points', p. 5710). The wording is predictive, not causal, as in the source, and the direction (conspiracy beliefs -> worse health responses) is right. The only error is the page locator. The sentence is on printed p. 5715 (PDF p. 7), not p. 5713. Page 5713 reports the RI-CLPM physical-distancing results and the lockdown-support results, and the quoted sentence is not there. A nuance that needs no change: the sentence is the authors' hedged ('Apparently') summary for the first pandemic year only, and their detailed results are qualified. Between-person effects ran in both directions for distancing and perceived danger, though larger from conspiracy beliefs to health responses. The lockdown-support effect appeared only from June to December 2020. Within-person effects depended on the outcome and phase, as the source itself says on the same page.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic.",
+    "page": "5715",
+    "pdf_page": 7,
+    "section": ""
+   },
+   {
+    "quote": "Conspiracy beliefs predicted more detrimental health beliefs and behaviors over time, although within-person changes differed across outcome variables and depended on the specific phase of the pandemic.",
+    "page": "5715",
+    "pdf_page": 7,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "predict deteriorated",
+   "deteriorat",
+   "throughout",
+   "Apparently",
+   "Dutch",
+   "Netherlands",
+   "three waves",
+   "three time points",
+   "three phases",
+   "panel",
+   "first year",
+   "phase of the pandemic",
+   "depend",
+   "only early",
+   "later in the pandemic",
+   "vice versa",
+   "Paradoxically",
+   "causal",
+   "cannot prove",
+   "generalize",
+   "detrimental",
+   "long run",
+   "short run",
+   "OSM",
+   "Supplement",
+   "page headers (=== PDF page N, printed page P ===)"
+  ],
+  "fix": "In a three-wave Dutch panel study, conspiracy theories were found to “predict deteriorated health responses to Covid-19 throughout the course of the pandemic” (van Prooijen et al., 2023, p. 5715).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "vanprooijen2023",
+  "source_summary": {
+   "design": "Three-wave longitudinal panel survey in the Netherlands (Kieskompas research panels; not preregistered), analysed with cross-lagged panel models (CLPM) and random-intercept cross-lagged panel models (RI-CLPM). Wave 1 April 2020 (first lockdown), Wave 2 June 2020 (between lockdowns), Wave 3 December 2020 (second lockdown). The authors state that the longitudinal design cannot prove causality.",
+   "sample": "N = 4913 Dutch respondents who took part in all three waves (Wave 1 N = 9033, Wave 2 N = 6775, Wave 3 N = 5745); 3516 men and 1397 women; mean age 59.68 (SD 14.45); N = 4118 in the models because of missing values. Men were overrepresented and belief in conspiracy theories was low.",
+   "measures": "Belief in nine Covid-19 conspiracy theories common in the Netherlands in 2020 (credibility ratings, 1-5; alpha .84-.86); self-reported physical distancing (4 items, 0-10); support for lockdown policy (5 items, 0-10); perceived danger of the coronavirus (3 items, 1-5).",
+   "main_results": "CLPM: stronger conspiracy beliefs predicted decreases in physical distancing and in perceived danger at the next wave (all cross-lagged paths significant). These paths were larger than the also-significant reverse paths (Wald tests). Conspiracy beliefs predicted reduced lockdown support only from Wave 2 to Wave 3. RI-CLPM (within-person): conspiracy beliefs predicted decreased distancing only from Wave 1 to 2, and decreased perceived danger only from Wave 2 to 3. Perceived danger at Wave 1 predicted increased conspiracy beliefs, and the within-person lockdown-support paths were paradoxically positive. Conclusion: stronger support for the hypothesis that conspiracy beliefs predict health responses than for the reverse, with within-person effects that depend on the outcome and the phase of the pandemic."
+  }
+ }
+}

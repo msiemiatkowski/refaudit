@@ -1,0 +1,55 @@
+{
+  "refkey": "omahony2023",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "PRISMA-guided systematic review (pre-registered at PROSPERO, CRD42021256263) of experimental and quasi-experimental studies that used a stimulus intended to influence measured conspiracy belief against a control or baseline condition. PubMed, PsycINFO and Scopus were searched on 3 June 2021. There was no pooled meta-analysis: each intervention comparison was summarised by Cohen's d, or by significance when d could not be computed. Risk of bias was assessed with RoB 2.",
+    "sample": "13 peer-reviewed articles published 2013-2020, reported as 25 studies (24 in two passages), total N = 7179 non-clinical adults, yielding 48 intervention comparisons (k). Most samples were from the US or UK (often recruited online via MTurk); others came from France, Hungary, Macedonia, Hong Kong and Belgium.",
+    "measures": "Self-reported general measures of conspiracy belief (e.g., GCBS, BCTI, CMQ, CAT) or specific ones (e.g., anti-vaccine, 7/7 bombings items); effect sizes (Cohen's d) and p-values against control, baseline or neutral groups.",
+    "main_results": "Only about 40% of comparisons (21 of 48) significantly changed conspiracy beliefs (the Discussion says 'only half'). Few effects were large (k = 3) or medium (k = 2). The authors conclude that the majority of interventions were ineffective. The most effective were informational inoculations (fact-based d = 1.3, logic-based d = 0.9) and a 3-month pseudoscience course (d = 1.07). Analytical priming produced significant but small effects. Counterarguments given after exposure produced small or very small effects. Labelling and narrative persuasion had no significant effects. The authors conclude that analytical-mindset and critical-thinking approaches are the most effective."
+  },
+  "occurrences": [
+    {
+      "id": "C013",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "The source is a systematic review of 'interventions that have sought to counter conspiracy beliefs'. Its abstract reports 25 studies (total N = 7179) and states that 'the majority of interventions were ineffective in terms of changing conspiracy beliefs'. The Discussion (p. 11) and Conclusion (p. 14) repeat this as the review's finding: only about half of the interventions changed beliefs at all, and only a handful had medium-to-large effects. The manuscript's sentence closely paraphrases the abstract, with the same design (systematic review), number (25 studies), target (interventions designed to counter conspiracy beliefs), direction and word ('ineffective'); 'most' is the source's 'majority'. Nothing is overstated, because the source itself says 'we found'. A note only, with no change needed: the source contradicts itself on some counts. It gives 25 studies in the abstract and Methods but 24 studies on pp. 5 and 13, all from 13 articles. Its Results give ~40% (21 of 48) successful comparisons but its Discussion says 'only half', and that count covers all 48 comparisons, including a few designed to increase beliefs. The manuscript follows the source's headline figure and conclusion.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "We conducted a systematic review to identify and assess interventions that have sought to counter conspiracy beliefs. Out of 25 studies (total N = 7179), we found that while the majority of interventions were ineffective",
+          "page": "1",
+          "pdf_page": 1,
+          "section": ""
+        },
+        {
+          "quote": "Furthermore, only a handful of interventions produced medium to large effects. These findings suggest that most existing conspiracy interventions are ineffective in terms of changing conspiracy beliefs.",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        }
+      ],
+      "search_terms": [
+        "ineffective",
+        "majority",
+        "most existing",
+        "only half",
+        "~40%",
+        "successfully changed",
+        "effective",
+        "no effect",
+        "no significant",
+        "small effects",
+        "meta-analy",
+        "7179",
+        "25 studies",
+        "24 studies",
+        "13 articles",
+        "24|25|48|13 (numbers)"
+      ],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

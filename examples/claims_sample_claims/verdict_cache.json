@@ -353,5 +353,300 @@
    "measures": "Two ad hoc 3-item scales (1-7 agreement): 'COVID-19 hoax' (virus harmless, danger exaggerated by experts) and 'SARS-CoV-2 human-made' (created to reduce population / rule the world). Self-reported pandemic-related behaviours (1 never - 7 always) forming two composites: containment-related (increased hygiene, keeping physical distance) and self-centered prepping (hoarding, alternative remedies). Also COVID-19 threat perception (4 items), Conspiracy Mentality Scale, 1-item political orientation; Study 2 added RWA, SDO, Big Five and (UK only) intended lockdown noncompliance.",
    "main_results": "Hoax beliefs negatively predicted containment-related behaviour in all three samples (Study 1 B = -0.345, p < .001; US 2a B = -0.448, p < .001; UK 2b B = -0.196, p = .001) and, in the UK, positively predicted intended lockdown noncompliance (B = .197). Human-made beliefs positively predicted self-centered prepping (Study 1 B = 0.217; US B = 0.412; UK B = 0.153) but not containment behaviour. The two beliefs were positively correlated with each other and with conspiracy mentality. Effects were substantially weaker in the UK; with all controls the unique hoax effect on containment behaviour was no longer significant. The paper also cites a Frankovic (2020) US survey from early March 2020: 49% man-made, 44% exaggerated for political reasons, 13% hoax."
   }
+ },
+ "efc731bc514ef0ff29fe9911": {
+  "id": "C004",
+  "verdict": "SUPPORTED",
+  "support_type": "finding",
+  "severity": "",
+  "explanation": "The review covers 274 peer-reviewed articles (417 studies) published 2018-2021. It states that the GCBS was the most frequently used measure of general belief in conspiracy theories, used in 62 studies. Table 2 lists the CMQ (57 studies) and the CMS (52) as the next most used generic measures. The sentence restates this finding and correctly limits it to general, not specific, conspiracy belief: the review adds that scales for specific theories (mostly COVID-19) were the most common type overall. The period 2018-2021 matches the review's coverage. Note: the count refers to the studies included in this review (Scopus and Web of Science only), and the GCBS's lead over the CMQ is small. The sentence misstates neither.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "The GCBS was the most frequently used measure of general belief on conspiracy theories. It was used in a total of 62 studies (see Table 2).",
+    "page": "3",
+    "pdf_page": 3,
+    "section": ""
+   },
+   {
+    "quote": "Our review is intended to extend their work to cover the years 2018–2021.",
+    "page": "3",
+    "pdf_page": 3,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "GCBS",
+   "Generic Conspiracist",
+   "generic",
+   "most frequently",
+   "most commonly",
+   "most used",
+   "62",
+   "general belief",
+   "CMQ",
+   "CMS",
+   "Table 2",
+   "2018-2021"
+  ],
+  "fix": "",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "pilch2023",
+  "source_summary": {
+   "design": "PRISMA systematic review with narrative synthesis (no meta-analysis, because of methodological heterogeneity) of psychological studies on conspiracy beliefs published 2018-2021, planned as a continuation of Goreis and Voracek (2019). Scopus and Web of Science searched on 17 November 2021; double screening and data extraction verified by two other authors; descriptive analysis of study characteristics followed by a narrative synthesis of antecedents and consequences.",
+   "sample": "3,504 records (2,703 after de-duplication); 308 full texts assessed; 274 peer-reviewed articles reporting 417 studies with primary data that measured specific or general conspiracy beliefs and their correlation with at least one psychological variable. Continent of origin (Table 1): Europe 207 (49.6%), North America 136 (32.6%), Asia 28 (6.7%), multiple continents 28 (6.7%), South America 10 (2.4%), Australia/Oceania 7 (1.7%), Africa 1 (0.2%). Adults 359 (85.7%), students 60 (14.3%).",
+   "measures": "Coded study characteristics: design (cross-sectional, longitudinal, experimental), participant type, continent of origin, sample size and conspiracy-belief measures. Table 2 lists the most used questionnaires: GCBS 62 studies, CMQ 57, CMS 52 (all generic), BCTI 17, VCBS 11, HIV Conspiracy Theory Scale 5. Substantive coding of antecedents and consequences of conspiracy beliefs.",
+   "main_results": "71.2% of studies were cross-sectional, 23.3% experimental and 5.5% longitudinal. Nearly half (49.6%) were conducted in Europe. The GCBS was the most frequently used general measure, although scales for specific theories (mostly COVID-19) were the most common type overall. Antecedents fall into six groups (cognitive, motivational, personality, psychopathology, political, sociocultural). Conspiracy beliefs are linked to unfavourable attitudes and behaviours (e.g., lower COVID-19 protective behaviour and vaccination intentions). Compared with Goreis and Voracek (2019): 267 vs 96 papers, the same share of cross-sectional studies (71.2% vs 71.1%), more Asian studies, larger samples and fewer student samples."
+  }
+ },
+ "f8e63e5c7e610ff32dad8336": {
+  "id": "C005",
+  "verdict": "NOT-SUPPORTED",
+  "support_type": "finding",
+  "severity": "CRITICAL",
+  "explanation": "The key number is wrong. In the review, 207 of 417 studies (49.6%, 'nearly half') were conducted in European countries and 136 (32.6%) in North America (Table 1). 71.2% is the share of cross-sectional studies (297 of 417); the sentence has transferred it to Europe. 'Most of this research comes from Europe' also overstates the source. Europe is the largest single continent but not a majority: the discussion says the majority of studies were done in Europe and North America together. No other source in the manuscript's list reports 71.2% European studies. Every 71.2% figure in the source texts is Pilch's cross-sectional share, and the candidates helper found no matching passage.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Of the 417 studies described in the articles analyzed, nearly half (49.6%) were conducted in European countries (see Table 1).",
+    "page": "3",
+    "pdf_page": 3,
+    "section": ""
+   },
+   {
+    "quote": "The majority of the studies (71.2%) had a cross-sectional design, and the remaining studies had an experimental design (23.3%) or a longitudinal design (5.5%).",
+    "page": "3",
+    "pdf_page": 3,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "Europ",
+   "European countries",
+   "71.2",
+   "71,2",
+   "49.6",
+   "continent",
+   "North America",
+   "majority",
+   "most of",
+   "half",
+   "71.2 / 71,2 across all texts/*.txt",
+   "refaudit claims candidates C005"
+  ],
+  "fix": "Nearly half of this research comes from Europe: 49.6% of the studies were conducted in European countries (Pilch et al., 2023).",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "pilch2023",
+  "source_summary": {
+   "design": "PRISMA systematic review with narrative synthesis (no meta-analysis, because of methodological heterogeneity) of psychological studies on conspiracy beliefs published 2018-2021, planned as a continuation of Goreis and Voracek (2019). Scopus and Web of Science searched on 17 November 2021; double screening and data extraction verified by two other authors; descriptive analysis of study characteristics followed by a narrative synthesis of antecedents and consequences.",
+   "sample": "3,504 records (2,703 after de-duplication); 308 full texts assessed; 274 peer-reviewed articles reporting 417 studies with primary data that measured specific or general conspiracy beliefs and their correlation with at least one psychological variable. Continent of origin (Table 1): Europe 207 (49.6%), North America 136 (32.6%), Asia 28 (6.7%), multiple continents 28 (6.7%), South America 10 (2.4%), Australia/Oceania 7 (1.7%), Africa 1 (0.2%). Adults 359 (85.7%), students 60 (14.3%).",
+   "measures": "Coded study characteristics: design (cross-sectional, longitudinal, experimental), participant type, continent of origin, sample size and conspiracy-belief measures. Table 2 lists the most used questionnaires: GCBS 62 studies, CMQ 57, CMS 52 (all generic), BCTI 17, VCBS 11, HIV Conspiracy Theory Scale 5. Substantive coding of antecedents and consequences of conspiracy beliefs.",
+   "main_results": "71.2% of studies were cross-sectional, 23.3% experimental and 5.5% longitudinal. Nearly half (49.6%) were conducted in Europe. The GCBS was the most frequently used general measure, although scales for specific theories (mostly COVID-19) were the most common type overall. Antecedents fall into six groups (cognitive, motivational, personality, psychopathology, political, sociocultural). Conspiracy beliefs are linked to unfavourable attitudes and behaviours (e.g., lower COVID-19 protective behaviour and vaccination intentions). Compared with Goreis and Voracek (2019): 267 vs 96 papers, the same share of cross-sectional studies (71.2% vs 71.1%), more Asian studies, larger samples and fewer student samples."
+  }
+ },
+ "0e87bb6527a770e7199e40c9": {
+  "id": "C008",
+  "verdict": "SUPPORTED",
+  "support_type": "finding",
+  "severity": "",
+  "explanation": "This is the source's own Study 1 result. The authors analysed N = 6353 participants from 36 countries (a dataset collected by Hornsey, Pearson, et al., 2023) in multilevel models with the 2019 Human Freedom Index as the country-level predictor. The HFI was a significant negative predictor of the single-item generic conspiracy beliefs measure (Lantian et al., 2016): beta = -.14, with a significant model-fit improvement, chi2(1) = 7.83, p = .005, controlling for age and gender. The sentence matches on every point checked. Direction: more freedom, weaker beliefs. Number: 36 countries. Measure: the HFI. Construct: generic conspiracy beliefs. Significance: significant. Wording: 'was associated with' is correlational, which fits the design. The dataset is secondary, but the HFI analysis is the authors' own, so this is not SECONDARY. Context the sentence leaves out without overreaching: the item explicitly mentions authorities and government, and the authors note that collinear country-level factors such as corruption were not controlled. Neither undermines the sentence.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Consistent with our hypothesis, the HFI emerged as a significant negative predictor of generic conspiracy beliefs (β = −.14).",
+    "page": "",
+    "pdf_page": null,
+    "section": "STUDY 1 > Results"
+   },
+   {
+    "quote": "This resulted in the final sample of N = 6353 individuals (65.6% women, 34.4% men, Mage = 21.81, SDage = 5.62) from 36 countries across six continents.",
+    "page": "",
+    "pdf_page": null,
+    "section": "STUDY 1 > Method > Participants"
+   }
+  ],
+  "search_terms": [
+   "36 countries",
+   "Human Freedom Index",
+   "HFI",
+   "generic conspiracy belief",
+   "negative predictor",
+   "β = −.14",
+   "higher levels of HFI",
+   "associated with lower",
+   "student",
+   "GDP",
+   "corruption",
+   "robust",
+   "ecological",
+   "causal"
+  ],
+  "fix": "",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "siemiatkowski2026",
+  "source_summary": {
+   "design": "Five studies. Studies 1 and 2: cross-national multilevel (mixed-effects) analyses of existing datasets (Study 1: Hornsey, Pearson, et al., 2023; Study 2: van Bavel et al., 2022), with the Human Freedom Index (HFI) as a country-level predictor and a random intercept for countries. Study 3: a preregistered correlational survey in Poland. Study 4: a preregistered three-condition experiment manipulating perceived societal freedom (low, high, control). Study 5: a cross-sectional mediation study in Poland (PROCESS Model 4).",
+   "sample": "Study 1: N = 6353 participants from 36 countries across six continents (65.6% women, Mage = 21.81). Study 2: N = 44,458 from 52 countries. Studies 3-5: Polish online panels, N = 278, 246 and 592.",
+   "measures": "HFI (0-10; 76 indicators in 12 areas; 2019 report for Study 1, 2020 report for Study 2); perceived societal freedom (8 items based on the HFI); generic conspiracy beliefs (Lantian et al., 2016 single item, which explicitly mentions authorities and government); an interest-group COVID-19 conspiracy item; conspiracy mentality; generic conspiracist beliefs (Kay & Slovic, 2023); vaccine-related and financial-crisis conspiracy beliefs; political anger; lack of control. Covariates: age and gender (plus political orientation in Studies 2-5).",
+   "main_results": "Study 1: the HFI was a significant negative predictor of generic conspiracy beliefs (beta = -.14; model fit improvement chi2(1) = 7.83, p = .005), controlling for age and gender. Study 2: the HFI negatively predicted interest-group COVID-19 conspiracy beliefs (beta = -.17). Study 3: perceived freedom was negatively related to most conspiracy measures, but not significantly to the single-item generic measure (beta = -.07). Study 4: the high-freedom condition lowered conspiracy beliefs and the low-freedom condition raised them (one non-significant contrast, for financial-crisis beliefs). Study 5: political anger mediated the link; lack of control did not."
+  }
+ },
+ "e2c51efecb6e0018011777d5": {
+  "id": "C001",
+  "verdict": "SUPPORTED",
+  "support_type": "finding",
+  "severity": "",
+  "explanation": "The sentence restates the paper's own central finding, almost in its own words. The abstract says that 'in no instance' did the authors observe systematic evidence of an increase in conspiracism. This covers the United States (Study 1: 46 specific theories, some tracked over up to 55 years; Studies 3-4: perceived conspirators and conspiracy thinking, 2012-2021) and six European countries (Study 2: Germany, Great Britain, Italy, Poland, Portugal, Sweden, 2016 vs 2018). In Study 2, only 1 of 35 comparisons rose significantly and 7 fell. Direction, the number of countries and the populations all match, and the sentence makes no causal claim. 'No systematic evidence' is accurate even though the paper reports a few significant increases (7 of 46 in Study 1; 13 of 52 across Studies 1-2), because the authors themselves judge these insufficient. 'Contrary to this impression' matches the paper's framing against the popular belief that conspiracism is rising. Context only, not an error: the European test covers six theories over two years, and the authors say they cannot rule out increases in other beliefs or other countries; the sentence does not claim more than this.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "In no instance do we observe systematic evidence for an increase in conspiracism, however operationalized.",
+    "page": "1",
+    "pdf_page": 1,
+    "section": ""
+   },
+   {
+    "quote": "Out of the 35 comparisons presented, the proportion of believers significantly increased over time in only one: Holocaust denial in Sweden increased from 1% to 3% of the population, (p = 0.016).",
+    "page": "11",
+    "pdf_page": 11,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "systematic evidence",
+   "no instance",
+   "compelling evidence",
+   "scant evidence",
+   "increase / increased",
+   "European",
+   "Europe",
+   "six countries",
+   "Sweden",
+   "Germany",
+   "Poland",
+   "seven nations",
+   "cross-national",
+   "2016 and 2018",
+   "preclude",
+   "caution",
+   "sweeping",
+   "limitation",
+   "could be increasing"
+  ],
+  "fix": "",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "uscinski2022",
+  "source_summary": {
+   "design": "Four studies of change over time using repeated cross-sectional national polls: earlier survey items were re-polled with the exact original wording and T1 and T2 proportions were compared (two-tailed difference-in-proportions tests); Study 4 traces a conspiracy-thinking scale across surveys (OLS trend). Descriptive and correlational; no causal design.",
+   "sample": "U.S. adults (T1 polls fielded 1966-2020; T2 polls online, opt-in, quota-based, 2020-2021); YouGov national samples in six European countries (Germany, Great Britain, Italy, Poland, Portugal, Sweden) in 2016 and 2018; four U.S. surveys (2012-2020) for Study 3 and eight U.S. surveys (October 2012 to May 2021) for Study 4.",
+   "measures": "Study 1: belief in 46 specific conspiracy theories plus 4 pieces of COVID-19 misinformation (U.S.); Study 2: belief in six conspiracy theories (Alien Contact, AIDS Virus, Control World, Holocaust Denial, Global Warming, Hide Immigrants); Study 3: which of nine groups are 'likely to work in secret against the rest of us'; Study 4: American Conspiracy Thinking Scale (ACTS, four items, 1-5).",
+   "main_results": "Study 1: of 46 conspiracy theories and related misinformation, 7 increased significantly, 22 showed no significant change and 17 decreased (average change across the 37 Roper-based items -3.84 points); Study 2: of 35 country-by-theory comparisons, 1 increased (Holocaust denial in Sweden, 1% to 3%), 7 decreased, 27 showed no significant change; Study 3: no significant increase in the average number of perceived conspiring groups (2.56 in 2012 vs 2.70 in 2020, p = 0.09); Study 4: no average increase in conspiracy thinking 2012-2021. The authors conclude there is no systematic evidence that conspiracism, however operationalized, has increased, but caution against sweeping inferences beyond the theories and countries tested."
+  }
+ },
+ "31397d8a53323ebadf68f912": {
+  "id": "C010",
+  "verdict": "SUPPORTED-WITH-CAVEAT",
+  "support_type": "finding",
+  "severity": "MINOR",
+  "explanation": "The substance is right. The source is a longitudinal study of 4913 Dutch panel members surveyed three times (April, June and December 2020), so 'three-wave Dutch panel study' is accurate. The quoted words appear word for word in the authors' closing sentence, which states the paper's own conclusion from its cross-lagged results. 'Predict' is the source's own non-causal wording, which fits the authors' statement that their design cannot prove causality. The problem is the page: the quoted sentence is on printed page 5715 (PDF page 7), not p. 5713. Page 5713 holds the within-person (RI-CLPM) results for physical distancing and the results for lockdown support, and the quoted words do not appear there. The deterministic quote check agrees: the quote is verbatim (score 100), but on printed page 5715. Optional note: the source opens the sentence with 'Apparently'. Its fuller summary also says the results were 'mostly consistent' with the consequential hypothesis and that within-person changes differed by outcome and by pandemic phase (for example, distancing changed only from Wave 1 to Wave 2, and the within-person lagged effects for lockdown support were positive). The waves span only April to December 2020. The author may want a hedge such as 'the authors concluded that', but the quotation itself is faithful.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic.",
+    "page": "5715",
+    "pdf_page": 7,
+    "section": ""
+   },
+   {
+    "quote": "The present study sought to address the dynamic relationship between conspiracy beliefs and health responses on a large Dutch panel (N = 4913) at three time points during the pandemic",
+    "page": "5710",
+    "pdf_page": 2,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "deteriorat",
+   "throughout",
+   "Apparently",
+   "course of the pandemic",
+   "three time points",
+   "three phases",
+   "three waves",
+   "all three waves",
+   "Dutch panel",
+   "Netherlands",
+   "panel",
+   "longitudinal",
+   "causal",
+   "Taken together",
+   "mostly consistent",
+   "only early",
+   "Paradoxically",
+   "printed page markers 5709-5716 (5713, 5715)"
+  ],
+  "fix": "(van Prooijen et al., 2023, p. 5715)",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "vanprooijen2023",
+  "source_summary": {
+   "design": "Longitudinal three-wave panel survey (not preregistered), analysed with cross-lagged panel models (CLPM) and random-intercept cross-lagged panel models (RI-CLPM) in lavaan. It tests a Consequential Conspiracy Theories Hypothesis (conspiracy beliefs predict worsening health responses) against a Rationalizing Hypothesis (detrimental health responses predict rising conspiracy beliefs). The authors state that the longitudinal design cannot prove causality.",
+   "sample": "Dutch Kieskompas research panel. Wave 1: April 2020, first lockdown, N = 9033. Wave 2: June 2020, after the first lockdown, N = 6775. Wave 3: December 2020, second lockdown, N = 5745. Analyses use the 4913 respondents who took part in all three waves (3516 men, 1397 women; mean age 59.68). Models were fitted on N = 4118 because of missing values.",
+   "measures": "Belief in nine pandemic-related conspiracy theories common in the Netherlands in 2020 (credibility rated 1-5; alpha .84-.86). Physical distancing (4 items, 0-10). Support for lockdown policy (5 items, 0-10). Perceived danger of the coronavirus (3 items, 1-5). A second, 4-item conspiracy measure is reported only in the online supplement.",
+   "main_results": "CLPM, physical distancing and perceived danger: every cross-lagged path was significant in both directions, and the paths from conspiracy beliefs to the outcomes were significantly larger than the reverse paths (Wald chi2(2) = 81.48 and 173.62). CLPM, lockdown support: only conspiracy beliefs at Wave 2 predicted lower support at Wave 3. RI-CLPM (within-person change): conspiracy beliefs predicted a drop in distancing only from Wave 1 to Wave 2. For danger, perceived danger at Wave 1 predicted a rise in conspiracy beliefs, and conspiracy beliefs at Wave 2 predicted lower perceived danger at Wave 3. For lockdown support the within-person lagged effects were, paradoxically, positive. The authors conclude that the results support 'conspiracy beliefs predict health responses' more strongly than the reverse. Their last sentence: 'Apparently, conspiracy theories predict deteriorated health responses to Covid-19 throughout the course of the pandemic' (p. 5715)."
+  }
+ },
+ "3fd8d47df008764ae5fc4ede": {
+  "id": "C013",
+  "verdict": "SUPPORTED",
+  "support_type": "finding",
+  "severity": "",
+  "explanation": "The source is a systematic review of 'interventions that have sought to counter conspiracy beliefs'. Its abstract reports 25 studies (total N = 7179) and states that 'the majority of interventions were ineffective in terms of changing conspiracy beliefs'. The Discussion (p. 11) and Conclusion (p. 14) repeat this as the review's finding: only about half of the interventions changed beliefs at all, and only a handful had medium-to-large effects. The manuscript's sentence closely paraphrases the abstract, with the same design (systematic review), number (25 studies), target (interventions designed to counter conspiracy beliefs), direction and word ('ineffective'); 'most' is the source's 'majority'. Nothing is overstated, because the source itself says 'we found'. A note only, with no change needed: the source contradicts itself on some counts. It gives 25 studies in the abstract and Methods but 24 studies on pp. 5 and 13, all from 13 articles. Its Results give ~40% (21 of 48) successful comparisons but its Discussion says 'only half', and that count covers all 48 comparisons, including a few designed to increase beliefs. The manuscript follows the source's headline figure and conclusion.",
+  "group_share": "",
+  "evidence": [
+   {
+    "quote": "We conducted a systematic review to identify and assess interventions that have sought to counter conspiracy beliefs. Out of 25 studies (total N = 7179), we found that while the majority of interventions were ineffective",
+    "page": "1",
+    "pdf_page": 1,
+    "section": ""
+   },
+   {
+    "quote": "Furthermore, only a handful of interventions produced medium to large effects. These findings suggest that most existing conspiracy interventions are ineffective in terms of changing conspiracy beliefs.",
+    "page": "11",
+    "pdf_page": 11,
+    "section": ""
+   }
+  ],
+  "search_terms": [
+   "ineffective",
+   "majority",
+   "most existing",
+   "only half",
+   "~40%",
+   "successfully changed",
+   "effective",
+   "no effect",
+   "no significant",
+   "small effects",
+   "meta-analy",
+   "7179",
+   "25 studies",
+   "24 studies",
+   "13 articles",
+   "24|25|48|13 (numbers)"
+  ],
+  "fix": "",
+  "alternative": "",
+  "confidence": "high",
+  "refkey": "omahony2023",
+  "source_summary": {
+   "design": "PRISMA-guided systematic review (pre-registered at PROSPERO, CRD42021256263) of experimental and quasi-experimental studies that used a stimulus intended to influence measured conspiracy belief against a control or baseline condition. PubMed, PsycINFO and Scopus were searched on 3 June 2021. There was no pooled meta-analysis: each intervention comparison was summarised by Cohen's d, or by significance when d could not be computed. Risk of bias was assessed with RoB 2.",
+   "sample": "13 peer-reviewed articles published 2013-2020, reported as 25 studies (24 in two passages), total N = 7179 non-clinical adults, yielding 48 intervention comparisons (k). Most samples were from the US or UK (often recruited online via MTurk); others came from France, Hungary, Macedonia, Hong Kong and Belgium.",
+   "measures": "Self-reported general measures of conspiracy belief (e.g., GCBS, BCTI, CMQ, CAT) or specific ones (e.g., anti-vaccine, 7/7 bombings items); effect sizes (Cohen's d) and p-values against control, baseline or neutral groups.",
+   "main_results": "Only about 40% of comparisons (21 of 48) significantly changed conspiracy beliefs (the Discussion says 'only half'). Few effects were large (k = 3) or medium (k = 2). The authors conclude that the majority of interventions were ineffective. The most effective were informational inoculations (fact-based d = 1.3, logic-based d = 0.9) and a 3-month pseudoscience course (d = 1.07). Analytical priming produced significant but small effects. Counterarguments given after exposure produced small or very small effects. Labelling and narrative persuasion had no significant effects. The authors conclude that analytical-mindset and critical-thinking approaches are the most effective."
+  }
  }
 }

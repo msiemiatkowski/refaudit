@@ -1,0 +1,63 @@
+{
+  "refkey": "omahony2023",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Systematic review (PRISMA-P guided, preregistered at PROSPERO CRD42021256263). PubMed, PsycINFO and Scopus were searched on 3 June 2021 for experimental or quasi-experimental studies with a control condition that tried to influence conspiracy belief. Each comparison was summarised as a pairwise Cohen's d, or as statistical significance when d could not be calculated. Risk of bias was rated with RoB 2. The effects were not pooled meta-analytically.",
+    "sample": "13 peer-reviewed articles published 2013-2020, reporting 25 studies (the text also says 24). Total N = 7179 non-clinical adults; 48 intervention comparisons. The articles came mostly from the US and UK, with others from France, Hungary, Macedonia, Hong Kong and Belgium; many samples were US participants recruited online.",
+    "measures": "Self-reported conspiracy belief, measured either as general conspiracy ideation (e.g. GCBS, CMQ, CAT, BCTI) or as belief in specific conspiracy theories (e.g. anti-vaccine conspiracy beliefs, 7/7 bombings). The outcome was the difference between the intervention and a control or baseline condition.",
+    "main_results": "About 40% (21) of the 48 comparisons changed conspiracy beliefs significantly, and only a handful had medium-to-large effects. The authors conclude that most interventions are ineffective. Informational inoculations had the largest effects (fact-based d = 1.3, logic-based d = 0.9), but warning participants beforehand (metainoculation) negated them. Analytical-thinking priming had small effects. A 3-month pseudoscience course had a large effect (d = 1.07). Counterarguments, ridicule, empathy appeals, labelling and narrative persuasion had small or null effects. The authors judge an analytical mindset and critical-thinking skills to be the most effective approaches."
+  },
+  "occurrences": [
+    {
+      "id": "C013",
+      "verdict": "SUPPORTED",
+      "support_type": "finding",
+      "severity": "",
+      "explanation": "The source is a systematic review of interventions that 'have sought to counter conspiracy beliefs'. Its abstract says that out of 25 studies (total N = 7179) 'the majority of interventions were ineffective' at changing conspiracy beliefs. The Discussion (p. 11: 'most existing conspiracy interventions are ineffective') and the Conclusion (p. 14) say the same. The sentence matches the source on design, study count, direction and scope. This is the review's own synthesis finding, not a report of other work. Context only, no fix needed: (1) The source is inconsistent about its own count. It says 25 studies in the abstract and twice on p. 5, but '24 studies' elsewhere on p. 5 and on p. 13; the studies come from 13 articles and give 48 comparisons. The manuscript uses the source's headline figure. (2) The source's 'ineffective' rests on only ~40% (21 of 48) of comparisons reaching significance, a pool that includes some comparisons designed to increase belief, and on few medium-to-large effects. So it partly means 'small effects' rather than strictly null results. The sentence still reproduces the authors' own conclusion faithfully.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "We conducted a systematic review to identify and assess interventions that have sought to counter conspiracy beliefs. Out of 25 studies (total N = 7179), we found that while the majority of interventions were ineffective",
+          "page": "1",
+          "pdf_page": 1,
+          "section": ""
+        },
+        {
+          "quote": "We found that overall, the majority of current conspiracy interventions are ineffective in terms of changing conspiracy beliefs.",
+          "page": "14",
+          "pdf_page": 14,
+          "section": ""
+        }
+      ],
+      "search_terms": [
+        "25 studies",
+        "24 studies",
+        "13 articles",
+        "7179",
+        "48 comparisons",
+        "ineffective",
+        "inef-",
+        "majority",
+        "most existing",
+        "only half",
+        "~40%",
+        "successfully changed",
+        "sought to counter",
+        "designed to reduce / increase / nullify",
+        "aimed at reducing / increasing",
+        "not intended to reduce",
+        "medium to large",
+        "handful of interventions",
+        "induced any change",
+        "S1 Table",
+        "supplement",
+        "systematic review",
+        "PRISMA",
+        "PROSPERO"
+      ],
+      "fix": "",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

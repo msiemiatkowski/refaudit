@@ -4,7 +4,7 @@
  "heading": null,
  "method": "pandoc",
  "tracked_changes": false,
- "prepared": "2026-11-01 18:17",
+ "prepared": "2026-11-01 18:37",
  "version": "2.0.0",
  "prompt_version": "1",
  "refs": [
@@ -703,28 +703,32 @@
  "services": [
   [
    "Crossref",
-   "answered from the cache (20 from the cache)"
+   "answered from the cache (30 from the cache)"
   ],
   [
    "OpenAlex",
-   "answered from the cache (10 from the cache)"
+   "answered from the cache (20 from the cache)"
   ],
   [
    "Unpaywall",
-   "not needed"
+   "answered from the cache (10 from the cache)"
   ],
   [
    "Europe PMC",
-   "not needed"
+   "answered from the cache (10 from the cache)"
   ],
   [
    "Semantic Scholar",
-   "not needed"
+   "answered from the cache (10 from the cache)"
   ],
   [
    "Download",
-   "not needed"
+   "reached (7 responses, 3 failed requests); journals.sagepub.com refused (HTTP 403); pmc.ncbi.nlm.nih.gov refused (HTTP 403); onlinelibrary.wiley.com refused (HTTP 403)"
   ]
  ],
- "failures": []
+ "failures": [
+  "journals.sagepub.com refused a download (HTTP 403); its other files were skipped.",
+  "pmc.ncbi.nlm.nih.gov refused a download (HTTP 403); its other files were skipped.",
+  "onlinelibrary.wiley.com refused a download (HTTP 403); its other files were skipped."
+ ]
 }
