@@ -165,7 +165,8 @@ def test_judge_bash_guard(command, allowed):
 @pytest.mark.parametrize("tool, args, allowed", [
     ("Read", {"file_path": "/x/ms_claims/texts/a.txt"}, True), ("Read", {"file_path": "/x/ms_claims/verdicts/a.json"}, False),
     ("Grep", {"pattern": "C012", "path": "/x/ms_claims"}, False), ("Grep", {"pattern": "a", "path": "/x/ms_claims/texts/a.txt"}, True),
-    ("Glob", {"pattern": "**/*.json"}, False), ("Read", {"file_path": "/x/ms_claims.xlsx"}, False)])
+    ("Glob", {"pattern": "**/*.json"}, False), ("Read", {"file_path": "/x/ms_claims.xlsx"}, False),
+    ("Read", {"file_path": "/x/.ms_claims.sealed/verdict_cache.json"}, False)])
 def test_second_opinion_is_blind(tool, args, allowed):
     hook = ROOT / ".claude" / "hooks" / "blind_second_opinion.py"
     result = subprocess.run([sys.executable, str(hook)], input=json.dumps({"tool_name": tool, "tool_input": args}),
@@ -196,3 +197,85 @@ def test_comment_names_the_better_reference_and_both_pages():
     assert claims_report.short_cite({"authors": ["Imhoff", "Lamberty"], "year": "2020"}) == "Imhoff & Lamberty, 2020"
     assert claims_report._place({"page": "", "pdf_page": 3}) == "PDF p. 3"
     assert claims_report._place({"section": "Results"}) == "section Results"
+
+
+def test_reused_texts_keep_the_fetch_report_of_their_run():
+    from refaudit import claims_cli
+
+    class Quiet:
+        failures = []
+
+        def summary(self, services):
+            return [(name, "not needed") for name in services]
+
+    earlier = {"services": [("Download", "reached (7 responses); journals.sagepub.com refused (HTTP 403)"),
+                            ("Unpaywall", "not needed")],
+               "failures": ["journals.sagepub.com refused a download (HTTP 403); its other files were skipped."]}
+    report = claims_cli._fetch_report(Quiet(), earlier, reused=3)
+    assert dict(report["services"])["Download"].endswith("refused (HTTP 403) (earlier run)")
+    assert dict(report["services"])["Unpaywall"] == "not needed" and report["failures"] == earlier["failures"]
+    assert claims_cli._fetch_report(Quiet(), earlier, reused=0)["failures"] == []
+
+
+def test_comments_land_on_the_cited_occurrence(tmp_path):
+    """The same citation in two sentences, and twice in one sentence: each comment marks its own occurrence."""
+    import docx
+    from refaudit import claims_report
+    d = docx.Document()
+    d.add_paragraph("First claim here (Smith, 2020). Second claim (Smith, 2020).")
+    d.add_paragraph("A later claim (Smith, 2020), and again (Smith, 2020).")
+    d.save(tmp_path / "ms.docx")
+    later = "A later claim (Smith, 2020), and again (Smith, 2020)."
+    rows = [{"sentence": sentence, "citation": "Smith, 2020", "status": status, "verdict": "NOT-SUPPORTED",
+             "severity": "MAJOR", "notes": [], "judge": {}, "alternative": ""}
+            for sentence, status in [("First claim here (Smith, 2020).", "GREEN"), ("Second claim (Smith, 2020).", "RED"),
+                                     (later, "GREEN"), (later, "RED")]]
+    assert claims_report.write_comments(tmp_path / "ms.docx", tmp_path / "out.docx", rows) == 2
+    before = []
+    for p in docx.Document(tmp_path / "out.docx").paragraphs:
+        xml = p._p.xml
+        if "commentRangeStart" in xml:
+            before.append("".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", xml.split("commentRangeStart")[0])))
+    assert before == ["First claim here (Smith, 2020). Second claim (", "A later claim (Smith, 2020), and again ("]
+
+
+def test_seal_hides_the_first_verdicts_until_verify(run):
+    _, work = run
+    write(work, "verdicts", "kowalska2017", [
+        verdict("C001", "SUPPORTED", "Uncertainty was positively associated with conspiracy belief", "538", 1),
+        verdict("C002", "NOT-SUPPORTED", "This study was correlational; no causal conclusions can be drawn", "538", 1,
+                "MAJOR"),
+        verdict("C003", "SUPPORTED", "Participants (N = 412; 58% women)", "539", 2)])
+    claims_cli.verify(work, log=lambda *a: None)
+    hold = claims_cli.seal(work, log=lambda *a: None)
+    assert hold.parent == work.parent and not list((work / "verdicts").glob("*.json"))
+    assert not (work / "verdict_cache.json").exists() and not (work / "results.json").exists()
+    status = claims_cli.status(work)  # a second judge may run this: nothing to judge, the seconds still listed
+    assert status["sealed"] and status["to_judge"] == ["douglas2017"] and "kowalska2017" in status["to_second"]
+    assert "C002" not in (work / "verdict_cache.json").read_text()  # rebuilt while sealed, without first verdicts
+    claims_cli.verify(work, log=lambda *a: None)
+    assert not hold.exists() and len(list((work / "verdicts").glob("*.json"))) == 1
+    assert claims_cli.status(work)["sealed"] is False and claims_cli.status(work)["to_judge"] == ["douglas2017"]
+
+
+
+@pytest.mark.parametrize("hook, agent, call, code", [
+    ("refaudit_only.py", None, {"tool_input": {"command": "ls"}}, 0),  # the main conversation (settings.json)
+    ("refaudit_only.py", "claim-judge", {"tool_input": {"command": "ls"}}, 2),
+    ("refaudit_only.py", "claim-judge", {"tool_input": {"command": "refaudit claims status /w"}}, 0),
+    ("blind_second_opinion.py", "claim-judge", {"tool_name": "Read", "tool_input": {"file_path": "/w/verdicts/a.json"}}, 0),
+    ("blind_second_opinion.py", "claim-second-opinion",
+     {"tool_name": "Read", "tool_input": {"file_path": "/w/verdicts/a.json"}}, 2)])
+def test_hooks_in_settings_apply_only_to_the_judges(hook, agent, call, code):
+    only = "claim-second-opinion" if hook.startswith("blind") else "claim-judge,claim-second-opinion"
+    payload = json.dumps(dict(call, agent_type=agent) if agent else call)
+    result = subprocess.run([sys.executable, str(ROOT / ".claude" / "hooks" / hook), "--only", only], input=payload,
+                            capture_output=True, text=True)
+    assert result.returncode == code
+
+
+@pytest.mark.parametrize("hook", ["refaudit_only.py", "blind_second_opinion.py"])
+def test_hooks_fail_closed(hook):
+    result = subprocess.run([sys.executable, str(ROOT / ".claude" / "hooks" / hook)], input="not json",
+                            capture_output=True, text=True)
+    assert result.returncode == 2 and "blocked to be safe" in result.stderr

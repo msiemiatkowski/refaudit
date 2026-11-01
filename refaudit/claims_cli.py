@@ -33,6 +33,7 @@ SUPPORT_TYPES = ("finding", "theory", "speculation", "secondary", "definition", 
 CONFIDENCE = ("high", "medium", "low")
 SECOND_SAMPLE = 0.10  # share of GREEN rows that get a second opinion
 WORK_FILES = ("verdict_cache.json", "second_cache.json", "results.json", "second_requests.json")
+SEALED = ("verdicts", "verdict_cache.json", "results.json")  # the first judges' output, hidden from second opinions
 
 
 # --- the work directory -------------------------------------------------------------
@@ -66,6 +67,8 @@ def prepare(manuscript, sources=None, out=None, heading=None, force=False, offli
     """Extract claims and citations, match them, fetch source texts and write one packet per source."""
     manuscript = Path(manuscript).resolve()
     work = work_dir(manuscript, out)
+    unseal(work)
+    earlier = (load(work, "claims.json") or {}) if work.exists() and not force else {}
     if work.exists():
         if load(work, "claims.json"):
             ingest(work, load(work, "claims.json"))  # keep the verdicts of earlier runs in the cache
@@ -104,10 +107,12 @@ def prepare(manuscript, sources=None, out=None, heading=None, force=False, offli
     for entry in files:
         entry["ref"], entry["how"] = (None, entry["error"]) if entry.get("error") else texts.match_file(entry, candidates)
 
+    reused = 0
     for ref in candidates:
         log(f"  {ref['key']}: ", end="")
         try:
             text = _text(work, ref, files, client, mailto, force)
+            reused += bool(text.get("reused"))
         except Exception as exc:
             text = {"key": ref["key"], "level": "NONE", "version": "", "origin": "", "reason": f"error: {exc}",
                     "pages": [], "supplements": [], "abstract": "", "discarded": [], "notes": [], "identity": "",
@@ -127,7 +132,7 @@ def prepare(manuscript, sources=None, out=None, heading=None, force=False, offli
              "prepared": datetime.now().strftime("%Y-%m-%d %H:%M"), "version": __version__,
              "prompt_version": PROMPT_VERSION, "refs": refs, "rows": rows,
              "files": [{k: f.get(k) for k in ("path", "ref", "how", "supp", "error")} for f in files],
-             "services": client.summary(texts.SERVICES) if client else [], "failures": client.failures if client else []}
+             **_fetch_report(client, earlier, reused)}
     save(work, "claims.json", state)
     for name in ("verdicts", "second"):  # judged again below only where the cache has no verdict
         for path in (work / name).glob("*.json"):
@@ -142,12 +147,24 @@ def _text(work: Path, ref: dict, files: list[dict], client, mailto, force: bool)
     if path.exists() and not force:
         old = json.loads(path.read_text(encoding="utf-8"))
         if old.get("signature") == signature:
-            return old
+            return dict(old, reused=True)
     text = texts.build_text(ref, files, client, mailto)
     text["signature"] = signature
     save(work, f"texts/{ref['key']}.json", text)
     (work / "texts" / f"{ref['key']}.txt").write_text(texts.render(text), encoding="utf-8")
     return text
+
+
+def _fetch_report(client, earlier: dict, reused: int) -> dict:
+    """What each service did. Texts reused from an earlier run keep that run's report (refused hosts included)."""
+    services = client.summary(texts.SERVICES) if client else []
+    failures = list(client.failures) if client else []
+    if reused and earlier.get("services"):
+        before = {name: result.replace(" (earlier run)", "") + " (earlier run)" for name, result in earlier["services"]}
+        services = [(name, before[name] if result == "not needed" and not before.get(name, "").startswith(
+            "not needed") and name in before else result) for name, result in services]
+        failures += [f for f in earlier.get("failures", []) if f not in failures and "refused a download" in f]
+    return {"services": services, "failures": failures}
 
 
 # --- verdicts ----------------------------------------------------------------------
@@ -259,6 +276,7 @@ def second_sample(state: dict, green: list[dict]) -> set[str]:
 
 def verify(work: Path, log=print) -> dict:
     """Ingest verdicts, run the deterministic checks and decide which rows need a second opinion."""
+    unseal(work)
     state = load(work, "claims.json")
     errors = ingest(work, state)
     cache, seconds = load(work, "verdict_cache.json", {}), load(work, "second_cache.json", {})
@@ -296,11 +314,57 @@ def verify(work: Path, log=print) -> dict:
     return {"judged": len(judged), "pending_second": pending, "errors": errors}
 
 
+def sealed(work: Path) -> Path:
+    """Where the first judges' output waits while the second opinions run: outside the work folder."""
+    return work.parent / f".{work.name}.sealed"
+
+
+def seal(work: Path, log=print) -> Path:
+    """Before the second opinions: move the first verdicts (files, cache, check results) out of the work folder.
+
+    The second judges' hook also blocks them, but hooks are skipped in some sessions (an untrusted folder), so
+    the first verdicts are simply not there to find. verify, report and prepare bring them back."""
+    ingest(work, load(work, "claims.json"))
+    hold = sealed(work)
+    hold.mkdir(exist_ok=True)
+    for name in SEALED:
+        if (work / name).exists():
+            _remove(hold / name)
+            shutil.move(str(work / name), str(hold / name))
+    (work / "verdicts").mkdir(exist_ok=True)
+    log(f"First verdicts moved to {hold} for the blind second opinions; 'refaudit claims verify' brings them back.")
+    return hold
+
+
+def unseal(work: Path) -> None:
+    """Bring the first verdicts back after the second opinions (anything written meanwhile is kept)."""
+    hold = sealed(work)
+    if not hold.exists():
+        return
+    for name in SEALED:
+        if (hold / name).exists():
+            if name == "verdicts" and (work / name).is_dir():  # a first judge run again while sealed wins
+                for path in (work / name).glob("*.json"):
+                    shutil.move(str(path), str(hold / name / path.name))
+            _remove(work / name)  # caches rebuilt while sealed hold no first verdicts
+            shutil.move(str(hold / name), str(work / name))
+    shutil.rmtree(hold, ignore_errors=True)
+
+
+def _remove(path: Path) -> None:
+    if path.is_dir():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
 def status(work: Path) -> dict:
     """What remains: sources whose occurrences have no cached verdict, and second opinions not yet run."""
     state = load(work, "claims.json")
     ingest(work, state)
-    cache, seconds = load(work, "verdict_cache.json", {}), load(work, "second_cache.json", {})
+    hold = sealed(work)  # during the second opinions the first verdicts are there, so nothing is "to judge"
+    cache = load(hold if hold.exists() else work, "verdict_cache.json", {})
+    seconds = load(work, "second_cache.json", {})
     requests = load(work, "second_requests.json", {})
     by_id = {row["id"]: row for row in state["rows"]}
     sources = []
@@ -317,7 +381,7 @@ def status(work: Path) -> dict:
     return {"work": str(work), "manuscript": state["manuscript"], "prompt_version": PROMPT_VERSION,
             "to_judge": [s["refkey"] for s in sources if s["pending"]],
             "to_second": [s["refkey"] for s in sources if s["second_pending"]], "sources": sources,
-            "unmatched": [r["id"] for r in state["rows"] if r["match"] != "matched"]}
+            "unmatched": [r["id"] for r in state["rows"] if r["match"] != "matched"], "sealed": hold.exists()}
 
 
 # --- report ------------------------------------------------------------------------
@@ -346,6 +410,7 @@ def rows_for_report(work: Path) -> tuple[dict, list[dict]]:
 
 def report(work: Path, out=None, model=None, effort=None, log=print) -> list[Path]:
     """Write <stem>_claims.xlsx, <stem>_claims_comments.docx and <stem>_claims.json."""
+    unseal(work)
     state, rows = rows_for_report(work)
     manuscript = Path(state["manuscript"])
     folder = Path(out) if out else work.parent
@@ -377,6 +442,7 @@ def main(argv=None) -> int:
     p.add_argument("--force", action="store_true", help="fetch every text and judge every claim again")
     p.add_argument("--offline", action="store_true", help="no network: your files only, no reference lookups")
     for name, text in (("status", "what still needs judging (JSON)"), ("verify", "check the verdicts"),
+                       ("seal", "hide the first verdicts before the blind second opinions (verify brings them back)"),
                        ("report", "write the xlsx, the commented docx and the JSON")):
         q = sub.add_parser(name, help=text)
         q.add_argument("work", help="the work folder printed by prepare (<manuscript>_claims)")
@@ -403,6 +469,8 @@ def main(argv=None) -> int:
             print(json.dumps(status(work), ensure_ascii=False, indent=1))
         elif args.command == "verify":
             verify(work, log=err)
+        elif args.command == "seal":
+            seal(work, log=err)
         elif args.command == "report":
             report(work, args.out, args.model, args.effort, log=err)
         elif args.command == "candidates":

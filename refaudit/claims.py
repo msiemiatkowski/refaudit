@@ -312,7 +312,7 @@ def occurrences(paragraphs: list[str], refs: list[dict]) -> list[dict]:
                 "scope": " ".join(scope.split()).strip(" ,;:"),
                 "prev": sentence_list[i - 1][2] if i else "",
                 "next": sentence_list[i + 1][2] if i + 1 < len(sentence_list) else "",
-                "citation": cite.text if not cite.narrative else cite.text, "authors": cite.authors,
+                "citation": cite.text, "authors": cite.authors,
                 "et_al": cite.et_al, "year": cite.year, "narrative": cite.narrative, "locator": cite.locator,
                 "prefix": cite.prefix, "original": cite.original, "group": cite.group,
                 "quotes": quotes, "numbers": _numbers(stripped), "ref": key, "match": state, "match_note": note})

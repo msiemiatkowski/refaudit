@@ -9,3 +9,5 @@ _site/
 # part 2: cached source texts (often copyrighted) and packets
 texts/
 packets/
+# first verdicts hidden while the blind second opinions run
+.*.sealed/

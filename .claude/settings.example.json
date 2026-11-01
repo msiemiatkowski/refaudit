@@ -14,5 +14,27 @@
       "Edit(//**/*_claims/verdicts/*.json)",
       "Edit(//**/*_claims/second/*.json)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/refaudit_only.py\" --only claim-judge,claim-second-opinion"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/blind_second_opinion.py\" --only claim-second-opinion"
+          }
+        ]
+      }
+    ]
   }
 }

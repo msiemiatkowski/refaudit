@@ -54,12 +54,19 @@ problem in the prompt.
 
 ## 4. Second opinions
 
+First hide the first verdicts, so the second judges cannot see them even where hooks are not enforced:
+
+```
+refaudit claims seal "<work folder>"
+```
+
 Run `refaudit claims status "<work folder>"` again. For every refkey in `to_second`, launch the
 **claim-second-opinion** subagent (`subagent_type: "claim-second-opinion"`, same `model` and `effort`) with:
 
 > Packet: `<packet>`. Judge these claims: `<second_pending IDs>`. Write `<second path>`. Work folder: `<work folder>`.
 
-Same batches of at most five. Then run `refaudit claims verify "<work folder>"` once more.
+Same batches of at most five. Then run `refaudit claims verify "<work folder>"` once more; it brings the first
+verdicts back and compares the two opinions.
 
 ## 5. Report
 

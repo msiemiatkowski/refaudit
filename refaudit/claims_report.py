@@ -229,7 +229,7 @@ def write_summary(ws, state: dict, rows: list[dict], run: dict) -> None:
              ("Your files not matched", str(sum(not f.get("ref") for f in state["files"]))),
              *[("", f"{f['path']}: {f.get('how') or f.get('error') or ''}") for f in state["files"] if not f.get("ref")],
              ("", ""), ("Source", "Result"), *state.get("services", []),
-             ("API failures", str(len(state.get("failures", [])))), *[("", x) for x in dict.fromkeys(state.get("failures", []))],
+             ("Failed or refused requests", str(len(state.get("failures", [])))), *[("", x) for x in dict.fromkeys(state.get("failures", []))],
              ("Verdict file problems", str(len(run.get("errors", [])))), *[("", x) for x in run.get("errors", [])]]
     _table(ws, lines, [30, 110])
     for row in ws.iter_rows():
@@ -341,11 +341,13 @@ def write_comments(manuscript, path, rows: list[dict]) -> int:
     document = docx.Document(str(manuscript))
     accept_changes(document)
     paragraphs = [Paragraph(p, document) for p in document.element.body.iter(qn("w:p"))]
-    count = 0
+    count, seen = 0, Counter()
     for row in rows:
+        nth = seen[(row["sentence"], row["citation"])]  # the same citation twice in one sentence
+        seen[(row["sentence"], row["citation"])] += 1
         if row["status"] == "GREEN":
             continue
-        span = _find(paragraphs, row)
+        span = _find(paragraphs, row, nth)
         if not span:
             continue
         paragraph, start, end = span
@@ -357,17 +359,23 @@ def write_comments(manuscript, path, rows: list[dict]) -> int:
     return count
 
 
-def _find(paragraphs, row: dict):
-    """(paragraph, start, end) of the citation as written, near the start of its sentence."""
-    head = " ".join(row["sentence"].split()[:6])
-    pattern = r"\s+".join(map(re.escape, row["citation"].split()))
-    for paragraph in paragraphs:
-        text = "".join(run.text for run in paragraph.runs)
-        flat = " ".join(text.split())
-        if head[:30] not in flat and row["citation"] not in text:
-            continue
-        anchor = text.find(head.split()[0]) if head else 0
-        found = re.compile(pattern).search(text, max(anchor, 0)) or re.compile(pattern).search(text)
+def _find(paragraphs, row: dict, nth: int = 0):
+    """(paragraph, start, end) of the citation as written, in the paragraph that holds its sentence.
+
+    The same citation can occur in several sentences, or twice in one sentence (nth), so the search starts at
+    the sentence. Only if no paragraph has the sentence (the text differs) is the citation's first match used."""
+    words = row["sentence"].split()[:8]
+    head = re.compile(r"\s+".join(map(re.escape, words))) if words else None
+    pattern = re.compile(r"\s+".join(map(re.escape, row["citation"].split())))
+    texts = [(paragraph, "".join(run.text for run in paragraph.runs)) for paragraph in paragraphs]
+    for paragraph, text in texts:
+        sentence = head.search(text) if head else None
+        if sentence:
+            hits = list(pattern.finditer(text, sentence.start()))
+            if len(hits) > nth:
+                return paragraph, hits[nth].start(), hits[nth].end()
+    for paragraph, text in texts:
+        found = pattern.search(text)
         if found:
             return paragraph, found.start(), found.end()
     return None

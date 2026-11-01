@@ -6,7 +6,7 @@ A reference checker in two parts.
   and doi.org, and writes a colour-coded .xlsx. It is deterministic and makes no model calls. Keep it that way.
 - **Part 2**, `/check-claims <manuscript.docx> [--sources DIR] [--model M] [--effort E]`: checks every cited claim
   against the cited source's own text.
-  - The deterministic steps are `refaudit claims prepare|status|verify|report|candidates`.
+  - The deterministic steps are `refaudit claims prepare|status|verify|seal|report|candidates`.
   - The judging is done by the `claim-judge` and `claim-second-opinion` subagents (`.claude/agents/`).
   - The skill is in `.claude/skills/check-claims/SKILL.md`.
 
