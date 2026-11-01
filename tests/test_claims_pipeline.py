@@ -1,0 +1,184 @@
+"""Part 2 end to end without network or models: prepare, verdicts written as a judge would, verify, report."""
+
+import json
+import re
+import shutil
+import subprocess
+import sys
+import zipfile
+from pathlib import Path
+
+import docx
+import pytest
+from openpyxl import load_workbook
+
+from conftest import FIXTURES
+from refaudit import claims_cli
+from refaudit.cli import main
+
+ROOT = Path(__file__).parent.parent
+SENTENCES = [
+    "Uncertainty is positively related to conspiracy belief (Kowalska & Nowak, 2017).",
+    "Uncertainty causes conspiracy belief (Kowalska & Nowak, 2017).",
+    "Kowalska and Nowak (2017) surveyed 500 adults.",
+    "Uncertainty was linked to conspiracy belief before (Douglas et al., 2017; Missing, 2020).",
+]
+
+
+def verdict(id_, name, quote="", page="", pdf=None, severity="", confidence="high"):
+    return {"id": id_, "verdict": name, "support_type": "finding", "severity": severity, "explanation": f"{name} because.",
+            "group_share": "", "evidence": [{"quote": quote, "page": page, "pdf_page": pdf, "section": ""}] if quote else [],
+            "search_terms": ["x"], "fix": "a fix" if severity else "", "alternative": "", "confidence": confidence}
+
+
+@pytest.fixture
+def run(tmp_path):
+    d = docx.Document()
+    d.add_heading("Introduction", level=1)
+    d.add_paragraph(" ".join(SENTENCES))
+    d.add_heading("References", level=1)
+    d.add_paragraph("Douglas, K. M., Sutton, R. M., & Cichocka, A. (2017). The psychology of conspiracy theories. "
+                    "Current Directions in Psychological Science, 26(6), 538–542.")
+    d.add_paragraph("Kowalska, A., & Nowak, J. (2017). Uncertainty and conspiracy belief: A test article. "
+                    "Journal of Test Results, 26(6), 538–540. https://doi.org/10.9999/test.2017.001")
+    d.add_paragraph("Uncited, B. (2010). Never cited. Journal, 1, 1–2.")
+    d.save(tmp_path / "ms.docx")
+    (tmp_path / "pdfs").mkdir()
+    shutil.copy(FIXTURES / "claims" / "paged.pdf", tmp_path / "pdfs" / "download (3).pdf")
+    work = claims_cli.prepare(tmp_path / "ms.docx", tmp_path / "pdfs", offline=True, log=lambda *a, **k: None)
+    return tmp_path, work
+
+
+def write(work, folder, key, entries):
+    (work / folder / f"{key}.json").write_text(json.dumps({"refkey": key, "prompt_version": claims_cli.PROMPT_VERSION,
+                                                           "occurrences": entries}), encoding="utf-8")
+
+
+def test_prepare_writes_packets_and_texts(run):
+    _, work = run
+    state = claims_cli.load(work, "claims.json")
+    assert [r["ref"] for r in state["rows"]] == ["kowalska2017"] * 3 + ["douglas2017", None]
+    refs = {r["key"]: r for r in state["refs"]}
+    assert refs["kowalska2017"]["level"] == "FULL" and refs["douglas2017"]["level"] == "NONE"
+    assert state["files"][0]["ref"] == "kowalska2017" and state["files"][0]["how"] == "DOI in the file"
+    packet = claims_cli.load(work, "packets/kowalska2017.json")
+    assert len(packet["occurrences"]) == 3 and Path(packet["full_text"]).exists()
+    status = claims_cli.status(work)
+    assert status["to_judge"] == ["douglas2017", "kowalska2017"] and status["unmatched"] == ["C005"]
+
+
+def test_judging_verification_and_report(run):
+    tmp_path, work = run
+    write(work, "verdicts", "kowalska2017", [
+        verdict("C001", "SUPPORTED", "Uncertainty was positively associated with conspiracy belief", "538", 1),
+        verdict("C002", "OVERSTATED", "This study was correlational; no causal conclusions can be drawn", "538", 1, "MAJOR"),
+        verdict("C003", "NOT-SUPPORTED", "Participants (N = 412; 58% women)", "539", 2, "CRITICAL")])
+    write(work, "verdicts", "douglas2017", [verdict("C004", "UNVERIFIABLE", severity="NOTE")])
+    summary = claims_cli.verify(work, log=lambda *a: None)
+    assert summary["judged"] == 4 and not summary["errors"]
+    results = claims_cli.load(work, "results.json")["results"]
+    assert results["C002"]["evidence"][0]["detail"] == "found on PDF page 2, printed page 539 instead"
+    assert results["C003"]["numbers"] == {"500": False}
+    requests = claims_cli.load(work, "second_requests.json")
+    assert set(requests["kowalska2017"]) == {"C001", "C002", "C003"}  # not GREEN, plus the GREEN sample
+    write(work, "second", "kowalska2017", [verdict("C001", "SUPPORTED"), verdict("C002", "OVERSTATED", severity="MAJOR"),
+                                           verdict("C003", "SUPPORTED", confidence="low")])
+    claims_cli.verify(work, log=lambda *a: None)
+    paths = claims_cli.report(work, model="fable", effort="max", log=lambda *a: None)
+    assert [p.name for p in paths] == ["ms_claims.xlsx", "ms_claims_comments.docx", "ms_claims.json"]
+
+    wb = load_workbook(paths[0])
+    assert wb.sheetnames == ["Claims", "Sources", "PDFs to upload", "Summary", "Legend"]
+    claims_sheet = wb["Claims"]
+    header = [c.value for c in claims_sheet[1]]
+    rows = {r[0].value: {h: c for h, c in zip(header, r)} for r in claims_sheet.iter_rows(min_row=2)}
+    expected = {"C001": ("GREEN", "SUPPORTED"), "C002": ("ORANGE", "OVERSTATED"), "C003": ("ORANGE", "DISPUTED"),
+                "C004": ("GREY", "UNVERIFIABLE"), "C005": ("GREY", None)}
+    assert {k: (v["Status"].value, v["Verdict"].value) for k, v in rows.items()} == expected
+    assert rows["C001"]["Status"].fill.start_color.rgb.endswith("C6EFCE")
+    assert rows["C002"]["Quote check"].fill.start_color.rgb.endswith("F4B183")
+    assert "quote not found" in rows["C002"]["Quote check"].value
+    assert rows["C003"]["Second opinion"].value.startswith("disagrees: SUPPORTED")
+    assert rows["C005"]["Reference"].fill.start_color.rgb.endswith("D9D9D9")
+    assert rows["C004"]["Evidence level"].value == "NONE"
+    sources = {r[0].value: r for r in wb["Sources"].iter_rows(min_row=2)}
+    assert sources["kowalska2017"][2].hyperlink.target == "https://doi.org/10.9999/test.2017.001"
+    assert [r[1] for r in wb["PDFs to upload"].iter_rows(min_row=2, values_only=True)][0].startswith("Douglas")
+    summary = {r[0]: r[1] for r in wb["Summary"].iter_rows(values_only=True) if r[0]}
+    assert summary["Judge model"] == "fable" and summary["Agreement on the GREEN sample"].startswith("1 of 1")
+    assert summary["Uncited entries"] == "1" and summary["Unmatched citations"] == "1"
+
+    with zipfile.ZipFile(paths[1]) as z:
+        comments = z.read("word/comments.xml").decode()
+        document = z.read("word/document.xml").decode()
+    assert len(re.findall(r"<w:comment ", comments)) == 4 and set(re.findall(r'w:author="([^"]+)"', comments)) == {"refaudit"}
+    anchored = ["".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", m)) for m in
+                re.findall(r"<w:commentRangeStart [^>]*/>(.*?)<w:commentRangeEnd", document)]
+    assert anchored == ["Kowalska &amp; Nowak, 2017", "Kowalska and Nowak (2017)", "Douglas et al., 2017", "Missing, 2020"]
+    data = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert len(data["rows"]) == 5 and data["run"]["prompt_version"] == claims_cli.PROMPT_VERSION
+
+
+def test_reruns_judge_only_changed_sources(run):
+    tmp_path, work = run
+    write(work, "verdicts", "kowalska2017", [verdict(f"C00{i}", "SUPPORTED") for i in (1, 2, 3)])
+    write(work, "verdicts", "douglas2017", [verdict("C004", "UNVERIFIABLE", severity="NOTE")])
+    claims_cli.verify(work, log=lambda *a: None)
+    assert claims_cli.status(work)["to_judge"] == []
+    (tmp_path / "pdfs" / "Douglas2017.txt").write_text("The Psychology of Conspiracy Theories\nKaren M. Douglas\n"
+                                                        "Full text of the article.", encoding="utf-8")
+    claims_cli.prepare(tmp_path / "ms.docx", tmp_path / "pdfs", offline=True, log=lambda *a, **k: None)
+    assert claims_cli.status(work)["to_judge"] == ["douglas2017"]  # a new file for this source only
+    claims_cli.prepare(tmp_path / "ms.docx", tmp_path / "pdfs", offline=True, force=True, log=lambda *a, **k: None)
+    assert claims_cli.status(work)["to_judge"] == ["douglas2017", "kowalska2017"]
+
+
+def test_bad_verdict_files_are_reported(run):
+    _, work = run
+    write(work, "verdicts", "kowalska2017", [verdict("C001", "MAYBE"), verdict("C009", "SUPPORTED"),
+                                             verdict("C002", "SUPPORTED", quote=" ".join(["word"] * 41))])
+    errors = claims_cli.verify(work, log=lambda *a: None)["errors"]
+    assert any("'MAYBE'" in e for e in errors) and any("C009" in e for e in errors) and any("40 words" in e for e in errors)
+
+
+def test_cli_without_claude(run, capsys):
+    tmp_path, work = run
+    assert main(["claims", "report", str(work)]) == 0
+    wb = load_workbook(tmp_path / "ms_claims.xlsx")
+    rows = list(wb["Claims"].iter_rows(min_row=2, values_only=True))
+    assert {r[8] for r in rows} == {"GREY"} and rows[0][20]  # no verdicts, but candidate passages
+    assert main(["claims", "candidates", str(work), "C004"]) == 0
+    assert json.loads(capsys.readouterr().out)["candidates"][0]["ref"] == "kowalska2017"
+    assert main(["claims", "status", str(tmp_path)]) == 2
+
+
+@pytest.mark.parametrize("command, allowed", [
+    ("refaudit claims candidates /w C012", True), ("python3 -m refaudit claims status /w", True),
+    ("refaudit claims report /w", False), ("refaudit claims candidates /w C1; rm -rf ~", False), ("cat x", False)])
+def test_judge_bash_guard(command, allowed):
+    hook = ROOT / ".claude" / "hooks" / "refaudit_only.py"
+    result = subprocess.run([sys.executable, str(hook)], input=json.dumps({"tool_input": {"command": command}}),
+                            capture_output=True, text=True)
+    assert (result.returncode == 0) == allowed
+
+
+@pytest.mark.parametrize("tool, args, allowed", [
+    ("Read", {"file_path": "/x/ms_claims/texts/a.txt"}, True), ("Read", {"file_path": "/x/ms_claims/verdicts/a.json"}, False),
+    ("Grep", {"pattern": "C012", "path": "/x/ms_claims"}, False), ("Grep", {"pattern": "a", "path": "/x/ms_claims/texts/a.txt"}, True),
+    ("Glob", {"pattern": "**/*.json"}, False), ("Read", {"file_path": "/x/ms_claims.xlsx"}, False)])
+def test_second_opinion_is_blind(tool, args, allowed):
+    hook = ROOT / ".claude" / "hooks" / "blind_second_opinion.py"
+    result = subprocess.run([sys.executable, str(hook)], input=json.dumps({"tool_name": tool, "tool_input": args}),
+                            capture_output=True, text=True)
+    assert (result.returncode == 0) == allowed
+
+
+def test_agent_and_skill_files():
+    for name in ("claim-judge", "claim-second-opinion"):
+        text = (ROOT / ".claude" / "agents" / f"{name}.md").read_text(encoding="utf-8")
+        front = text.split("---")[1]
+        assert f"name: {name}" in front and "model: fable" in front and "effort: max" in front
+        assert "WebFetch" not in front and "WebSearch" not in front
+        assert f'"prompt_version": "{claims_cli.PROMPT_VERSION}"' in text
+    skill = (ROOT / ".claude" / "skills" / "check-claims" / "SKILL.md").read_text(encoding="utf-8")
+    assert "disable-model-invocation: true" in skill and "$ARGUMENTS" in skill and "at most five" in skill

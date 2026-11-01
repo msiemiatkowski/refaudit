@@ -49,10 +49,19 @@ def test_legend():
     assert legend["fills"]["GREEN"] == "C6EFCE" and set(legend["meanings"]) == set(legend["order"])
 
 
-def test_worker_loads_every_module():
+def test_worker_loads_every_module_the_web_app_needs():
     worker = (ROOT / "web" / "worker.js").read_text(encoding="utf-8")
     listed = set(json.loads(re.search(r"const MODULES = (\[.*?\]);", worker).group(1)))
-    assert listed == {p.name for p in (ROOT / "refaudit").glob("*.py")} - {"__main__.py"}
+    needed, todo = {"__init__.py"}, ["web"]
+    while todo:  # modules imported by refaudit/web.py, directly or indirectly
+        name = todo.pop()
+        if f"{name}.py" in needed or not (ROOT / "refaudit" / f"{name}.py").exists():  # e.g. __version__
+            continue
+        needed.add(f"{name}.py")
+        source = (ROOT / "refaudit" / f"{name}.py").read_text(encoding="utf-8")
+        for group in re.findall(r"^from \.(\w*) import ([\w, ()]+)", source, re.M):
+            todo += [group[0]] if group[0] else [n.strip(" ()") for n in group[1].split(",") if n.strip(" ()")]
+    assert needed <= listed, needed - listed
 
 
 def test_pure_python_ratio_matches_rapidfuzz():

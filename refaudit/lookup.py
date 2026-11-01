@@ -79,7 +79,17 @@ class Client:
         tmp.replace(path)
         return body
 
-    def _fetch(self, service, url, params):
+    def download(self, service: str, url: str) -> tuple[bytes, str] | None:
+        """A file (e.g. an open-access PDF) and its content type, with the same politeness; None for 404."""
+        if service in self.skipped:
+            raise Refused(f"{service} skipped: {self.skipped[service]}")
+        if self.offline:
+            raise Refused(f"{service}: no downloads offline")
+        status, body = self._fetch(service, url, None, raw=True)
+        self.fetched[service] += 1
+        return body
+
+    def _fetch(self, service, url, params, raw=False):
         params, headers = dict(params or {}), {}
         if self.mailto and service.startswith(("Crossref", "OpenAlex")):  # their polite pools
             params["mailto"] = self.mailto
@@ -102,6 +112,8 @@ class Client:
             if r.status_code == 404:
                 return 404, None
             if r.status_code == 200:
+                if raw:
+                    return 200, (r.content, r.headers.get("Content-Type", ""))
                 try:
                     return 200, r.json()
                 except ValueError:
@@ -127,13 +139,13 @@ class Client:
         self.failures.append(f"{service} refused requests ({reason}); skipped for the rest of the run.")
         return Refused(f"{service} refused requests ({reason})")
 
-    def summary(self) -> list[tuple[str, str]]:
+    def summary(self, services=SERVICES) -> list[tuple[str, str]]:
         """(service, plain-language result) for the Summary sheet."""
         def n(count, word):
             return f"{count} {word}{'' if count == 1 else 's'}"
 
         rows = []
-        for service in SERVICES:
+        for service in services:
             fetched, cached, failed = self.fetched[service], self.cached[service], self.failed[service]
             state = (f"skipped: {self.skipped[service]}" if service in self.skipped else "reached" if fetched
                      else "answered from the cache" if cached else "not reached" if failed else "not needed")

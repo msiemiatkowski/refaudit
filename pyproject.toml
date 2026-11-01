@@ -4,16 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "refaudit"
-version = "1.0.0"
-description = "Check the references in a .docx or .bib file against Crossref and OpenAlex and write a colour-coded .xlsx report."
+version = "2.0.0"
+description = "Check the references in a .docx or .bib file against Crossref and OpenAlex, and check cited claims against the sources' own text."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "requests",
-    "python-docx>=1.0",
+    "python-docx>=1.2",  # 1.2 adds Word comments
     "bibtexparser>=2.0",
     "openpyxl",
     "rapidfuzz",
+    "pypdf",
 ]
 
 [project.optional-dependencies]

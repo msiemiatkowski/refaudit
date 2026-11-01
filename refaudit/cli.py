@@ -43,6 +43,10 @@ def audit(refs: list[parse.Reference], client: lookup.Client, progress=None) -> 
 
 
 def main(argv=None) -> int:
+    argv = sys.argv[1:] if argv is None else list(argv)
+    if argv[:1] == ["claims"]:  # part 2: `refaudit claims prepare|status|verify|report|candidates`
+        from . import claims_cli
+        return claims_cli.main(argv[1:])
     parser = argparse.ArgumentParser(
         prog="refaudit",
         description="Check the references in a .docx or .bib file against Crossref and OpenAlex "

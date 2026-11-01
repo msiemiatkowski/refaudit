@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(refaudit claims *)",
+      "Bash(python -m refaudit claims *)",
+      "Bash(python3 -m refaudit claims *)",
+      "Bash(pandoc *)",
+      "Bash(pdftotext *)",
+      "Bash(pdftoppm *)",
+      "Bash(tesseract *)",
+      "Agent(claim-judge)",
+      "Agent(claim-second-opinion)",
+      "Read(//**/*_claims/**)",
+      "Edit(//**/*_claims/verdicts/*.json)",
+      "Edit(//**/*_claims/second/*.json)"
+    ]
+  }
+}

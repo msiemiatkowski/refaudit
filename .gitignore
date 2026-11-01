@@ -6,3 +6,6 @@ dist/
 *.tmp
 ~$*.xlsx
 _site/
+# part 2: cached source texts (often copyrighted) and packets
+texts/
+packets/
