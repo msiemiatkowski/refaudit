@@ -377,7 +377,7 @@ def open_access(client: Client, doi: str, mailto: str | None, notes: list[str]) 
     candidates, abstracts = [], {}
     path = quote(doi, safe="/")
     if mailto:
-        data = _get(client, "Unpaywall", f"{UNPAYWALL}/{path}", {"email": mailto}, notes) or {}
+        data = _get(client, "Unpaywall", f"{UNPAYWALL}/{path}", None, notes) or {}  # the client adds the email
         for loc in data.get("oa_locations") or []:
             if loc.get("url_for_pdf"):
                 candidates.append({"url": loc["url_for_pdf"], "version": VERSIONS.get(loc.get("version"), "unknown"),

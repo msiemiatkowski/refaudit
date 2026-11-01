@@ -94,6 +94,8 @@ class Client:
         if self.mailto and service.startswith(("Crossref", "OpenAlex")):  # their polite pools
             params["mailto"] = self.mailto
             headers["User-Agent"] = f"refaudit/{__version__} (mailto:{self.mailto})"
+        if self.mailto and service == "Unpaywall":  # required; like mailto, never part of the cache key
+            params["email"] = self.mailto
         if self.openalex_key and service.startswith("OpenAlex"):
             params["api_key"] = self.openalex_key  # never part of the cache key or of messages
         problem, wait = "", 0

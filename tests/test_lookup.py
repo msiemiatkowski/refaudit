@@ -106,6 +106,13 @@ def test_polite_parameters(tmp_path, sleeps):
     assert Client(tmp_path).session.headers["User-Agent"].startswith("refaudit/")
 
 
+def test_unpaywall_email_is_sent_but_never_cached(tmp_path, sleeps):
+    c = client(tmp_path, Response(200, {"oa_locations": []}), mailto="me@example.org")
+    c.get("Unpaywall", "https://api.unpaywall.org/v2/10.1/x")
+    assert c.session.calls[0]["params"] == {"email": "me@example.org"}
+    assert all("me@example.org" not in p.read_text() for p in (tmp_path / "cache").glob("*.json"))
+
+
 def test_rate_limit(tmp_path, sleeps):
     c = client(tmp_path, Response(200, {}), Response(200, {}))
     c.get("Crossref", "https://api.crossref.org/works/a")
