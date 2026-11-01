@@ -1,0 +1,38 @@
+{
+  "refkey": "granadossamayoa2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Two longitudinal (prospective panel) survey studies analysed with lagged hierarchical OLS regressions and change scores; correlational, with no manipulation and no mediation analysis.",
+    "sample": "Study 1: 107 US MTurk workers who completed both waves (baseline June 2020, n = 501; follow-up December 2020). Study 2: 1,037 UK adults from the C19PRC panel (waves 1, 2 and 4, March-December 2020).",
+    "measures": "Belief in two COVID-19 conspiracy theories (deliberately created / danger exaggerated; Study 2: made in a Wuhan lab / no more dangerous than flu); conspiracist ideation via a shortened Generic Conspiracist Beliefs Scale (Study 1) and the Conspiracy Mentality Questionnaire (Study 2); belief in 2020 US election voter fraud and political orientation (Study 1). Trust was not measured.",
+    "main_results": "Baseline belief in COVID-19 conspiracy theories predicted later belief in election voter fraud (beta = 0.50 controlling for conspiracist ideation and political orientation) and increases in conspiracist ideation over six months (Study 1, beta = 0.38, about 8% of variance) and over several months in the UK (Study 2, beta = 0.16). The authors read this as a 'gateway' effect; loss of trust in authorities and a social component are offered only as possible mechanisms for future research."
+  },
+  "occurrences": [
+    {
+      "id": "C012",
+      "verdict": "OVERSTATED",
+      "support_type": "speculation",
+      "severity": "MAJOR",
+      "explanation": "The source's own findings are prospective associations: baseline belief in COVID-19 conspiracy theories predicted later increases in generic conspiracist ideation (US MTurk, N = 107; UK panel, N = 1,037). It never measured trust and ran no mediation analysis. 'Trust' appears only in the General Discussion (p. 11). There the authors say the mechanisms are a task for future research and call loss of trust in authorities 'one possible mechanism', crediting the idea to their reference [52], which is not in the manuscript's list. They also offer a second possible mechanism, a social component (exposure to conspiracy websites and like-minded people). And their trust idea is narrower: theories that implicate scientists or government officials make novel theories about those same actors more believable. The manuscript's 'showed that this happens because' turns an untested speculation, credited to another work, into a demonstrated causal mechanism.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Future research should address the mechanisms through which belief in specific conspiracy theories triggers increases in conspiracist ideation. A loss of trust in authorities is one possible mechanism [52].",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        },
+        {
+          "quote": "Specifically, once people believe a specific conspiracy theory that implicates scientists or government officials in wrongdoing, their trust in those authorities will be violated, making it more likely that they believe other novel conspiracy theories",
+          "page": "11",
+          "pdf_page": 11,
+          "section": ""
+        }
+      ],
+      "search_terms": ["trust", "distrust", "mistrust", "mechanism", "mediat", "indirect", "process", "authorit", "institution", "government", "scientist", "official", "receptiv", "because", "causal", "explain", "future research", "possible", "potential", "loss", "violat", "social component", "[52]", "Pierre"],
+      "fix": "Granados Samayoa et al. (2022) suggested that this may happen because believers lose trust in authorities, which makes them receptive to other conspiracy theories.",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

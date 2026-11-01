@@ -1,0 +1,38 @@
+{
+  "refkey": "greenburgh2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Pre-registered online questionnaire study (November 2020). Item features (intentional vs incidental harm, self vs society as target, general vs specific) are varied systematically across conspiracy-type items. Analyses: a cumulative link regression model with multi-model averaging and an unregistered mixed graphical network analysis. Correlational with respect to paranoia; no intervention is tested.",
+    "sample": "1,000 US-based adults recruited via Prolific Academic (mean age 36, SD 12; 522 male, 463 female, 13 nonbinary, 2 other/undisclosed), with a mild conservative bias.",
+    "measures": "Paranoia: R-GPTS persecution subscale, with the reference subscale in robustness checks. A new 24-item Components of Conspiracy Ideation Questionnaire (1-5 endorsement). Per-item perceived endorsement by similar others (yes/no/unsure). General conspiracy mindset: the Conspiracy Mentality Questionnaire. Social and Economic Conservatism Scale.",
+    "main_results": "Paranoia predicted higher endorsement overall (estimate 0.83, 95% CI 0.72-0.93). Incidental-harm and society-targeted items were endorsed more overall. More paranoid participants were relatively more likely to endorse intentional-harm and self-referential items; the self-referential effect is called marginal. In the network analysis endorsement clustered mainly by intentionality, and the edge from paranoia to intentional/self items was stronger than the edge to intentional/society items. Participants endorsed items they thought similar others endorsed, and paranoia did not weaken this effect. There are no data on interventions to reduce conspiracy beliefs."
+  },
+  "occurrences": [
+    {
+      "id": "C014",
+      "verdict": "MISATTRIBUTED",
+      "support_type": "none",
+      "severity": "MAJOR",
+      "explanation": "Greenburgh et al. (2022) is a cross-sectional online survey of 1,000 US adults about how paranoia relates to endorsement of conspiracy-type items that differ in intentionality and target of harm. It tests no intervention, reviews no intervention studies and never discusses priming an analytical mindset or teaching critical thinking. A search of the whole text finds 'analytic' only in 'meta-analytic evidence', 'mindset' only as 'general conspiracy mindset' (the CMQ measure), 'effective', 'intervention' and 'critical thinking' nowhere, and 'treatment' only in a remark about patients with schizophrenia. The sentence restates, almost word for word, O'Mahony et al. (2023). That review is in the reference list and is cited in the previous sentence. Its abstract (printed p. 1, PDF p. 1) reads: 'Interventions that fostered an analytical mindset or taught critical thinking skills were found to be the most effective in terms of changing conspiracy beliefs.' Its conclusion point 4 (p. 14) says the same. So the claim is correct but credited to the wrong source. Severity is MAJOR rather than CRITICAL: the statement itself is accurate and the right source is cited one sentence earlier, but the citation as written gives no support.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "In a large (n = 1000), pre-registered online study we tested if endorsement of items on a new Components of Conspiracy Ideation Questionnaire varied according to whether harm was described as being (a) intentional and (b) self-referential.",
+          "page": "",
+          "pdf_page": null,
+          "section": "Title and abstract"
+        },
+        {
+          "quote": "We present a novel study investigating the relationship between paranoia and different components of conspiracy thinking.",
+          "page": "",
+          "pdf_page": null,
+          "section": "Discussion"
+        }
+      ],
+      "search_terms": ["intervention", "interven", "effective", "ineffective", "analytic", "analytical mindset", "mindset", "critical thinking", "critical", "skills", "taught", "teach", "training", "educat", "debunk", "inocul", "prebunk", "counterargument", "counter", "reduc", "systematic review", "review", "meta-analy", "25 studies", "treatment", "therap", "rational", "reasoning", "reflect", "intuitive", "thinking style", "cognitive style"],
+      "fix": "The most effective interventions were those that fostered an analytical mindset or taught critical thinking skills (O'Mahony et al., 2023).",
+      "alternative": "omahony2023",
+      "confidence": "high"
+    }
+  ]
+}

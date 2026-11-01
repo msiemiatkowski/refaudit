@@ -1,0 +1,44 @@
+{
+  "refkey": "imhoff2020",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Three cross-sectional online correlational surveys (Study 1; preregistered Studies 2a and 2b, with documented deviations). Self-reported pandemic behaviour was regressed on two COVID-19 conspiracy beliefs, with controls added in exploratory steps. Data were collected March 20-25, 2020.",
+    "sample": "Study 1: N = 220 US MTurk workers (March 20-23, 2020). Study 2a: N = 288 US MTurk workers. Study 2b: N = 298 UK Prolific participants (both March 25, 2020). A German replication is reported only in the Supplemental Material.",
+    "measures": "Two 3-item agreement scales (1-7): 'COVID-19 hoax' (the virus is harmless and its danger overblown) and 'SARS-CoV-2 human-made' (the virus was purposely created). Self-reported pandemic behaviour (18 items, 1-7) formed two composites: containment-related (e.g., hygiene, physical distancing) and self-centred prepping (e.g., hoarding, alternative remedies). Also threat perception, the Conspiracy Mentality Scale and political orientation; Study 2 added RWA, SDO and the Big Five, plus intended lockdown noncompliance in the UK.",
+    "main_results": "The two beliefs correlated positively with each other and with conspiracy mentality. Hoax beliefs predicted less containment-related behaviour: Study 1 B = -0.345; US 2a B = -0.448; UK 2b B = -0.196, weaker. Human-made beliefs predicted more self-centred prepping, and hoax beliefs did too in US 2a. All results are cross-sectional correlations, and the authors say they are mute on causality. The intro's survey percentages (e.g. 13% hoax) come from other work (Frankovic, 2020). The packet lists a correction dated 2020-10-14 that is not in the text file."
+  },
+  "occurrences": [
+    {
+      "id": "C003",
+      "verdict": "SECONDARY",
+      "support_type": "secondary",
+      "severity": "MINOR",
+      "explanation": "The number, date, country and wording all match the source: a survey from the beginning of March 2020 in the United States, with 13% 'convinced that the coronavirus is a hoax'. But Imhoff and Lamberty only report this figure in their introduction, citing another survey (Frankovic, 2020). It is not their own result. Their own studies were run March 20-25, 2020 and measured agreement on 1-7 scales, not prevalence. Frankovic (2020) is not in the manuscript's reference list. The candidates helper found no other listed source with this figure (uscinski2022 gives different March 2020 percentages for other beliefs). So the sentence should mark the citation as secondary.",
+      "group_share": "",
+      "evidence": [
+        {"quote": "A survey conducted in the beginning of March 2020 in the United States supported the notion to differentiate between the two types of conspiracy beliefs", "page": "", "pdf_page": null, "section": "Distinct Effects of Different Conspiracy Beliefs on Behavior"},
+        {"quote": "In contrast, 44% thought that the threat of the coronavirus is being exaggerated for political reasons and 13% were convinced that the coronavirus is a hoax (Frankovic, 2020).", "page": "", "pdf_page": null, "section": "Distinct Effects of Different Conspiracy Beliefs on Behavior"}
+      ],
+      "search_terms": ["13%", "%", "Frankovic", "hoax", "beginning of March", "survey", "Americans", "prevalen", "percent", "agree"],
+      "fix": "At the beginning of March 2020, 13% of Americans were convinced that the coronavirus is a hoax (Frankovic, 2020, as cited in Imhoff & Lamberty, 2020).",
+      "alternative": "",
+      "confidence": "high"
+    },
+    {
+      "id": "C009",
+      "verdict": "NOT-SUPPORTED",
+      "support_type": "finding",
+      "severity": "CRITICAL",
+      "explanation": "The direction is reversed. In every study the source finds that believing COVID-19 is a hoax goes with LESS self-reported containment-related behaviour (hygiene/handwashing, physical distancing): Study 1 B = -0.345, p < .001; US Study 2a B = -0.448, p < .001; UK Study 2b B = -0.196, p = .001 (weaker). The abstract and the General Discussion say the same. No passage reports more containment behaviour among hoax believers. The only positive link for hoax beliefs (US Study 2a) is with self-centred prepping such as hoarding, not with containment behaviour. The sentence's examples (hygiene, physical distancing) and its self-report, non-causal wording are otherwise accurate.",
+      "group_share": "",
+      "evidence": [
+        {"quote": "In line with our predictions, believing that COVID-19 was a hoax was a strong negative prediction of containment-related behaviors such as handwashing and keeping physical distance, B = −0.345, SE = 0.063, p < .001", "page": "", "pdf_page": null, "section": "Results"},
+        {"quote": "Whereas conspiracy beliefs describing the pandemic as a hoax were more strongly associated with reduced containment-related behavior", "page": "", "pdf_page": null, "section": "Abstract"}
+      ],
+      "search_terms": ["containment", "hygiene", "distanc", "handwash", "hoax", "positiv", "increas", "greater", "more likely", "less likely", "weaker", "reduced", "negative"],
+      "fix": "People who believed that COVID-19 is a hoax reported less containment-related behaviour, such as hygiene and physical distancing (Imhoff & Lamberty, 2020).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

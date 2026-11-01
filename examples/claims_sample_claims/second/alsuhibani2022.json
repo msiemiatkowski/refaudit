@@ -1,0 +1,54 @@
+{
+  "refkey": "alsuhibani2022",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Three cross-sectional online surveys. Confirmatory factor analyses compared one-factor and two-correlated-factor models of paranoia and conspiracy beliefs; multivariate latent regression models entered all psychological constructs simultaneously as predictors of covarying paranoia and conspiracy factors, with Wald tests of equality of coefficients.",
+    "sample": "UK. Study 1: mainly student sample from Liverpool, Oxford and Ulster university participant panels, UK-born only (N = 496). Study 2: Qualtrics sample of UK residents stratified by age, sex and household income (N = 1,519). Study 3: same sampling frame (N = 638).",
+    "measures": "Paranoia: PaDS-R P scale (Studies 1-2), a revised propositional paranoia scale (Study 3). Conspiracy beliefs: Conspiracy Mentality Questionnaire (Study 1), Generic Conspiracist Beliefs Scale (Studies 2-3). Also Relationship Questionnaire / ECR-12 attachment, Brief Core Schema Scales (Study 1) / Self-Esteem Rating Scale (Studies 2-3), Multidimensional Locus of Control Scale, 3-item Loneliness Scale (Studies 1-2 only), expanded Cognitive Reflection Test (Studies 2-3), NPI-13 narcissism (Study 3).",
+    "main_results": "A two-correlated-factor model fit better than a single factor in all studies (latent r = .42 to .53). Both belief systems were associated with chance and powerful-others locus of control and with loneliness (the loneliness effect was stronger for paranoia in Study 1 and did not differ in Study 2). Paranoia was specifically associated with negative self-esteem and, in Studies 1-2, insecure attachment. Conspiracy beliefs were associated with positive self-esteem (Studies 2-3), narcissism (Study 3) and poor CRT performance (Studies 2-3). The authors stress that all studies were cross-sectional and make no strong causal claims."
+  },
+  "occurrences": [
+    {
+      "id": "C007",
+      "verdict": "OVERSTATED",
+      "support_type": "finding",
+      "severity": "MAJOR",
+      "explanation": "The source finds that loneliness is associated with conspiracy beliefs, but only cross-sectionally. Loneliness was measured only in Studies 1 and 2 (UK samples: mainly students, N = 496; stratified quota sample, N = 1,519) with a 3-item scale. In latent regression models with all constructs entered simultaneously, it was positively and significantly associated with conspiracy mentality / generic conspiracist beliefs (standardised beta about .15 in both studies, Tables 2 and 4; zero-order r = .15 and .28, Tables 1 and 3). The association was much stronger for paranoia in Study 1 and equal in Study 2 (Table 7). The authors say that all three studies were cross sectional (p. 18), that they make no strong claims about the causal role of the constructs, and that experimental and longitudinal studies are needed. 'Drives people towards' is causal wording that the source neither tests nor supports: the association could run the other way or reflect third variables. The generic sentence also drops the UK-sample scope and the modest size of the effect. No other source in the manuscript's list supports a causal loneliness effect. The candidates helper returned no loneliness passages. Grep for loneliness and ostracism across all source texts found that omahony2023 and pilch2023 mention only ostracism, second-hand from Poon et al. (2020), which is not in the list. So the wording should be fixed, not the citation.",
+      "group_share": "",
+      "evidence": [
+        {
+          "quote": "Both belief systems were also associated with loneliness although, in one study (Study 1, with the least representative sample), this effect was greater for paranoia.",
+          "page": "16",
+          "pdf_page": 16,
+          "section": ""
+        },
+        {
+          "quote": "this model is structural, identifying common and specific psychological features of paranoia and conspiracy theories, and we make no strong claims about the causal role of the psychological processes identified.",
+          "page": "18",
+          "pdf_page": 18,
+          "section": ""
+        }
+      ],
+      "search_terms": [
+        "lonel",
+        "isolat",
+        "social capital",
+        "social network",
+        "network diversity",
+        "causal",
+        "cause / causing",
+        "cross sectional / cross-sectional",
+        "longitudinal",
+        "experiment",
+        "drive / driving",
+        "lead to / led to",
+        "predict",
+        "ostracism / social exclusion (all source texts)",
+        "refaudit claims candidates C007"
+      ],
+      "fix": "Loneliness is associated with stronger belief in conspiracy theories (Alsuhibani et al., 2022).",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}

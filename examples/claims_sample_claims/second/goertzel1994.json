@@ -1,0 +1,28 @@
+{
+  "refkey": "goertzel1994",
+  "prompt_version": "1",
+  "source_summary": {
+    "design": "Cross-sectional, correlational survey. Only the OpenAlex abstract is available, so design details beyond it are unknown.",
+    "sample": "348 residents of southwestern New Jersey, USA.",
+    "measures": "Belief in each of a list of 10 conspiracy theories (whether each was 'at least probably true'); anomia; interpersonal trust; employment insecurity; ethnicity (Black, Hispanic, white), age, gender, educational level, occupational category.",
+    "main_results": "Most respondents thought several of the 10 conspiracy theories were at least probably true; belief in one conspiracy went with belief in others; belief correlated with anomia, lack of interpersonal trust and employment insecurity; Black and Hispanic respondents believed more than white respondents, and young people slightly more; few significant correlations with gender, education or occupation."
+  },
+  "occurrences": [
+    {
+      "id": "C002",
+      "verdict": "UNVERIFIABLE",
+      "support_type": "none",
+      "severity": "NOTE",
+      "explanation": "Only the OpenAlex abstract is available; there is no full text. The abstract describes a correlational survey of 348 residents of southwestern New Jersey: how many of 10 conspiracy theories people believed, whether those beliefs went together, and their correlates (anomia, low interpersonal trust, employment insecurity, ethnicity, age). It says nothing about conspiracy theories offering simple explanations for events that are hard to understand, and none of the claim's key terms (simple, explanation, understand, event, argue) appear in it. The sentence credits Goertzel with a theoretical argument ('argued'). Such an argument would be in the introduction or discussion if anywhere, so the abstract can neither confirm nor refute it. No other source in the list credits this argument to Goertzel: Granados Samayoa et al. (2022) cite Goertzel (their ref. 10) only for how common and how coherent conspiracy beliefs are. The closest related statements credit other authors: van Prooijen et al. (2023) say conspiracy theories 'help people understand their social environment', and Alsuhibani et al. (2022) link need for closure to 'conspiratorial explanations for uncertain events'. So neither is a better-fitting reference for this narrative citation.",
+      "group_share": "",
+      "evidence": [
+        {"quote": "A survey of 348 residents of southwestern New Jersey showed that most believed that several of a list of 10 conspiracy theories were at least probably true.", "page": "", "pdf_page": null, "section": "Abstract"},
+        {"quote": "Belief in conspiracies was correlated with anomia, lack of interpersonal trust, and insecurity about employment.", "page": "", "pdf_page": null, "section": "Abstract"}
+      ],
+      "search_terms": ["simpl", "explan", "explain", "understand", "comprehen", "event", "argu", "meaning", "sense", "uncertain", "complex", "function", "reason", "cope", "why", "other sources: simple explanation", "make sense of", "sense-making", "hard to understand", "difficult to understand", "complex events", "offer/provide explanation", "explanations for uncertain events", "need for closure", "understand their social environment", "Goertzel", "refaudit claims candidates C002"],
+      "fix": "None can be derived from the abstract. Check the full text of Goertzel (1994) for this argument; if it is not there, replace or remove the citation.",
+      "alternative": "",
+      "confidence": "high"
+    }
+  ]
+}
