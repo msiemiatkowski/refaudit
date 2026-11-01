@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 import unicodedata
 
-from rapidfuzz.fuzz import partial_ratio
+from .fuzzy import partial_ratio
 
 from .retrieval import number_key, numbers_in
 from .texts import where

@@ -114,6 +114,38 @@ judges have no web tools.
 **Word comments.** They are anchored on the citation text as written, in a copy of the manuscript with tracked
 changes accepted. The runs are split so the comment covers only the citation.
 
+**The claude.ai page** (`web/claude/`, built by `tools/build_claude_page.py`).
+- **Why a claude.ai page.** It lets a page judge claims on the user's Claude plan with no API key: it asks Claude
+  through the page's `sample` capability, and gives files back through `downloads`.
+- **No network.** A claude.ai page cannot reach any other host. So the page prepares offline: your files only,
+  no lookups.
+- **Pyodide from the page's own files.** Pyodide 0.29.5, lxml and the pure-Python wheels are published with the
+  page. claude.ai serves no .zip or .whl files, so those archives are published base64-encoded as `.txt`. A fetch
+  shim in the worker decodes them, and Pyodide still checks each wheel against its lock file.
+- **The same engine.** `refaudit/claims_web.py` wraps `claims_cli`:
+  - the page plays the skill;
+  - each judge's answer is filed as `verdicts/<refkey>.json`;
+  - `verify` and `report` are the command line's.
+- **One question per source.** It holds:
+  - the Rules, Verdicts and Output sections read from `.claude/agents/claim-judge.md`;
+  - the claims;
+  - the best passages from the other cited sources, for spotting misattributions;
+  - the source's whole text.
+- **Long sources.** A text over the 256 KB question limit keeps its first pages and the pages most relevant to the
+  claims, and says how many pages were left out.
+- **Blind second opinions.** These are blind by construction: the second question never contains the first
+  verdict, and it is never served from claude.ai's answer cache (`cache: false`). First questions are cached for
+  24 hours, so a re-run replays unchanged answers.
+- **Sources without text.** These get UNVERIFIABLE without asking Claude. The same rule now skips their second
+  opinions everywhere, since a second judge would have nothing to read either.
+- **Pacing.** Questions go two at a time, from one click. A usage limit (`rate_limited`) stops the run with no
+  retry; what was judged is kept, and "Continue the check" resumes, for example with another model.
+- **rapidfuzz.** It is not available in Pyodide. `refaudit/fuzzy.py` gives a pure-Python `partial_ratio`:
+  shared k-grams pick the alignments, scored with the existing exact `lcs_ratio`. It never scores above rapidfuzz,
+  and agrees with it at every threshold the claim check uses: 400 real quotes and every title against every first
+  page were tested, plus a unit test.
+- **requests.** Its import is optional, since the page has no network to use it on.
+
 ## Known limits
 
 - **`.claude/settings.json` was not written.** Claude Code's auto-mode classifier refused it because it changes
@@ -146,6 +178,11 @@ changes accepted. The runs are split so the comment covers only the citation.
 - **Paywalled sources.** These stay at ABSTRACT or NONE until you upload the PDF. Semantic Scholar's unauthenticated
   limit (about 1 request per second, shared) is easily hit; it is retried and then skipped, and the Summary says so.
 - **Cost.** Max-effort judges read whole papers. See the README for ways to lower it.
+- **The claude.ai page:**
+  - It cannot look anything up (no network). It judges at effort "high" at most.
+  - It loses its work if the page is reloaded. claude.ai's 24-hour answer cache makes a re-run cheap.
+  - It was tested in Chromium with a stand-in for Claude (`tools/test_claude_page.js`). Its first real run happens
+    when you open it in claude.ai.
 
 ## Acceptance
 

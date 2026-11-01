@@ -10,7 +10,10 @@ from collections import Counter
 from pathlib import Path
 from urllib.parse import quote, urlencode, urlparse
 
-import requests
+try:
+    import requests
+except ImportError:  # the claim check on a claude.ai page has no network, so no requests
+    requests = None
 
 from . import __version__
 from .compare import (PARTICLES, RED_NOTICES, Match, Notice, Record, norm, same_surname, similarity, title_score,

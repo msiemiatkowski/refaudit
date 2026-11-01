@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import quote
 from xml.etree import ElementTree
 
-from rapidfuzz.fuzz import partial_ratio
+from .fuzzy import partial_ratio
 
 from .claims import surname_key
 from .compare import clean, norm

@@ -116,7 +116,7 @@ Part 2 asks, for each sentence that cites a source: does that source, read in fu
 
 The work is split in two:
 - **Deterministic steps in Python** (`refaudit claims …`). These extract claims and citations, match them to the reference list, get the source texts, pull candidate passages, check quotes and build the reports.
-- **Judging by Claude Code subagents** (`.claude/`). This runs on your Claude plan with no API key.
+- **Judging by Claude**, on your Claude plan with no API key: Claude Code subagents (`.claude/`), or the private claude.ai page described [below](#in-claudeai-on-your-claude-plan).
 
 Part 1 (`refaudit FILE`) is unchanged and makes no model calls.
 
@@ -142,6 +142,41 @@ Options are `--sources DIR`, `--model M` (default `fable`), `--effort E` (defaul
 So that unattended runs don't stop at permission prompts, copy `.claude/settings.example.json` to `.claude/settings.json`. It allows `refaudit claims`, pandoc, pdftotext, pdftoppm and tesseract, the two judge agents, and writes to the verdict folders. It also registers the judges' two hooks at settings level, limited to the judges' own tool calls, so they apply even where agent hooks are skipped. Claude Code would not write that file itself, because it changes Claude's own permissions.
 
 The two agents also load only in sessions started after `.claude/agents/` exists; restart once after pulling this branch. Trust the folder when Claude Code asks: until then it skips the hooks in the agents' files.
+
+### In claude.ai, on your Claude plan
+
+The same check also runs as a private claude.ai page, with no install and no API key:
+[Refaudit Claim Check](https://claude.ai/artifact/WX7y3N4QaJQnNi7MzMLGKz). Only its owner can open it until they share it.
+1. Add the manuscript (.docx) and the PDFs you have of the works it cites.
+2. Choose a model and click **Check the claims**. Allow Claude when the page asks: each source becomes one question,
+   on your Claude plan, followed by a blind second opinion on every problem it flags.
+3. Read the results on the page and save the Excel report, the Word file with comments and the JSON.
+
+How it differs from `/check-claims` in Claude Code:
+- **No network.** A claude.ai page cannot reach other services, so it looks nothing up: no open-access copies, abstracts
+  or reference checks. A source without your PDF is marked UNVERIFIABLE without asking Claude, and the page links to
+  its DOI so you can fetch the PDF and add it.
+- **Effort.** A page can ask for effort "high" at most, not "max".
+- **Size.** One question holds up to 256 KB of text. A longer source is shortened to its first pages and the pages most
+  relevant to the claims, and the judge is told what was left out.
+- **Same engine.** The page runs refaudit's own Python code in the browser (Pyodide) and writes the same reports. The
+  judging rules are read from `.claude/agents/claim-judge.md`.
+- **Re-runs.** If you run the same check again within a day, claude.ai replays Claude's answers instead of asking again.
+
+To rebuild and test the page (Node with Playwright for the test):
+
+```bash
+python tools/build_claude_page.py
+```
+
+```bash
+node tools/test_claude_page.js
+```
+
+The build fetches Pyodide and the pinned wheels, checks them, and writes everything the page publishes to
+`build/claude-page/`. The test runs the built page in Chromium with a stand-in for Claude that answers with the
+verdicts the judges wrote in `examples/`. Publish the folder with Claude Code's Artifact tool; ask Claude to
+"update the claim-check page".
 
 ### What happens
 

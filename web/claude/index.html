@@ -1,0 +1,539 @@
+<title>Refaudit Claim Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* One column in three stages: your files, the check, the results. Tokens follow the refaudit web app;
+     status fills are the Excel report's own. */
+  :root {
+    --bg: #f5f7fa; --surface: #ffffff; --text: #1f2328; --muted: #59636e; --border: #d8dee4;
+    --accent: #3b5bdb; --accent-text: #ffffff; --accent-soft: #edf2ff; --danger: #c92a2a; --ok: #2b8a3e;
+    --ink-on-fill: #1f2328;
+    --s-green: #c6efce; --s-yellow: #ffeb9c; --s-orange: #f4b183; --s-red: #ff8b8b; --s-purple: #d9c3e9; --s-grey: #d9d9d9;
+    --radius: 14px; --shadow: 0 1px 2px rgba(31, 35, 40, .06), 0 4px 16px rgba(31, 35, 40, .06);
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1216; --surface: #171b21; --text: #e6edf3; --muted: #9aa4af; --border: #2d333b;
+      --accent: #7c9cff; --accent-text: #0f1216; --accent-soft: #1d2540; --danger: #ff8787; --ok: #69db7c;
+      --shadow: none; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1216; --surface: #171b21; --text: #e6edf3; --muted: #9aa4af; --border: #2d333b;
+    --accent: #7c9cff; --accent-text: #0f1216; --accent-soft: #1d2540; --danger: #ff8787; --ok: #69db7c;
+    --shadow: none; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.55 var(--font); }
+  a { color: var(--accent); }
+  h1, h2, h3 { line-height: 1.2; margin: 0; text-wrap: balance; }
+  h2 { font-size: 1.2rem; }
+  p { margin: 0; }
+  .wrap {
+    max-width: 1000px; margin: 0 auto; padding-block: 24px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px;
+  }
+  .muted { color: var(--muted); }
+  .small { font-size: .9rem; }
+  .brand { display: flex; gap: 14px; align-items: center; }
+  .logo { width: 44px; height: 44px; flex: none; }
+  .logo rect { fill: var(--accent); }
+  .logo path { fill: none; stroke: var(--accent-text); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .brand h1 { font-size: 1.55rem; letter-spacing: -.01em; }
+  .brand p { color: var(--muted); max-width: 65ch; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+          padding: 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-width: 0; }
+  .card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .step { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  .drops { display: grid; grid-template-columns: 1fr 1.4fr; gap: 14px; }
+  @media (max-width: 720px) { .drops { grid-template-columns: 1fr; } }
+  .drop { display: grid; gap: 6px; justify-items: center; text-align: center; padding: 22px 14px; cursor: pointer;
+          border: 2px dashed var(--border); border-radius: 12px; min-width: 0; }
+  .drop:hover, .drop.dragging { border-color: var(--accent); background: var(--accent-soft); }
+  .drop:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .drop.chosen { border-style: solid; border-color: var(--accent); }
+  .drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .drop-title { font-weight: 600; }
+  .drop-icon { width: 30px; height: 30px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; font-size: .85rem; padding: 2px 4px 2px 10px;
+          border: 1px solid var(--border); border-radius: 999px; background: var(--bg); }
+  .chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chip button { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; padding: 2px 6px; border-radius: 999px; }
+  .chip button:hover { color: var(--danger); }
+  button { font: inherit; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-text); border: 1px solid var(--accent); font-weight: 600; }
+  button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  button.secondary:hover { border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  .row > * { min-width: 0; max-width: 100%; }
+  .runtime { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .92rem; }
+  .spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--accent);
+             animation: spin 1s linear infinite; flex: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+  .message { padding: 10px 14px; border-radius: 10px; border: 1px solid var(--danger); color: var(--danger); background: var(--bg); }
+  .note { padding: 10px 14px; border-radius: 10px; background: var(--accent-soft); }
+  select { font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
+  label.field { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; font-weight: 600; width: min(100%, 32rem); }
+  label.field select { width: 100%; }
+  label.field small { font-weight: 400; color: var(--muted); }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--border); vertical-align: top; }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-top: 0; }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  .ref { min-width: 16rem; }
+  .pill { display: inline-block; font-size: .8rem; font-weight: 600; padding: 1px 9px; border-radius: 999px; white-space: nowrap;
+          color: var(--ink-on-fill); }
+  .s-GREEN { background: var(--s-green); } .s-YELLOW { background: var(--s-yellow); } .s-ORANGE { background: var(--s-orange); }
+  .s-RED { background: var(--s-red); } .s-PURPLE { background: var(--s-purple); } .s-GREY { background: var(--s-grey); }
+  .state { font-size: .85rem; color: var(--muted); white-space: nowrap; }
+  .state.done { color: var(--ok); } .state.failed { color: var(--danger); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+  .tile { border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; background: var(--bg); text-align: left; color: inherit;
+          display: grid; gap: 2px; }
+  .tile b { font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+  .tile[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .tile .pill { justify-self: start; }
+  .claims { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .claim { border: 1px solid var(--border); border-left-width: 6px; border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px;
+           background: var(--surface); min-width: 0; }
+  .claim.b-GREEN { border-left-color: var(--s-green); } .claim.b-YELLOW { border-left-color: var(--s-yellow); }
+  .claim.b-ORANGE { border-left-color: var(--s-orange); } .claim.b-RED { border-left-color: var(--s-red); }
+  .claim.b-PURPLE { border-left-color: var(--s-purple); } .claim.b-GREY { border-left-color: var(--s-grey); }
+  .claim-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .9rem; }
+  .claim-id { font-family: var(--mono); color: var(--muted); }
+  .sentence { font-style: italic; overflow-wrap: anywhere; }
+  .claim p { overflow-wrap: anywhere; }
+  .label { font-weight: 600; }
+  blockquote { margin: 0; padding-left: 12px; border-left: 3px solid var(--border); color: var(--muted); overflow-wrap: anywhere; }
+  .example-banner { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+  details summary { cursor: pointer; font-weight: 600; }
+  .legend { display: grid; gap: 6px; margin-top: 10px; }
+  .legend div { display: grid; grid-template-columns: 11rem 1fr; gap: 10px; align-items: baseline; }
+  @media (max-width: 520px) { .legend div { grid-template-columns: 1fr; } }
+  footer { color: var(--muted); font-size: .9rem; display: grid; gap: 6px; max-width: 70ch; }
+</style>
+
+<main class="wrap">
+  <header class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="3" width="22" height="26" rx="4"/><path d="M10 16.5l4 4 8-9"/></svg>
+    <div>
+      <h1>Refaudit claim check</h1>
+      <p>Checks every cited claim in your manuscript against the cited work's own text. Claude reads each source on
+        your Claude plan; a second, blind opinion checks every problem it finds.</p>
+    </div>
+  </header>
+
+  <section class="card" aria-labelledby="files-title">
+    <div class="card-head">
+      <div><p class="step">Step 1</p><h2 id="files-title">Your manuscript and the works it cites</h2></div>
+      <p class="runtime" id="runtime" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><span id="runtime-text">Starting the checker…</span></p>
+    </div>
+    <div class="drops">
+      <label class="drop" id="drop-ms" for="ms-input">
+        <input type="file" id="ms-input" accept=".docx">
+        <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>
+        <span class="drop-title">Manuscript (.docx)</span>
+        <span class="muted small" id="ms-hint">Drop it here or click to choose. APA in-text citations and a reference list.</span>
+        <span class="chips" id="ms-chips"></span>
+      </label>
+      <label class="drop" id="drop-src" for="src-input">
+        <input type="file" id="src-input" multiple accept=".pdf,.epub,.docx,.html,.htm,.txt">
+        <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6l2 2h8v10H4z"/><path d="M12 12v5m0-5l-2 2m2-2l2 2"/></svg>
+        <span class="drop-title">PDFs of the works you cite</span>
+        <span class="muted small">Any file names. A source is matched by the DOI in the file, its title, or an AuthorYear file name. Files with “supp” in the name are read as supplements.</span>
+        <span class="chips" id="src-chips"></span>
+      </label>
+    </div>
+    <p class="message" id="message" role="alert" hidden></p>
+  </section>
+
+  <section class="card" id="sources-card" aria-labelledby="sources-title" hidden>
+    <div class="card-head">
+      <div><p class="step">Step 2</p><h2 id="sources-title">Check the claims</h2></div>
+      <p class="muted small" id="sources-sub"></p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Source</th><th>Text</th><th class="num">Claims</th><th>Check</th></tr></thead>
+        <tbody id="sources"></tbody>
+      </table>
+    </div>
+    <div id="extras" class="small"></div>
+    <div class="row">
+      <label class="field" for="model">Claude model
+        <select id="model">
+          <option value="claude-fable-5-1">Claude Fable 5.1, most thorough</option>
+          <option value="claude-opus-5-5">Claude Opus 5.5, thorough, uses less of your plan</option>
+          <option value="claude-sonnet-5-5">Claude Sonnet 5.5, quickest, uses the least</option>
+        </select>
+        <small>Each source is read at high effort, the most a page can ask for.</small>
+      </label>
+    </div>
+    <div class="row">
+      <button type="button" class="primary" id="check" disabled>Check the claims</button>
+      <button type="button" class="secondary" id="stop" hidden>Stop</button>
+      <p class="muted small" id="check-note" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="card" id="results-card" aria-labelledby="results-title">
+    <div class="card-head">
+      <div><p class="step">Step 3</p><h2 id="results-title">Results</h2></div>
+      <div class="row" id="saves" hidden>
+        <button type="button" class="primary" data-save=".xlsx">Save the Excel report</button>
+        <button type="button" class="secondary" data-save="_comments.docx">Save the Word file with comments</button>
+        <button type="button" class="secondary" data-save=".json">Save the data (JSON)</button>
+      </div>
+    </div>
+    <p class="note example-banner" id="example-banner"><span class="label">Example.</span>
+      <span>These are the results for refaudit's test manuscript, which has ten planted problems. Your own results replace them.</span></p>
+    <div class="tiles" id="tiles" role="group" aria-label="Show claims by status"></div>
+    <ol class="claims" id="claims"></ol>
+    <details>
+      <summary>What the statuses and verdicts mean</summary>
+      <div class="legend" id="legend"></div>
+    </details>
+  </section>
+
+  <footer>
+    <p><strong>Where your files go.</strong> They are read in this page and stay here. For each source, Claude
+      receives its text and the sentences that cite it, through your Claude account. This page cannot reach any
+      other service, so it does not look sources up online: add the PDFs you have.</p>
+    <p>refaudit also checks reference lists against Crossref and OpenAlex, on its public site. The same claim check
+      runs in Claude Code with <code>/check-claims</code>.</p>
+    <p id="version"></p>
+  </footer>
+</main>
+
+<script>
+"use strict";
+const EXAMPLE = null; // the committed acceptance run, filled in by tools/build_claude_page.py
+const DAY = 86400000;
+const ORDER = ["RED", "PURPLE", "ORANGE", "YELLOW", "GREEN", "GREY"];
+const MEANING = {
+  SUPPORTED: "The source states this.",
+  "SUPPORTED-WITH-CAVEAT": "Substance right; a word, qualifier, number format or page locator needs fixing.",
+  SECONDARY: "The source reports this from another work: cite the original, or use “as cited in”.",
+  "PARTIALLY-SUPPORTED": "Only part of the claim is in the source, or it holds only more narrowly.",
+  OVERSTATED: "Stated more strongly than the source: causal wording, overgeneralization, speculation as a finding.",
+  "NOT-SUPPORTED": "The source contradicts the claim, or does not address it after a full search.",
+  MISATTRIBUTED: "Right, but it belongs to another source (named when it is in your list).",
+  UNVERIFIABLE: "No readable text, or only an abstract that does not settle it.",
+  DISPUTED: "The two opinions disagree; both are shown.",
+};
+const STATUS_WORDS = { GREEN: "Supported", YELLOW: "Minor fix", ORANGE: "Problem", RED: "Wrong", PURPLE: "Concern", GREY: "Not checked" };
+const SAMPLE_ERRORS = {
+  rate_limited: "Claude's usage limit was reached. Pick another model and continue, or try again later.",
+  not_granted: "Claude was not allowed for this page. Run the check again and allow it when asked.",
+  sampling_disabled: "Asking Claude is turned off for your account or for this page.",
+};
+const $ = (id) => document.getElementById(id);
+const state = { manuscript: null, sources: [], overview: null, files: [], running: false, ready: false, rows: null };
+let sample = null, downloads = null, maxBytes = 262144, stopper = null;
+
+// ---- the engine (Python in a Web Worker) ----
+const engine = new Worker("engine.js");
+const waiting = new Map();
+let nextId = 0;
+engine.onmessage = ({ data }) => {
+  if (data.type === "status") { setRuntime(data.text, true); return; }
+  if (data.type === "ready") {
+    state.ready = true;
+    setRuntime(state.manuscript ? "" : "Ready. Add your manuscript.");
+    ask("boot").then((info) => { $("version").textContent = `refaudit ${info.version}, judging rules version ${info.prompt_version}.`; });
+    maybePrepare();
+    return;
+  }
+  if (data.type === "fatal") { setRuntime(""); showMessage("The checker could not start: " + data.error); return; }
+  const job = waiting.get(data.id);
+  waiting.delete(data.id);
+  if (job) data.ok ? job.resolve(data.result) : job.reject(new Error(data.error));
+};
+engine.onerror = () => showMessage("The checker could not start in this browser.");
+function ask(op, args = {}) {
+  return new Promise((resolve, reject) => {
+    const id = ++nextId;
+    waiting.set(id, { resolve, reject });
+    engine.postMessage({ id, op, ...args });
+  });
+}
+
+// ---- Claude, through the page's capabilities ----
+(async () => {
+  const claude = window.claude;
+  if (!claude || !claude.use) { claudeAvailable(false); return; }
+  [sample, downloads] = await Promise.all([claude.use("sample"), claude.use("downloads")]);
+  if (sample) {
+    try { maxBytes = (await sample.limits()).maxPromptBytes || maxBytes; } catch { /* keep the documented cap */ }
+  }
+  claudeAvailable(Boolean(sample));
+})();
+function claudeAvailable(yes) {
+  state.claude = yes;
+  if (!yes) $("check-note").textContent = "Asking Claude works only when this page is open in claude.ai.";
+  updateCheck();
+}
+
+// ---- files ----
+function setRuntime(text, busy = false) {
+  $("runtime").querySelector(".spinner").hidden = !busy;
+  $("runtime-text").textContent = text;
+}
+function showMessage(text) { $("message").textContent = text; $("message").hidden = !text; }
+function chip(name, onRemove) {
+  const el = document.createElement("span");
+  el.className = "chip";
+  el.innerHTML = '<span></span><button type="button" aria-label="Remove">×</button>';
+  el.firstChild.textContent = name;
+  el.lastChild.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); onRemove(); });
+  return el;
+}
+function renderFiles() {
+  $("ms-chips").replaceChildren(...(state.manuscript ? [chip(state.manuscript.name, () => { state.manuscript = null; renderFiles(); maybePrepare(); })] : []));
+  $("drop-ms").classList.toggle("chosen", Boolean(state.manuscript));
+  $("src-chips").replaceChildren(...state.sources.map((f) => chip(f.name, () => {
+    state.sources = state.sources.filter((s) => s !== f); renderFiles(); maybePrepare();
+  })));
+  $("drop-src").classList.toggle("chosen", state.sources.length > 0);
+}
+function addFiles(list, which) {
+  showMessage("");
+  for (const file of list) {
+    const ext = (file.name.match(/\.[^.]+$/) || [""])[0].toLowerCase();
+    if (which === "ms") {
+      if (ext !== ".docx") { showMessage(`${file.name} is not a .docx file. The manuscript must be a Word .docx file.`); continue; }
+      state.manuscript = file;
+    } else if ([".pdf", ".epub", ".docx", ".html", ".htm", ".txt"].includes(ext)) {
+      state.sources = state.sources.filter((s) => s.name !== file.name).concat(file);
+    } else showMessage(`${file.name} was skipped: sources can be PDF, EPUB, DOCX, HTML or TXT files.`);
+  }
+  renderFiles();
+  maybePrepare();
+}
+for (const [zone, input, which] of [["drop-ms", "ms-input", "ms"], ["drop-src", "src-input", "src"]]) {
+  $(input).addEventListener("change", (e) => { addFiles(e.target.files, which); e.target.value = ""; });
+  $(zone).addEventListener("dragover", (e) => { e.preventDefault(); $(zone).classList.add("dragging"); });
+  $(zone).addEventListener("dragleave", () => $(zone).classList.remove("dragging"));
+  $(zone).addEventListener("drop", (e) => { e.preventDefault(); $(zone).classList.remove("dragging"); addFiles(e.dataTransfer.files, which); });
+}
+
+let prepareTimer = null;
+function maybePrepare() {
+  clearTimeout(prepareTimer);
+  if (!state.manuscript || !state.ready || state.running) return;
+  prepareTimer = setTimeout(prepare, 300);
+}
+async function prepare() {
+  setRuntime("Reading your files…", true);
+  try {
+    const read = async (f) => ({ name: f.name, bytes: await f.arrayBuffer() });
+    state.overview = await ask("prepare", { manuscript: await read(state.manuscript),
+                                            sources: await Promise.all(state.sources.map(read)) });
+    setRuntime("");
+    renderSources();
+  } catch (error) {
+    setRuntime("");
+    showMessage("Your files could not be read: " + error.message);
+  }
+}
+
+// ---- step 2: sources ----
+function shortRef(raw) { return raw.length > 150 ? raw.slice(0, 147) + "…" : raw; }
+function textCell(s) {
+  if (s.level === "NONE") {
+    const td = document.createElement("td");
+    td.innerHTML = '<span class="pill s-GREY">No text</span> ';
+    if (s.doi) {
+      const a = document.createElement("a");
+      a.href = "https://doi.org/" + s.doi; a.target = "_blank"; a.rel = "noopener"; a.textContent = "find its PDF";
+      td.append(a);
+    } else td.append("add its PDF");
+    return td;
+  }
+  const td = document.createElement("td");
+  const words = { FULL: "Your file", PREPRINT: "Preprint", WEB: "Web page", ABSTRACT: "Abstract only" };
+  td.textContent = `${words[s.level] || s.level}${s.pages ? `, ${s.pages} pages` : ""}`;
+  return td;
+}
+function renderSources() {
+  const ov = state.overview;
+  $("sources-card").hidden = false;
+  const withText = ov.sources.filter((s) => s.level !== "NONE").length;
+  $("sources-sub").textContent = `${ov.rows} citations of ${ov.sources.length} works; ${withText} with text.`;
+  $("sources").replaceChildren(...ov.sources.map((s) => {
+    const tr = document.createElement("tr");
+    tr.id = "src-" + s.refkey;
+    const ref = document.createElement("td");
+    ref.className = "ref";
+    ref.textContent = shortRef(s.reference);
+    const claims = document.createElement("td");
+    claims.className = "num";
+    claims.textContent = s.claims.length;
+    const check = document.createElement("td");
+    check.innerHTML = '<span class="state"></span>';
+    tr.append(ref, textCell(s), claims, check);
+    return tr;
+  }));
+  for (const s of ov.sources) setState(s.refkey, s.pending.length ? (s.level === "NONE" ? "No text: marked unverifiable" : "Not checked yet") : "Checked", s.pending.length ? "" : "done");
+  const extras = [];
+  if (ov.unmatched.length) extras.push(`<p><span class="label">Not in the reference list:</span> ${ov.unmatched.map((u) => escapeHtml(`${u.id} ${u.citation}`)).join("; ")}.</p>`);
+  const unused = ov.files.filter((f) => !f.ref);
+  if (unused.length) extras.push(`<p><span class="label">Files that matched no reference:</span> ${unused.map((f) => escapeHtml(f.name)).join(", ")}.</p>`);
+  if (ov.tracked_changes) extras.push("<p>The manuscript has tracked changes; they are read as accepted.</p>");
+  $("extras").innerHTML = extras.join("");
+  updateCheck();
+}
+function setState(refkey, text, kind = "") {
+  const cell = document.querySelector(`#src-${CSS.escape(refkey)} .state`);
+  if (cell) { cell.textContent = text; cell.className = "state " + kind; }
+}
+function updateCheck() {
+  const ov = state.overview;
+  const button = $("check");
+  if (!ov) { button.disabled = true; return; }
+  const toRead = ov.sources.filter((s) => s.pending.length && s.level !== "NONE");
+  const anyPending = ov.sources.some((s) => s.pending.length || s.second_pending.length);
+  button.disabled = state.running || !state.claude || !anyPending;
+  button.textContent = !anyPending ? "All claims checked" : state.rows ? "Continue the check" : `Check ${ov.rows} claims with Claude`;
+  if (state.claude && !state.running) {
+    $("check-note").textContent = anyPending
+      ? `Claude reads ${toRead.length} source${toRead.length === 1 ? "" : "s"}, then gives second opinions on what it flags. This uses your Claude plan.`
+      : "Every claim is checked. Add PDFs and they are read too.";
+  }
+}
+
+// ---- the check ----
+async function pool(limit, items, work) {
+  let next = 0;
+  const lane = async () => { while (next < items.length && !stopper.signal.aborted) await work(items[next++]); };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, lane));
+}
+function stop(reason) {
+  if (reason) showMessage(reason);
+  if (stopper && !stopper.signal.aborted) stopper.abort();
+}
+async function judge(source, ids, second, model, used) {
+  const label = second ? "Second opinion" : "Reading";
+  if (!second && source.level === "NONE") {
+    await ask("noText", { refkey: source.refkey, ids });
+    setState(source.refkey, "No text: marked unverifiable", "done");
+    return;
+  }
+  const started = Date.now();
+  const tick = setInterval(() => setState(source.refkey, `${label}… ${Math.round((Date.now() - started) / 1000)} s`), 1000);
+  setState(source.refkey, `${label}…`);
+  try {
+    const question = await ask("question", { refkey: source.refkey, ids, second, maxBytes });
+    const options = { model, modelTier: "complex", effort: "high", signal: stopper.signal, cache: second ? false : { gcTime: DAY } };
+    const result = await sample(question, options);
+    const by = result.modelApplied || `${result.modelTierApplied} tier`;
+    used[by] = (used[by] || 0) + 1;
+    const saved = await ask("answer", { refkey: source.refkey, reply: result.text, second, model: by });
+    if (saved.saved) setState(source.refkey, second ? "Second opinion done" : "Checked", "done");
+    else setState(source.refkey, `Answer not usable: ${saved.problems[0]}${result.truncated ? " (cut short)" : ""}`, "failed");
+  } catch (error) {
+    if (error && error.code === "cancelled") setState(source.refkey, "Stopped");
+    else if (error && SAMPLE_ERRORS[error.code]) { setState(source.refkey, "Stopped", "failed"); stop(SAMPLE_ERRORS[error.code]); }
+    else setState(source.refkey, "Failed: " + ((error && (error.message || error.code)) || "unknown error"), "failed");
+  } finally { clearInterval(tick); }
+}
+async function runCheck() {
+  if (state.running || !state.overview) return;
+  state.running = true;
+  stopper = new AbortController();
+  showMessage("");
+  $("stop").hidden = false;
+  updateCheck();
+  const model = $("model").value;
+  const used = {};
+  try {
+    const first = state.overview.sources.filter((s) => s.pending.length);
+    $("check-note").textContent = "Claude is reading the sources. You can keep this page open in the background.";
+    await pool(2, first, (s) => judge(s, s.pending, false, model, used));
+    let checked = await ask("verify");
+    state.overview = checked.overview;
+    const seconds = state.overview.sources.filter((s) => s.second_pending.length);
+    if (seconds.length && !stopper.signal.aborted) {
+      $("check-note").textContent = "Second opinions: a new reading of each problem, without the first verdict.";
+      await pool(2, seconds, (s) => judge(s, s.second_pending, true, model, used));
+      checked = await ask("verify");
+      state.overview = checked.overview;
+    }
+    const models = Object.entries(used).map(([m, n]) => `${m} (${n} question${n === 1 ? "" : "s"})`).join(", ");
+    const report = await ask("report", { model: models || model, effort: "high" });
+    state.files = report.files;
+    state.rows = report.rows;
+    renderResults(report.rows, false);
+  } catch (error) {
+    showMessage("The check stopped: " + error.message);
+  } finally {
+    state.running = false;
+    $("stop").hidden = true;
+    updateCheck();
+    if (state.overview) for (const s of state.overview.sources) if (!s.pending.length && !s.second_pending.length) setState(s.refkey, "Checked", "done");
+  }
+}
+$("check").addEventListener("click", runCheck);
+$("stop").addEventListener("click", () => stop("Stopped. What was checked is kept; continue whenever you like."));
+
+// ---- step 3: results ----
+let filter = null;
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function place(e) {
+  if (e.page) return `p. ${e.page}` + (e.pdf_page && String(e.pdf_page) !== String(e.page) ? ` (PDF p. ${e.pdf_page})` : "");
+  return e.pdf_page ? `PDF p. ${e.pdf_page}` : e.section ? `section ${e.section}` : "";
+}
+function renderResults(rows, example) {
+  $("results-card").hidden = false;
+  $("example-banner").hidden = !example;
+  $("saves").hidden = example || !state.files.length;
+  const counts = Object.fromEntries(ORDER.map((s) => [s, rows.filter((r) => r.status === s).length]));
+  $("tiles").replaceChildren(...ORDER.filter((s) => counts[s]).map((s) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "tile"; b.setAttribute("aria-pressed", String(filter === s));
+    b.innerHTML = `<span class="pill s-${s}">${s}</span><b>${counts[s]}</b><span class="muted small">${STATUS_WORDS[s]}</span>`;
+    b.addEventListener("click", () => { filter = filter === s ? null : s; renderResults(rows, example); });
+    return b;
+  }));
+  const shown = rows.filter((r) => !filter || r.status === filter)
+                    .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status) || a.id.localeCompare(b.id));
+  $("claims").replaceChildren(...shown.map((r) => {
+    const li = document.createElement("li");
+    li.className = `claim b-${r.status}`;
+    const evidence = (r.evidence || [])[0];
+    li.innerHTML = `
+      <div class="claim-head"><span class="pill s-${r.status}">${r.status}</span>
+        <span class="label">${escapeHtml(r.verdict || "not judged")}</span>${r.severity ? `<span class="muted">${escapeHtml(r.severity)}</span>` : ""}
+        <span class="claim-id">${escapeHtml(r.id)}</span><span>${escapeHtml(r.citation)}</span></div>
+      <p class="sentence">${escapeHtml(r.sentence)}</p>
+      ${r.explanation ? `<p>${escapeHtml(r.explanation)}</p>` : ""}
+      ${(r.notes || []).map((n) => `<p class="muted small">${escapeHtml(n)}</p>`).join("")}
+      ${r.fix ? `<p><span class="label">Fix:</span> ${escapeHtml(r.fix)}</p>` : ""}
+      ${evidence && evidence.quote ? `<blockquote>“${escapeHtml(evidence.quote)}”${place(evidence) ? ` <span class="small">(${escapeHtml(place(evidence))})</span>` : ""}</blockquote>` : ""}
+      ${r.second ? `<p class="muted small">Second opinion: ${escapeHtml(r.second)}</p>` : ""}`;
+    return li;
+  }));
+}
+for (const button of document.querySelectorAll("[data-save]")) {
+  button.addEventListener("click", async () => {
+    const file = state.files.find((f) => f.name.endsWith(button.dataset.save));
+    if (!file) return;
+    if (!downloads) { showMessage("Saving files works only when this page is open in claude.ai."); return; }
+    try { await downloads.save({ filename: file.name, data: file.bytes }); }
+    catch (error) { if (error && error.code !== "declined") showMessage("The file could not be saved (" + (error.code || error.message) + ")."); }
+  });
+}
+$("legend").innerHTML = Object.entries(MEANING).map(([v, m]) => `<div><span class="label">${v}</span><span>${m}</span></div>`).join("")
+  + ORDER.map((s) => `<div><span><span class="pill s-${s}">${s}</span></span><span>${STATUS_WORDS[s]}</span></div>`).join("");
+
+if (EXAMPLE) renderResults(EXAMPLE.rows, true);
+else $("results-card").hidden = true;
+</script>

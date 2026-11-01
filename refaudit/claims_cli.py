@@ -299,6 +299,8 @@ def verify(work: Path, log=print) -> dict:
     sample = second_sample(state, green)
     requests = {}
     for row in judged:
+        if refs.get(row["ref"], {}).get("level") == "NONE":
+            continue  # no text and no abstract: a second judge would have nothing to read either
         if (first[row["id"]]["status"] != "GREEN" or cache[row["cache_key"]].get("confidence") == "low"
                 or row["id"] in sample):
             requests.setdefault(row["ref"], []).append(row["id"])

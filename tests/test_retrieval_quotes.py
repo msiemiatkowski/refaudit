@@ -85,3 +85,22 @@ def test_real_pdf_quote_after_column_split():
     check = quotes.check_evidence([{"quote": "This study was correlational; no causal conclusions can be drawn from "
                                              "these data.", "page": "539", "pdf_page": 2}], text)
     assert check[0]["ok"]
+
+
+def test_partial_ratio_without_rapidfuzz_agrees_at_the_thresholds():
+    import random
+    from rapidfuzz.fuzz import partial_ratio as reference
+    from refaudit.fuzzy import _partial_ratio
+    random.seed(3)
+    words = ("conspiracy beliefs were associated with lower trust in institutions and with stronger paranoia "
+             "across samples from several countries while analytic thinking predicted weaker endorsement").split()
+    page = " ".join(random.choice(words) for _ in range(900))
+    for _ in range(60):
+        k, i = random.randint(6, 30), random.randrange(800)
+        quote = list(" ".join(page.split()[i:i + k]))
+        for _ in range(random.choice([0, 1, 2, 5])):
+            quote[random.randrange(len(quote))] = random.choice("xyz ")
+        quote = "".join(quote)
+        ours, theirs = _partial_ratio(quote, page), reference(quote, page)
+        assert ours <= theirs + 1e-9 and (ours >= 95) == (theirs >= 95) and (ours >= 85) == (theirs >= 85)
+    assert _partial_ratio("", "abc") == 0 and _partial_ratio("abc", "xxabcxx") == 100
