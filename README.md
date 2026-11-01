@@ -1,6 +1,9 @@
 # refaudit
 
-A small tool that checks the references in a .docx or .bib file against Crossref and OpenAlex and writes a colour-coded .xlsx report. It runs from the command line or, through the [web app](#web-app), in a browser. It is deterministic: no LLM calls and no scraping of publisher pages, only the public APIs of doi.org, Crossref, DataCite and OpenAlex.
+A small tool in two parts.
+
+1. **Reference check**, `refaudit FILE`. It checks every entry of a reference list (.docx or .bib) against Crossref, OpenAlex, DataCite and doi.org: metadata, DOI, retractions and expressions of concern. It writes a colour-coded .xlsx and runs from the command line or, through the [web app](#web-app), in a browser. It is deterministic: no model calls and no scraping, only public APIs.
+2. **Claim check**, `/check-claims` in Claude Code. It checks every claim in a manuscript that carries a citation against the cited source's own text, from your PDFs or an open-access copy. It writes an .xlsx, a commented copy of the manuscript and JSON. See [Claim check](#claim-check).
 
 ## Installation
 
@@ -107,7 +110,128 @@ python -m http.server -d _site 8000
 
 Then open http://localhost:8000. The browser needs internet access to cdn.jsdelivr.net, pypi.org, files.pythonhosted.org and the four API hosts.
 
-## Statuses and colours
+## Claim check
+
+Part 2 asks, for each sentence that cites a source: does that source, read in full, actually support the sentence?
+
+The work is split in two:
+- **Deterministic steps in Python** (`refaudit claims …`). These extract claims and citations, match them to the reference list, get the source texts, pull candidate passages, check quotes and build the reports.
+- **Judging by Claude Code subagents** (`.claude/`). This runs on your Claude plan with no API key.
+
+Part 1 (`refaudit FILE`) is unchanged and makes no model calls.
+
+### Workflow
+
+1. Put the PDFs you have into a folder. Any file names work; EPUB, DOCX, HTML and TXT are fine too. A file whose name contains `supp` is attached to its reference as supplementary material.
+2. In Claude Code, in this repository, run:
+
+   ```
+   /check-claims manuscript.docx --sources path/to/pdfs
+   ```
+
+3. Read `manuscript_claims.xlsx` and `manuscript_claims_comments.docx`, a copy of the manuscript with a Word comment on every citation that isn't GREEN.
+4. Upload the PDFs listed on the **PDFs to upload** sheet into the folder and run `/check-claims` again. Only sources whose text changed are judged again; `--force` redoes everything.
+
+Options are `--sources DIR`, `--model M` (default `fable`), `--effort E` (default `max`), `--out DIR` and `--force`.
+
+### Running it locally or in a cloud session
+
+- **Locally** (best for paywalled PDFs on your disk): clone the repository, `pip install -e .`, and install pandoc and poppler-utils. Optionally install tesseract-ocr for scanned PDFs. Start `claude` in the repository and run `/check-claims` with paths anywhere on your disk.
+- **In a cloud session:** commit the manuscript and PDFs under `inputs/`, and give the environment **Full** network access, because open-access copies come from many publisher hosts. Then run `/check-claims inputs/manuscript.docx --sources inputs/pdfs`.
+
+So that unattended runs don't stop at permission prompts, copy `.claude/settings.example.json` to `.claude/settings.json`. It allows `refaudit claims`, pandoc, pdftotext, pdftoppm and tesseract, the two judge agents, and writes to the verdict folders. Claude Code would not write that file itself, because it changes Claude's own permissions.
+
+The two agents also load only in sessions started after `.claude/agents/` exists; restart once after pulling this branch.
+
+### What happens
+
+1. **`refaudit claims prepare manuscript.docx [--sources DIR] [--out DIR]`**
+   - Reads the manuscript with `pandoc --track-changes=accept`, or python-docx without pandoc, leaving out the reference section.
+   - Splits it into sentences (English and Polish abbreviations).
+   - Finds every APA in-text citation and makes one row per occurrence.
+   - Matches each citation to the reference list by first-author surname (with Polish case endings), author count, year and letter. Unmatched and ambiguous citations are GREY.
+   - Uses part 1 for each cited reference's DOI and notices.
+   - Gets each source's text, in this order:
+     - **your file**, matched by a DOI in the file, the title on its first page, or an AuthorYear file name;
+     - **an open-access copy**, from URLs given by Unpaywall, OpenAlex, Europe PMC full-text XML or Semantic Scholar (only PDFs and Europe PMC XML are read; landing pages are not scraped and no shadow libraries are used);
+     - **the abstract**, from OpenAlex, Crossref or Semantic Scholar.
+   - Keeps a text only if its title (fuzzy ≥ 85) and first author appear on its first pages.
+   - Reads PDFs with `pdftotext -layout` page by page, splitting two-column pages and finding printed page numbers, so evidence reads "p. 540 (PDF p. 3)". It falls back to pypdf, and uses tesseract OCR for pages without text.
+   - Writes `packets/<refkey>.json` for each source: metadata, evidence level, abstract, every citing claim, and its best BM25 passages plus any passage containing one of the claim's numbers.
+   - Only identifiers (DOIs) go to these services, never manuscript text.
+2. **Judging** (`/check-claims`): one `claim-judge` subagent per source, in parallel batches of up to five.
+   - Each reads the source once and judges each of its citations separately.
+   - Each writes `verdicts/<refkey>.json` with the verdict, type of support, severity, explanation, one or two verbatim quotes with pages, a minimal fix, a better reference from the list if there is one, and its confidence.
+   - The judges may run only `refaudit claims candidates` and `status`, and have no web tools.
+3. **`refaudit claims verify WORK`**
+   - Checks every evidence quote against the source text on the stated page (fuzzy ≥ 95 after normalizing whitespace, hyphenation and ligatures).
+   - Compares page locators, matches the manuscript's direct quotations verbatim, and lists the claim's numbers as found or not found.
+   - Picks rows for a blind second opinion: every row that isn't GREEN, every low-confidence row and a random 10% of GREEN rows. The `claim-second-opinion` subagent never sees the first verdict; a hook blocks it.
+4. **`refaudit claims report WORK`**: writes `<stem>_claims.xlsx`, `<stem>_claims_comments.docx` and `<stem>_claims.json`.
+
+`refaudit claims status WORK` prints, as JSON, what still needs judging. `refaudit claims candidates WORK C012` lists the passages in the other cited sources that best fit claim C012.
+
+**Without Claude Code**, `prepare` and `report` still run. The report then shows each source's evidence level and each claim's candidate passages, with every claim GREY ("not judged yet").
+
+### Verdicts and statuses
+
+| Verdict | Meaning | Status |
+|---|---|---|
+| SUPPORTED | The source states this | GREEN (full text or web only) |
+| SUPPORTED-WITH-CAVEAT | Substance right; a word, qualifier, number format or page locator needs fixing | YELLOW |
+| SECONDARY | The source reports this from another work; cite the original or use "as cited in" | YELLOW |
+| PARTIALLY-SUPPORTED | Only part of the claim is in the source, or it holds only for a narrower population, measure, design or condition | ORANGE |
+| OVERSTATED | Facts right but stated more strongly than the source: causal wording for correlational data, overgeneralization, speculation as a finding | ORANGE |
+| NOT-SUPPORTED | The source contradicts the claim (reversed direction, wrong number) or doesn't address it after a full search | RED |
+| MISATTRIBUTED | The claim is right but belongs to another source (named if it is in the list) | RED |
+| UNVERIFIABLE | No readable text, or only an abstract that doesn't settle the claim | GREY |
+| DISPUTED | The two judges disagree; both rationales are shown | ORANGE |
+
+These rules then adjust the status:
+- SUPPORTED resting on ABSTRACT or PREPRINT evidence is YELLOW ("confirm in full text" or "checked against preprint").
+- A retracted source is RED, and one with an expression of concern is PURPLE (from part 1).
+- An evidence quote not found on its stated page is ORANGE ("quote not found, check by hand").
+- A direct quotation that isn't verbatim is ORANGE. One on another page than cited, or a wrong page locator, is YELLOW.
+- The row status is the worst of these, in part 1's order.
+
+Rows that aren't GREEN get a **severity**: CRITICAL (the meaning changes: a reversed direction, a wrong key number, a central claim misattributed), MAJOR, MINOR or NOTE.
+
+**Evidence levels:**
+- FULL: the published version or accepted manuscript;
+- PREPRINT;
+- WEB: a web page or report read in full;
+- ABSTRACT;
+- NONE.
+
+The workbook's sheets are:
+- **Claims**: one row per citation;
+- **Sources**: one row per reference, with its text origin, pages, identity check and notice;
+- **PDFs to upload**: sources at ABSTRACT, PREPRINT or NONE, ranked by how many of their claims aren't GREEN;
+- **Summary**: counts, unmatched citations, uncited entries, run info and second-opinion agreement;
+- **Legend**.
+
+### Cost
+
+Each source gets one judge at max effort (Fable by default), plus a second opinion for every non-GREEN row, every low-confidence row and 10% of the GREEN rows. A manuscript citing 50 sources therefore runs 50+ judges, each reading a full paper.
+
+To spend less:
+- choose a lighter model or effort, for example `/check-claims ms.docx --model sonnet --effort high`;
+- check part of a manuscript first;
+- rely on the cache: re-runs judge only claims whose text, citation or source text changed.
+
+### External tools
+
+- pandoc: optional; without it, python-docx is used.
+- poppler-utils (`pdftotext`, `pdftoppm`): pypdf is the fallback.
+- tesseract-ocr with `eng` and `pol` data: optional, for scanned PDFs.
+
+On Ubuntu:
+
+```bash
+sudo apt install pandoc poppler-utils tesseract-ocr tesseract-ocr-pol
+```
+
+## Statuses and colours (part 1)
 
 | Status | Fill | Meaning |
 |---|---|---|
